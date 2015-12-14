@@ -1,5 +1,6 @@
 package QWithoutA;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
@@ -10,24 +11,26 @@ import javax.swing.JPanel;
 
 
 
-public class GamePanel  extends JPanel implements Runnable, KeyListener {
-	int width = 1000;
-	int height = 600;
+public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
+	int width = 1900;
+	int height = 1900;
 
 	public static void main(String[] args) {
 
 		// Set up main window (using Swing's Jframe)
-		JFrame frame = new JFrame("Dodgeball");
+		JFrame frame = new JFrame("SaltMan");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(new Dimension(500, 300));
 		frame.setAutoRequestFocus(false);
 		frame.setVisible(true);
 		Container c = frame.getContentPane();
-		c.add(new GamePanel());
+		c.add(new SaltGamePanel());
 		frame.pack();
 	}
 
-	public GamePanel(){
+	public SaltGamePanel(){
+		this.setPreferredSize(new Dimension(width, height));
+		this.setBackground(Color.BLACK);
 }
 
 	
@@ -53,3 +56,4 @@ public class GamePanel  extends JPanel implements Runnable, KeyListener {
 		// TODO Auto-generated method stub
 		
 	}
+}
