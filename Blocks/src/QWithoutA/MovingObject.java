@@ -51,25 +51,19 @@ public abstract class MovingObject implements Runnable {
 	 */
 	private boolean moving;
 
-	/**
-	 * Sets default color and pauseDuration values. Sets speed to 0. Starts
-	 * thread. Every subclass of MovingObject must use this constructor.
-	 * 
-	 * @param x
-	 *            Initial x position.
-	 * @param y
-	 *            Initial y position.
-	 * @param left
-	 *            Left edge for bouncing.
-	 * @param right
-	 *            Right edge for bouncing.
-	 * @param top
-	 *            Top edge for bouncing.
-	 * @param bottom
-	 *            Bottom edge for bouncing.
-	 */
-	public MovingObject(double x, double y, int left, int right, int top,
 
+	public MovingObject(double x, double y, int left, int right, int top, int bottom){
+		this.pauseDuration = 40;
+		this.xSpeed = 0;
+		this.ySpeed = 0;
+		this.color = Color.black;
+		this.x = x;
+		this.y = y;
+		this.left = left;
+		this.right = right;
+		this.top = top;
+		this.bottom = bottom;
+		startThread();
 	}
 
 	/**
@@ -105,91 +99,53 @@ public abstract class MovingObject implements Runnable {
 	 */
 	abstract public void animateOneStep();
 	
-	/**
-	 * Returns the x location.
-	 * 
-	 * @return
-	 *            the current x position.
-	 */
+	
 	public double getX() {
 		return x;
 	}
-	/**
-	 *  getting the current position of the ball on right side of screen 
-	 * @return
-	 */
+
 	
 	public int getRight(){
 		return right;
 	}
-	/**
-	 *  getting the current position of the ball on left side of screen 
-	 * @return
-	 */
+	
+
 	public int getLeft(){
 		return left;
 	}
 
-	/**
-	 * Returns the y location.
-	 * 
-	 * @return
-	 *            the current y position
-	 */
+	
 	public double getY() {
 		return y;
 	}
-	/**
-	 * 
-	 * @return
-	 */
+	
+
 	public double getXspeed(){
 		return xSpeed;
 	}
-	/**
-	 * 
-	 * @return
-	 */
+	
+
 	public double getYspeed(){
 		return ySpeed;
 	}
+
 	
-	/**
-	 * Sets the x speed.
-	 * 
-	 * @param xSpeed
-	 *            New x speed.
-	 */
 	public void setXSpeed(double xSpeed) {
 		this.xSpeed = xSpeed;
 	}
+	
 
-	/**
-	 * Sets the y speed.
-	 * 
-	 * @param ySpeed
-	 *            New y speed.
-	 */
 	public void setYSpeed(double ySpeed) {
 		this.ySpeed = ySpeed;
 	}
+	
 
-	/**
-	 * Sets the x location.
-	 * 
-	 * @param x
-	 *            New x location.
-	 */
+
 	public void setX(int x) {
 		this.x = x;
 	}
+	
 
-	/**
-	 * Sets the y location.
-	 * 
-	 * @param y
-	 *            New y location.
-	 */
 	public void setY(int y) {
 		this.y = y;
 	}

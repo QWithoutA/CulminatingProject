@@ -3,6 +3,7 @@ package QWithoutA;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -12,15 +13,22 @@ import javax.swing.JPanel;
 
 
 public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
-	int width = 1900;
-	int height = 1900;
+	int width = 1910;
+	int height = 1910;
+	
+	//5 for now but add more later 
+	final int blockNum = 5;
+	
+	//an array of blocks
+	Blocks[] block = new Blocks[blockNum];
+	
 
 	public static void main(String[] args) {
 
 		// Set up main window (using Swing's Jframe)
 		JFrame frame = new JFrame("SaltMan");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(new Dimension(500, 300));
+		frame.setSize(new Dimension(1910, 1910));
 		frame.setAutoRequestFocus(false);
 		frame.setVisible(true);
 		Container c = frame.getContentPane();
@@ -30,8 +38,18 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 
 	public SaltGamePanel(){
 		this.setPreferredSize(new Dimension(width, height));
-		this.setBackground(Color.BLACK);
+		this.setBackground(Color.WHITE);
+		
+		block[0] = new Blocks(0, 200, 0, width, 0, height);
 }
+	
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		for (int i = 0; i < blockNum; i++) {
+			block[i].draw(g);
+			g.setColor(Color.BLACK);
+		}
+	}
 
 	
 	
