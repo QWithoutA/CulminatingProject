@@ -1,5 +1,6 @@
 package QWithoutA;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -37,17 +38,19 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 		frame.setSize(new Dimension(700, 700));
 		frame.setAutoRequestFocus(false);
 		frame.setVisible(true);
+		frame.setLayout(new BorderLayout());
 		Container c = frame.getContentPane();
 		c.add(new SaltGamePanel());
+		frame.setResizable(false);
 		frame.pack();
 	}
 
 	public SaltGamePanel(){
 		this.setPreferredSize(new Dimension(width, height));
 		this.setBackground(Color.WHITE);
-		
-		block[0] = new Blocks(0, 0, 0, width, 0, height);
-		
+		for (int i=0; i<blockNum; i++) {
+			block[i] = new Blocks(0, 0, 0, width, 0, height);
+		}
 		Thread gameThread = new Thread(this);
 		gameThread.start();
 		
