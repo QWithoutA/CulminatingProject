@@ -11,10 +11,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
-
+@SuppressWarnings("serial")
 public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
-	int width = 1910;
-	int height = 1910;
+	int width = 700;
+	int height = 700;
 	
 	//5 for now but add more later 
 	final int blockNum = 5;
@@ -22,13 +22,19 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	//an array of blocks
 	Blocks[] block = new Blocks[blockNum];
 	
+	/**
+	 * The pause between repainting (should be set for about 30 frames per
+	 * second).
+	 */
+	final int pauseDuration = 50;
+	
 
 	public static void main(String[] args) {
 
 		// Set up main window (using Swing's Jframe)
 		JFrame frame = new JFrame("SaltMan");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(new Dimension(1910, 1910));
+		frame.setSize(new Dimension(700, 700));
 		frame.setAutoRequestFocus(false);
 		frame.setVisible(true);
 		Container c = frame.getContentPane();
@@ -40,8 +46,25 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 		this.setPreferredSize(new Dimension(width, height));
 		this.setBackground(Color.WHITE);
 		
-		block[0] = new Blocks(0, 200, 0, width, 0, height);
-}
+		block[0] = new Blocks(0, 0, 0, width, 0, height);
+		
+		Thread gameThread = new Thread(this);
+		gameThread.start();
+		
+		setFocusable(true);
+		addKeyListener(this);
+
+	}
+	
+	public void run() {
+		while (true) {
+			repaint();
+			try {
+				Thread.sleep(pauseDuration);
+			} catch (InterruptedException e) {
+			}
+		}
+	}
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -52,12 +75,16 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	}
 
 	
-	
-	
-	
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		/**
+		if(e.getKeyCode() == 38){
+			paddle[1].setY((int) (paddle[1].getY()-20));
+		}
+		else if(e.getKeyCode() == 40){
+			paddle[1].setY((int) (paddle[1].getY()+20));
+		}	
+	*/
 	}
 
 	public void keyReleased(KeyEvent e) {
@@ -70,8 +97,4 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 		
 	}
 
-	public void run() {
-		// TODO Auto-generated method stub
-		
-	}
 }

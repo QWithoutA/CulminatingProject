@@ -81,9 +81,19 @@ public abstract class MovingObject implements Runnable {
 	public void stopThread() {
 		moving = false;
 	}
-
+// double cheack run method later.
 	public void run() {
-
+		while (moving) {
+			animateOneStep();
+			x += xSpeed;
+			y += ySpeed;
+			if (y >= bottom | y <= top)
+				ySpeed *= -1;
+			try {
+				Thread.sleep(pauseDuration);
+			} catch (InterruptedException e) {
+			}
+		}
 	}
 
 	/**
