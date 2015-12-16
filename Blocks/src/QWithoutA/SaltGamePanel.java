@@ -22,7 +22,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	
 	//an array of blocks
 	Blocks[] block = new Blocks[blockNum];
-	
+	Blocks[] block2 = new Blocks[blockNum];
 	/**
 	 * The pause between repainting (should be set for about 30 frames per
 	 * second).
@@ -51,7 +51,9 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 		// for loop establishes the block array from which all blocks of the main menu are made
 		for (int i=0; i<blockNum; i++) {
 			block[i] = new Blocks(0, 0, 0, width, 0, height);
-		}
+		}	
+		block2[0] = new Blocks(0, 0, 0, width, 0, height);
+		block2[1] = new Blocks(0, 0, 0, width, 0, height);
 		Thread gameThread = new Thread(this);
 		gameThread.start();
 		
@@ -92,6 +94,14 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 				block[i].setY(j*20-600);
 			}
 		}
+		// small illustration demonstrating the creation of separate blocks independent of the original array/block declaration
+		block2[0].setX(50);
+		block2[0].setY(400);
+		block2[1].setX(90);
+		block2[1].setY(400);
+		for (int i=0;i<2;i++)
+		block2[i].draw(g); 
+		
 	}
 
 	
