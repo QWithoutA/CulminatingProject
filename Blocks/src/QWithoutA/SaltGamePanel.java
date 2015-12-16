@@ -17,8 +17,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	int width = 700;
 	int height = 700;
 	
-	//5 for now but add more later 
-	final int blockNum = 36;
+	//number of blocks in main menu
+	int blockNum = 36;
 	
 	//an array of blocks
 	Blocks[] block = new Blocks[blockNum];
@@ -48,6 +48,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	public SaltGamePanel(){
 		this.setPreferredSize(new Dimension(width, height));
 		this.setBackground(Color.WHITE);
+		// for loop establishes the block array from which all blocks of the main menu are made
 		for (int i=0; i<blockNum; i++) {
 			block[i] = new Blocks(0, 0, 0, width, 0, height);
 		}
@@ -71,6 +72,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		// for loop draws in the ground of the main menu/first screen
+		// loop sets X and Y coordinates
 		for (int i = 0; i < blockNum; i++) {
 			for (int j = 0; j < blockNum; j++) {
 				g.setColor(Color.BLACK);
@@ -79,6 +82,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 				block[i].setY(j*20+600);
 			}
 		}
+		// for loop draws in the ceiling of the main menu/t screen
+		// loop sets X and Y coordinates
 		for (int i = 0; i < blockNum; i++) {
 			for (int j = 0; j < blockNum; j++) {
 				g.setColor(Color.BLACK);
