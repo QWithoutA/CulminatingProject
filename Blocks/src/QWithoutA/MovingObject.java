@@ -159,4 +159,8 @@ public abstract class MovingObject implements Runnable {
 	public void setY(int y) {
 		this.y = y;
 	}
+	
+	public void setColor(Color color) {
+		this.color = color;
+	}
 }

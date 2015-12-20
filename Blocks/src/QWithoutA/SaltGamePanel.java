@@ -18,11 +18,12 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	int width = 1100;
 	int height = 550;
 	
-	//number of blocks in main menu
-	int blockNum = 63;
-	
-	//an arraylist of blocks static
+	//an arraylist of blocks
 	ArrayList<Blocks> block = new ArrayList<Blocks>();
+	//an arraylist of the ground (can also make hills)
+	ArrayList<Ground> ground = new ArrayList<Ground>();
+	
+	ArrayList<ItemBlock> iBlock = new ArrayList<ItemBlock>();
 	/**
 	 * The pause between repainting (should be set for about 30 frames per
 	 * second).
@@ -47,10 +48,13 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 
 	public SaltGamePanel(){
 		this.setPreferredSize(new Dimension(width, height));
-		this.setBackground(Color.WHITE);
+		this.setBackground(Color.CYAN);
 		
-		block.add(new Blocks(150, 200, 0, width, 0, height));
-		block.add(new Blocks(300, 200, 0, width, 0, height));
+		ground.add(new Ground(0, 525, 0, width, 0, height));
+		
+		iBlock.add(new ItemBlock(250, 300, 0, width, 0, height));
+		block.add(new Blocks(150, 300, 0, width, 0, height));
+		block.add(new Blocks(350, 300, 0, width, 0, height));
 
 		Thread gameThread = new Thread(this);
 		gameThread.start();
@@ -73,11 +77,19 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 			
-			for (int i = 0; i < block.size(); i++) {
-			   block.get(i).draw(g);
-			   
+		for (int i = 0; i < ground.size(); i++) {
+			 g.setColor(Color.GREEN);   
+			ground.get(i).draw(g);
 			  }
-		
+			
+		for (int i = 0; i < block.size(); i++) {
+			g.setColor(Color.BLACK);   
+			block.get(i).draw(g);
+			  }
+		for (int i = 0; i < iBlock.size(); i++) {  
+			g.setColor(Color.MAGENTA);  
+			iBlock.get(i).draw(g);
+			  }
 	}
 
 	
