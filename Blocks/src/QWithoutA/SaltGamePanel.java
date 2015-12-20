@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,15 +15,14 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
-	int width = 700;
-	int height = 700;
+	int width = 1100;
+	int height = 550;
 	
 	//number of blocks in main menu
-	int blockNum = 36;
+	int blockNum = 63;
 	
-	//an array of blocks
-	Blocks[] block = new Blocks[blockNum];
-	Blocks[] block2 = new Blocks[blockNum];
+	//an arraylist of blocks static
+	ArrayList<Blocks> block = new ArrayList<Blocks>();
 	/**
 	 * The pause between repainting (should be set for about 30 frames per
 	 * second).
@@ -35,7 +35,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 		// Set up main window (using Swing's Jframe)
 		JFrame frame = new JFrame("SaltMan");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(new Dimension(700, 700));
+		frame.setSize(new Dimension(1100, 550));
 		frame.setAutoRequestFocus(false);
 		frame.setVisible(true);
 		//frame.setLayout(new BorderLayout());
@@ -48,12 +48,10 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	public SaltGamePanel(){
 		this.setPreferredSize(new Dimension(width, height));
 		this.setBackground(Color.WHITE);
-		// for loop establishes the block array from which all blocks of the main menu are made
-		for (int i=0; i<blockNum; i++) {
-			block[i] = new Blocks(0, 0, 0, width, 0, height);
-		}	
-		block2[0] = new Blocks(0, 0, 0, width, 0, height);
-		block2[1] = new Blocks(0, 0, 0, width, 0, height);
+		
+		block.add(new Blocks(150, 200, 0, width, 0, height));
+		block.add(new Blocks(300, 200, 0, width, 0, height));
+
 		Thread gameThread = new Thread(this);
 		gameThread.start();
 		
@@ -74,33 +72,11 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		// for loop draws in the ground of the main menu/first screen
-		// loop sets X and Y coordinates
-		for (int i = 0; i < blockNum; i++) {
-			for (int j = 0; j < blockNum; j++) {
-				g.setColor(Color.BLACK);
-				block[i].draw(g);
-				block[i].setX(i*20);
-				block[i].setY(j*20+600);
-			}
-		}
-		// for loop draws in the ceiling of the main menu/t screen
-		// loop sets X and Y coordinates
-		for (int i = 0; i < blockNum; i++) {
-			for (int j = 0; j < blockNum; j++) {
-				g.setColor(Color.BLACK);
-				block[i].draw(g);
-				block[i].setX(i*20);
-				block[i].setY(j*20-600);
-			}
-		}
-		// small illustration demonstrating the creation of separate blocks independent of the original array/block declaration
-		block2[0].setX(50);
-		block2[0].setY(400);
-		block2[1].setX(90);
-		block2[1].setY(400);
-		for (int i=0;i<2;i++)
-		block2[i].draw(g); 
+			
+			for (int i = 0; i < block.size(); i++) {
+			   block.get(i).draw(g);
+			   
+			  }
 		
 	}
 
