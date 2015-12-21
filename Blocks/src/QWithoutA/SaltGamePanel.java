@@ -20,12 +20,12 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	int height = 550;
 	
 	//an arraylist of blocks
-	ArrayList<Blocks> block = new ArrayList<Blocks>();
+	ArrayList<NormalBlock> block = new ArrayList<NormalBlock>();
 	//an arraylist of the ground (can also make hills)
 	ArrayList<Ground> ground = new ArrayList<Ground>();
 	//an arraylist of itemblocks
 	ArrayList<ItemBlock> iBlock = new ArrayList<ItemBlock>();
-	//an arraylist of movingplatforms
+	//an arraylist of movingplatforms 
 	ArrayList<MovingPlatform> mPlat = new ArrayList<MovingPlatform>();
 
 	/**
@@ -58,11 +58,14 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 		
 		iBlock.add(new ItemBlock(250, 300, 0, width, 0, height));
 		
-		block.add(new Blocks(150, 300, 0, width, 0, height));
-		block.add(new Blocks(350, 300, 0, width, 0, height));
+		block.add(new NormalBlock(150, 300, 0, width, 0, height));
+		block.add(new NormalBlock(350, 300, 0, width, 0, height));
 		
-		mPlat.add(new MovingPlatform(200, 200, 0, width, 0, height));
+		mPlat.add(new MovingPlatform(200, 250, 0, width, 0, height));
 		mPlat.get(0).setXSpeed(14-7);
+		
+		mPlat.add(new MovingPlatform(800, 250, 0, width, 0, height));
+		mPlat.get(1).setYSpeed(14-10);
 		
 
 		Thread gameThread = new Thread(this);
@@ -77,8 +80,10 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 		while (true) {
 			repaint();
 			cheackCollision();
-			if(cheackCollision())
+			if(cheackCollision()){
 				mPlat.get(0).setXSpeed(mPlat.get(0).getXspeed() *-1);
+				mPlat.get(1).setYSpeed(mPlat.get(1).getYspeed() *-1);
+			}
 			try {
 				Thread.sleep(pauseDuration);
 			} catch (InterruptedException e) {
@@ -111,7 +116,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	}
 	
 	public boolean cheackCollision(){
-	if(mPlat.get(0).getX() + mPlat.get(0).getWidth() > 500 || mPlat.get(0).getX() < 100){
+	if(mPlat.get(0).getX() + mPlat.get(0).getWidth() > Math.abs(500) || mPlat.get(0).getX() < Math.abs(100)){
 		return true;
 		}
 	else 

@@ -2,7 +2,7 @@ package QWithoutA;
 
 import java.awt.Graphics;
 
-public class Ground extends Blocks{
+public class Ground extends NormalBlock{
 
 	private int width = 1150;
 	private int height = 35;
@@ -23,6 +23,12 @@ public class Ground extends Blocks{
 	public void animateOneStep() {
 		// TODO Auto-generated method stub
 		
+	}
+	public int getWidth(){
+		return width;
+	}
+	public int getHeight(){
+		return height;
 	}
 
 }

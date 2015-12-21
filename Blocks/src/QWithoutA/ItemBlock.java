@@ -3,7 +3,7 @@ package QWithoutA;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class ItemBlock extends Blocks{
+public class ItemBlock extends NormalBlock{
 	
 	private int counter;
 	private int flashSpeed;
@@ -49,6 +49,13 @@ public class ItemBlock extends Blocks{
 		}
 		*/
 		
+	}
+	
+	public int getWidth(){
+		return width;
+	}
+	public int getHeight(){
+		return height;
 	}
 
 }
