@@ -4,8 +4,8 @@ import java.awt.Graphics;
 
 public class MovingPlatform extends MovingObject{
 
-	private int width = 70;
-	private int height = 10;
+	private int width = 100;
+	private int height = 5;
 	
 	public MovingPlatform(double x, double y, int left, int right, int top, int bottom) {
 		super(x, y, left + 10, right - 10, top + 10, bottom - 10);
@@ -23,5 +23,9 @@ public class MovingPlatform extends MovingObject{
 	public void animateOneStep() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public int getWidth(){
+		return width;
 	}
 }

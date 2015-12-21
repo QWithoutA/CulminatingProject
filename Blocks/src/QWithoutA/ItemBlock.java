@@ -25,7 +25,7 @@ public class ItemBlock extends Blocks{
 		int drawX = (int) getX();
 		int drawY = (int) getY();
 		
-		g.setColor(color);
+	
 		g.fillRect(drawX, drawY, width, height);
 		if (!filledIn) {
 			g.setColor(Color.black);

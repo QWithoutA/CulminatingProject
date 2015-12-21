@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
+	
 	int width = 1100;
 	int height = 550;
 	
@@ -60,8 +61,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 		block.add(new Blocks(150, 300, 0, width, 0, height));
 		block.add(new Blocks(350, 300, 0, width, 0, height));
 		
-		mPlat.add(new MovingPlatform(350, 200, 0, width, 0, height));
-		mPlat.get(0).setXSpeed(14-4);
+		mPlat.add(new MovingPlatform(200, 200, 0, width, 0, height));
+		mPlat.get(0).setXSpeed(14-7);
 		
 
 		Thread gameThread = new Thread(this);
@@ -75,6 +76,9 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	public void run() {
 		while (true) {
 			repaint();
+			cheackCollision();
+			if(cheackCollision())
+				mPlat.get(0).setXSpeed(mPlat.get(0).getXspeed() *-1);
 			try {
 				Thread.sleep(pauseDuration);
 			} catch (InterruptedException e) {
@@ -105,7 +109,14 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 			mPlat.get(i).draw(g);
 			  }
 	}
-
+	
+	public boolean cheackCollision(){
+	if(mPlat.get(0).getX() + mPlat.get(0).getWidth() > 500 || mPlat.get(0).getX() < 100){
+		return true;
+		}
+	else 
+		return false;
+	}
 	
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
