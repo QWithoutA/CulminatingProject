@@ -66,7 +66,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, K
 		// Set up main window (using Swing's Jframe)
 		JFrame frame = new JFrame("Salt Man Adventures");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(new Dimension(500, 300));
+		frame.setSize(new Dimension(1100, 550));
 		frame.setAutoRequestFocus(false);
 		JOptionPane.showMessageDialog(frame, "To win this game, make your way past enemies and holes to get the item at the end." + "\n" 
 				+ "If you happen to die, you will have to restart your journey.", 
