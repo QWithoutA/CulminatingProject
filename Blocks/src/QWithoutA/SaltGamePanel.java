@@ -22,8 +22,11 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	ArrayList<Blocks> block = new ArrayList<Blocks>();
 	//an arraylist of the ground (can also make hills)
 	ArrayList<Ground> ground = new ArrayList<Ground>();
-	
+	//an arraylist of itemblocks
 	ArrayList<ItemBlock> iBlock = new ArrayList<ItemBlock>();
+	//an arraylist of movingplatforms
+	ArrayList<MovingPlatform> mPlat = new ArrayList<MovingPlatform>();
+
 	/**
 	 * The pause between repainting (should be set for about 30 frames per
 	 * second).
@@ -53,8 +56,13 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 		ground.add(new Ground(0, 525, 0, width, 0, height));
 		
 		iBlock.add(new ItemBlock(250, 300, 0, width, 0, height));
+		
 		block.add(new Blocks(150, 300, 0, width, 0, height));
 		block.add(new Blocks(350, 300, 0, width, 0, height));
+		
+		mPlat.add(new MovingPlatform(350, 200, 0, width, 0, height));
+		mPlat.get(0).setXSpeed(14-4);
+		
 
 		Thread gameThread = new Thread(this);
 		gameThread.start();
@@ -86,9 +94,15 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 			g.setColor(Color.BLACK);   
 			block.get(i).draw(g);
 			  }
+		
 		for (int i = 0; i < iBlock.size(); i++) {  
 			g.setColor(Color.MAGENTA);  
 			iBlock.get(i).draw(g);
+			  }
+		
+		for (int i = 0; i < mPlat.size(); i++) {  
+			g.setColor(Color.BLACK);  
+			mPlat.get(i).draw(g);
 			  }
 	}
 
