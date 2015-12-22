@@ -9,8 +9,6 @@ public class ItemBlock extends NormalBlock{
 	private int flashSpeed;
 	private boolean filledIn;
 
-	private int width = 35;
-	private int height = 35;
 	public ItemBlock(double x, double y, int left, int right, int top, int bottom) {
 		super(x, y, left + 10, right - 10, top + 10, bottom - 10);
 		
@@ -26,10 +24,10 @@ public class ItemBlock extends NormalBlock{
 		int drawY = (int) getY();
 		
 	
-		g.fillRect(drawX, drawY, width, height);
+		g.fillRect(drawX, drawY, getWidth(), getHeight());
 		if (!filledIn) {
 			g.setColor(Color.black);
-			g.fillRect(drawX, drawY, width, height);
+			g.fillRect(drawX, drawY, getWidth(), getHeight());
 		}
 	}
 
@@ -50,12 +48,4 @@ public class ItemBlock extends NormalBlock{
 		*/
 		
 	}
-	
-	public int getWidth(){
-		return width;
-	}
-	public int getHeight(){
-		return height;
-	}
-
 }

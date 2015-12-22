@@ -26,7 +26,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	//an arraylist of itemblocks
 	ArrayList<ItemBlock> iBlock = new ArrayList<ItemBlock>();
 	//an arraylist of movingplatforms 
-	ArrayList<MovingPlatform> mPlat = new ArrayList<MovingPlatform>();
+	ArrayList<Platform> mPlat = new ArrayList<Platform>();
 
 	/**
 	 * The pause between repainting (should be set for about 30 frames per
@@ -61,10 +61,10 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 		block.add(new NormalBlock(150, 300, 0, width, 0, height));
 		block.add(new NormalBlock(350, 300, 0, width, 0, height));
 		
-		mPlat.add(new MovingPlatform(200, 250, 0, width, 0, height));
+		mPlat.add(new Platform(200, 250, 0, width, 0, height));
 		mPlat.get(0).setXSpeed(14-7);
 		
-		mPlat.add(new MovingPlatform(800, 250, 0, width, 0, height));
+		mPlat.add(new Platform(800, 250, 0, width, 0, height));
 		mPlat.get(1).setYSpeed(14-10);
 		
 

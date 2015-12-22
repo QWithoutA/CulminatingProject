@@ -2,12 +2,12 @@ package QWithoutA;
 
 import java.awt.Graphics;
 
-public class MovingPlatform extends MovingObject{
+public class Platform extends MovingObject{
 
 	private int width = 100;
 	private int height = 5;
 	
-	public MovingPlatform(double x, double y, int left, int right, int top, int bottom) {
+	public Platform(double x, double y, int left, int right, int top, int bottom) {
 		super(x, y, left + 10, right - 10, top + 10, bottom - 10);
 		
 	}
