@@ -27,6 +27,7 @@ public class Player extends MovingObject{
 		
 	}
 
+	
 	/* (non-Javadoc)
 	 * @see QWithoutA.MovingObject#draw(java.awt.Graphics)
 	 */

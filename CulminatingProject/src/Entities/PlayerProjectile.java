@@ -16,11 +16,15 @@ import QWithoutA.SaltGamePanel;
  *	Dec 16, 2015
  */
 public class PlayerProjectile extends MovingObject {
-    
-    private static int radiusSetter = 5;
+
+	
+	public double gravityConstant = 1.0198, initialAcc = 1.98;
+	
+    private static int radiusSetter = 6;
 	private int radius;
 	private int counter;
 	private boolean isDecayed = false;
+	private boolean isBouncing = false;
 	
 	public PlayerProjectile(double x, double y, int left, int right, int top, int bottom) {
 		super(x, y, left + radiusSetter, right - radiusSetter, top + radiusSetter, bottom - radiusSetter);
@@ -45,21 +49,33 @@ public class PlayerProjectile extends MovingObject {
 		int drawY = (int) getY() - (radius);
 		
 		g.setColor(color);
-		g.drawOval(drawX ,drawY, getRadius()*2, getRadius()*2);
+		g.drawOval(drawX ,drawY, getRadius() * 2, getRadius() * 2);
 		g.setColor(Color.WHITE);
-		g.fillOval(drawX, drawY, radius * 2, radius * 2);
+		g.fillOval(drawX, drawY, getRadius() * 2, getRadius() * 2);
 	}
 
 	@Override
 	public void animateOneStep() {
 		// TODO Auto-generated method stub
 		counter++;
-			if(counter > 500){
-				
+			if(counter > 50){
+				isDecayed = true;
 			}
 	}
 	
 	public boolean isDecayed() {
-		return isDecayed = true;		
+		return isDecayed;		
+	}
+	public void setProjectileAcceleration(double x) {
+		initialAcc = x;
+	}
+	public double getProjectileAcceleration() {
+		return initialAcc;
+	}
+	public void setBouncing(boolean x) {
+		isBouncing = x;
+	}
+	public boolean getIsBouncing(){
+		return isBouncing;
 	}
 }
