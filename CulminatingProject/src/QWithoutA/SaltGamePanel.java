@@ -33,12 +33,12 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	 * second).
 	 */
 	final int pauseDuration = 50;
-	
+	int screenCount = 0; 
 
 	public static void main(String[] args) {
 
 		// Set up main window (using Swing's Jframe)
-		JFrame frame = new JFrame("SaltMan");
+		JFrame frame = new JFrame("The Adventures of Salt Man");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(new Dimension(1100, 550));
 		frame.setAutoRequestFocus(false);
@@ -53,26 +53,27 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	public SaltGamePanel(){
 		this.setPreferredSize(new Dimension(width, height));
 		this.setBackground(Color.CYAN);
-		
-		ground.add(new Ground(0, 525, 0, width, 0, height));
-		
-		iBlock.add(new ItemBlock(250, 300, 0, width, 0, height));
-		
-		block.add(new NormalBlock(150, 300, 0, width, 0, height));
-		block.add(new NormalBlock(350, 300, 0, width, 0, height));
-		
-		mPlat.add(new MovingPlatform(200, 250, 0, width, 0, height));
-		mPlat.get(0).setXSpeed(14-7);
-		
-		mPlat.add(new MovingPlatform(800, 250, 0, width, 0, height));
-		mPlat.get(1).setYSpeed(14-10);
-		
-
-		Thread gameThread = new Thread(this);
-		gameThread.start();
-		
 		setFocusable(true);
 		addKeyListener(this);
+		
+		if (screenCount == 0) {
+			ground.add(new Ground(0, 525, 0, width, 0, height));
+			
+			iBlock.add(new ItemBlock(250, 300, 0, width, 0, height));
+			
+			block.add(new NormalBlock(150, 300, 0, width, 0, height));
+			block.add(new NormalBlock(350, 300, 0, width, 0, height));
+			
+			mPlat.add(new MovingPlatform(200, 250, 0, width, 0, height));
+			mPlat.get(0).setXSpeed(14-7);
+			
+			mPlat.add(new MovingPlatform(800, 250, 0, width, 0, height));
+			mPlat.get(1).setYSpeed(14-10);
+
+			Thread gameThread = new Thread(this);
+			gameThread.start();
+			
+		}
 
 	}
 	
@@ -81,8 +82,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 			repaint();
 			checkCollision();
 			if(checkCollision()){
-				mPlat.get(0).setXSpeed(mPlat.get(0).getXspeed() *-1);
-				mPlat.get(1).setYSpeed(mPlat.get(1).getYspeed() *-1);
+				mPlat.get(0).setXSpeed(mPlat.get(0).getXSpeed() *-1);
+				mPlat.get(1).setYSpeed(mPlat.get(1).getYSpeed() *-1);
 			}
 			try {
 				Thread.sleep(pauseDuration);

@@ -31,5 +31,13 @@ public class Ground extends NormalBlock{
 	public int getHeight(){
 		return height;
 	}
+	
+	public void setWidth() {
+		this.width = width;
+	}
+	
+	public void setHeight() {
+		this.height = height;
+	}
 
 }
