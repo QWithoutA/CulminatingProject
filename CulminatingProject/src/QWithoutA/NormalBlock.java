@@ -1,13 +1,12 @@
 package QWithoutA;
 
 import java.awt.Graphics;
-//Ground class serves as bottom platform on which the player character will be by default; separate from ordinary blocks
 
-public class Ground extends NormalBlock{
+public class NormalBlock extends MovingObject{
 
-	private int width = 1150;
+	private int width = 35;
 	private int height = 35;
-	public Ground(double x, double y, int left, int right, int top, int bottom) {
+	public NormalBlock(double x, double y, int left, int right, int top, int bottom) {
 		super(x, y, left + 10, right - 10, top + 10, bottom - 10);
 		
 	}
@@ -31,5 +30,4 @@ public class Ground extends NormalBlock{
 	public int getHeight(){
 		return height;
 	}
-
 }

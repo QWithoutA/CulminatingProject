@@ -15,15 +15,19 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
+	
 	int width = 1100;
 	int height = 550;
 	
 	//an arraylist of blocks
-	ArrayList<Blocks> block = new ArrayList<Blocks>();
+	ArrayList<NormalBlock> block = new ArrayList<NormalBlock>();
 	//an arraylist of the ground (can also make hills)
 	ArrayList<Ground> ground = new ArrayList<Ground>();
-	
+	//an arraylist of itemblocks
 	ArrayList<ItemBlock> iBlock = new ArrayList<ItemBlock>();
+	//an arraylist of movingplatforms 
+	ArrayList<MovingPlatform> mPlat = new ArrayList<MovingPlatform>();
+
 	/**
 	 * The pause between repainting (should be set for about 30 frames per
 	 * second).
@@ -49,14 +53,21 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	public SaltGamePanel(){
 		this.setPreferredSize(new Dimension(width, height));
 		this.setBackground(Color.CYAN);
-		// adds ground arraylist
+		
 		ground.add(new Ground(0, 525, 0, width, 0, height));
-		// adds item block arraylist
+		
 		iBlock.add(new ItemBlock(250, 300, 0, width, 0, height));
-		// adds regular platform blocks
-		block.add(new Blocks(150, 300, 0, width, 0, height));
-		block.add(new Blocks(350, 300, 0, width, 0, height));
-		//begins game
+		
+		block.add(new NormalBlock(150, 300, 0, width, 0, height));
+		block.add(new NormalBlock(350, 300, 0, width, 0, height));
+		
+		mPlat.add(new MovingPlatform(200, 250, 0, width, 0, height));
+		mPlat.get(0).setXSpeed(14-7);
+		
+		mPlat.add(new MovingPlatform(800, 250, 0, width, 0, height));
+		mPlat.get(1).setYSpeed(14-10);
+		
+
 		Thread gameThread = new Thread(this);
 		gameThread.start();
 		
@@ -68,6 +79,11 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	public void run() {
 		while (true) {
 			repaint();
+			checkCollision();
+			if(checkCollision()){
+				mPlat.get(0).setXSpeed(mPlat.get(0).getXspeed() *-1);
+				mPlat.get(1).setYSpeed(mPlat.get(1).getYspeed() *-1);
+			}
 			try {
 				Thread.sleep(pauseDuration);
 			} catch (InterruptedException e) {
@@ -77,23 +93,36 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-			// paints initial ground of main menu/first screen
+			
 		for (int i = 0; i < ground.size(); i++) {
 			 g.setColor(Color.GREEN);   
 			ground.get(i).draw(g);
 			  }
-			// paints test platform blocks on main menu/first screen
+			
 		for (int i = 0; i < block.size(); i++) {
 			g.setColor(Color.BLACK);   
 			block.get(i).draw(g);
 			  }
-			// paints test item blocks on main menu/first screen
+		
 		for (int i = 0; i < iBlock.size(); i++) {  
 			g.setColor(Color.MAGENTA);  
 			iBlock.get(i).draw(g);
 			  }
+		
+		for (int i = 0; i < mPlat.size(); i++) {  
+			g.setColor(Color.BLACK);  
+			mPlat.get(i).draw(g);
+			  }
 	}
-
+	
+	// collision method to determine when a certain object (currently moving platform) impacts something (currently a set of coordinates) 
+	public boolean checkCollision(){
+	if(mPlat.get(0).getX() + mPlat.get(0).getWidth() > Math.abs(500) || mPlat.get(0).getX() < Math.abs(100)){
+		return true;
+		}
+	else 
+		return false;
+	}
 	
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
