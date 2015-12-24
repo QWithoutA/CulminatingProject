@@ -13,7 +13,7 @@ public class ItemBlock extends NormalBlock{
 		super(x, y, left + 10, right - 10, top + 10, bottom - 10);
 		
 		counter = 0;
-		flashSpeed = (int) (Math.random() * 5 + 5);
+		flashSpeed = (int) (10);
 		filledIn = true;
 	}
 
@@ -26,14 +26,14 @@ public class ItemBlock extends NormalBlock{
 	
 		g.fillRect(drawX, drawY, getWidth(), getHeight());
 		if (!filledIn) {
-			g.setColor(Color.black);
+			g.setColor(Color.CYAN);
 			g.fillRect(drawX, drawY, getWidth(), getHeight());
 		}
 	}
 
 	@Override
 	public void animateOneStep() {
-	/*	counter++;
+		counter++;
 		if (counter == flashSpeed) {
 			counter = 0;
 			if (filledIn)
@@ -45,7 +45,7 @@ public class ItemBlock extends NormalBlock{
 			setX(1100);
 			setY(550);
 		}
-		*/
+		
 		
 	}
 }
