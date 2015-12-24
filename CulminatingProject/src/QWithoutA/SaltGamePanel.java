@@ -22,7 +22,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	ArrayList<Blocks> block = new ArrayList<Blocks>();
 	//an arraylist of the ground (can also make hills)
 	ArrayList<Ground> ground = new ArrayList<Ground>();
-	
+	//an arraylist of item blocks
 	ArrayList<ItemBlock> iBlock = new ArrayList<ItemBlock>();
 	/**
 	 * The pause between repainting (should be set for about 30 frames per
