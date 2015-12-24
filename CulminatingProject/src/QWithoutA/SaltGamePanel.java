@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import Entities.Player;
 import Entities.PlayerProjectile;
 import Entities.SlugProjectile;
 
@@ -34,12 +35,13 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	ArrayList<Ground> ground = new ArrayList<Ground>();
 	//an arraylist of the item blocks
 	ArrayList<ItemBlock> iBlock = new ArrayList<ItemBlock>();
-	
 	/**
      * ArrayLists of player projectiles and ranged enemy projectiles
      */
     static ArrayList<PlayerProjectile> saltBalls = new ArrayList<PlayerProjectile>();
     static ArrayList<SlugProjectile> slimeBalls = new ArrayList<SlugProjectile>();
+    
+    Player[] player = new Player[1];
     
 	/**
 	 * The pause between repainting (should be set for about 30 frames per
@@ -51,6 +53,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 * Radiuses of each player projectile 
 	 */
     int playerProjectileRadius;
+    
+    private int speedCap = 10;
 
 	private int signX = -1;
 
@@ -59,6 +63,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	private int playerX;
 
 	private int playerY;
+	
+	private int playerProjectileDirection = 1;
 	/**
 	 * Which key was pressed last
 	 */
@@ -81,7 +87,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 				+ "If you happen to die, you will have to restart your journey.", 
 				"Welcome", JOptionPane.INFORMATION_MESSAGE);
 		frame.setVisible(true);
-		frame.setLocation(100, 50);
+		frame.setLocation(100, 100);
 		Container c = frame.getContentPane();
 		c.add(new SaltGamePanel());
 		frame.pack();
@@ -106,6 +112,9 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		// adds regular platform blocks
 		block.add(new Blocks(150, 300, 0, width, 0, height));
 		block.add(new Blocks(350, 300, 0, width, 0, height));
+		
+		player[0] = new Player(30, 400, 0, width, 0, height);
+		
 		//begins game
 		Thread gameThread = new Thread(this);
 		gameThread.start();
@@ -117,29 +126,76 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 			repaint();
 			try {
 				Thread.sleep(pauseDuration);
-				if(saltBalls.size() > 0){
-					if(isPlayerProjectileSpawned){
-						if(Character.toString(key).equalsIgnoreCase("a")){
-							signX = -1;
-						}
-						else if(Character.toString(key).equalsIgnoreCase("d")){
-							signX = 1;
-						}
-						saltBalls.get(saltBalls.size()-1).setColor(new Color((int) (16), (int)  (16), (int) (16)));
-						saltBalls.get(saltBalls.size()-1).setXSpeed(initialVelocity * signX);
-						if(saltBalls.get(saltBalls.size()-1).getYspeed() <= height - saltBalls.get(saltBalls.size()-1).getYspeed())
-							saltBalls.get(saltBalls.size()-1).setYSpeed((saltBalls.get(saltBalls.size()-1).getYspeed() + saltBalls.get(saltBalls.size()-1).getProjectileAcceleration()));
 
-						//					if((saltBalls.get(i).getY() <= height) || (saltBalls.get(i).getY() >= 0)){
-						//						saltBalls.get(i).setYSpeed(speedCap * -1);
-						//					}
+				if(Character.toString(key).equalsIgnoreCase("a")){
+					player[0].setXSpeed(-speedCap);
+				}
+				else if(Character.toString(key).equalsIgnoreCase("d")){
+					player[0].setXSpeed(speedCap);
+				}
+				else if(Character.toString(key).equalsIgnoreCase("w")){
+					player[0].setYSpeed(-speedCap);
+				}
+				else if(Character.toString(key).equalsIgnoreCase("s")){
+					player[0].setHeight(player[0].getHeight()/2);
+				}
+				player[0].setYSpeed((player[0].getYspeed() +  1.98)/ 1.0198);
+				if(player[0].getYspeed() < 0){
+					player[0].setYSpeed(0);
+				}
+				if(player[0].getY() > height){
+					player[0].setY((int) (player[0].getY() - height/2));
+				}
+				if(playerProjectileDirection == -1){
+					signX = -1;
+				}
+				else if(playerProjectileDirection == 1){
+					signX = 1;
+				}
+				if(saltBalls.size() > 0){
+						if(isPlayerProjectileSpawned){
+							saltBalls.get(saltBalls.size()-1).setColor(new Color((int) (16), (int)  (16), (int) (16)));
+							saltBalls.get(saltBalls.size()-1).setXSpeed(speedCap * signX);
+							saltBalls.get(saltBalls.size()-1).setYSpeed(speedCap);
+							isPlayerProjectileSpawned = false;
+						}
+						for(int i = 0; i<saltBalls.size(); i++){
+							if(saltBalls.get(i).getBouncing() && saltBalls.get(i).getYspeed() == 0){
+								saltBalls.get(i).setYSpeed(saltBalls.get(i).getYspeed());
+							}
+							else{
+								saltBalls.get(i).setYSpeed((saltBalls.get(i).getYspeed() + saltBalls.get(i).getProjectileAcceleration())
+										/ saltBalls.get(i).getGravityConstant());
+							}
+							if(saltBalls.get(i).getY() > height){
+								saltBalls.get(i).setY((int) saltBalls.get(i).getY() - 10);
+							}
+							if(saltBalls.get(i).getYspeed() > -1 && saltBalls.get(i).getYspeed() < 1){
+								saltBalls.get(i).setHasBounced(true);
+							}
+						}
+//					if((saltBalls.get(i).getY() <= height) || (saltBalls.get(i).getY() >= 0)){
+//						saltBalls.get(i).setYSpeed(speedCap * -1);
+//					}
+				}
+				if(slimeBalls.size() > 0){
+					for(int i = 0; i < slimeBalls.size(); i++){
+						slimeBalls.get(i).setXSpeed(speedCap * signX);
+						slimeBalls.get(i).setYSpeed(0);
 					}
 				}
+
 				deletePlayerProjectile();
+				deleteSlugProjectile();
 				System.out.println(saltBalls.size());
+//				for(int i = 0; i<slimeBalls.size(); i++){
+//					if(Math.sqrt(Math.pow(circle[j].getX()-circle[i].getX(),2) + Math.pow(circle[j].getY()-circle[i].getY(),2)) <= circle[i].getRadius() + slimeBalls.get(i).getRadius() + ){
+//
+//					}
+//				}
 			} catch (InterruptedException e) {
 				
-			}catch(ArrayIndexOutOfBoundsException e){
+			} catch(ArrayIndexOutOfBoundsException e) {
 				
 			}
 			
@@ -148,6 +204,9 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		g.drawString ("Number of salt balls: " + saltBalls.size(), 5, 20);
+		g.drawString ("Current Key: " + key, 5, 40);
+		g.drawString ("Current Direction: " + playerProjectileDirection, 5, 60);
 		// paints initial ground of main menu/first screen
 		for (int i = 0; i < ground.size(); i++) {
 			g.setColor(Color.GREEN);   
@@ -163,27 +222,50 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 			g.setColor(Color.MAGENTA);  
 			iBlock.get(i).draw(g);
 		}
-		//Draws the player projectiles
-		g.drawString ("number of salt balls: " + saltBalls.size(), 5, 20);
-		g.drawString ("Current Key: " + key, 5, 40);
+		//Draws the player's projectiles
+		
 		for (int i = 0; i < saltBalls.size(); i++) {
 			saltBalls.get(i).draw(g);
 		}
+		player[0].draw(g);
+		for (int i = 0; i < slimeBalls.size(); i++) {
+			slimeBalls.get(i).draw(g);
+		}
 	}
 
-	
+	/**
+	 * sets the x direction the player's projectile is traveling towards
+	 */
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		key = e.getKeyChar();
 		//limits the number of player projectiles that can spawn
-		if(saltBalls.size() < 2){
-			saltBalls.add(new PlayerProjectile(playerX, playerY, 0, width, 0, height));
-			isPlayerProjectileSpawned = true;
+		if(saltBalls.size() < 10){
+			if(Character.toString(key).equalsIgnoreCase("a")){
+				playerProjectileDirection = -1;
+			}
+			else if(Character.toString(key).equalsIgnoreCase("d")){
+				playerProjectileDirection = 1;
+			}
+			else if(Character.toString(key).equalsIgnoreCase(" ")){
+				if(playerProjectileDirection == 1){
+					saltBalls.add(new PlayerProjectile(player[0].getX() + player[0].getWidth(), player[0].getY() + player[0].getHeight()/2, 0, width, 0, height));
+				}
+				else if(playerProjectileDirection == -1){
+					saltBalls.add(new PlayerProjectile(player[0].getX(), player[0].getY() + player[0].getHeight()/2, 0, width, 0, height));
+				}
+				isPlayerProjectileSpawned = true;
+			}
+			//shoots slug projectiles
+			else if(Character.toString(key).equalsIgnoreCase("e")){
+				SlugProjectile.setDirection(playerProjectileDirection);
+				slimeBalls.add(new SlugProjectile(playerX, playerY, 0, width, 0, height));
+					
+			}
 		}
 		else{
 			isPlayerProjectileSpawned = false;
 		}
-		
 		
 		
 		
@@ -199,15 +281,18 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+		key = KeyEvent.CHAR_UNDEFINED;
+		player[0].setXSpeed(0);
 	}
 
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		key = e.getKeyChar();
+		
 	}
 	
-	@Override
+	/**
+	 * 
+	 */	
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		playerX = e.getX ();
@@ -247,19 +332,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 //			}
 
 	}
-	/**
-	 * Deletes the player projectile after a set amount of time 
-	 */
-	public static void deletePlayerProjectile(){
-		if(saltBalls.size() > 0){
-			for(int i = 0; i < saltBalls.size(); i++){
-				if(saltBalls.get(i).isDecayed()){
-					saltBalls.remove(i);
-				}
-			}
-		}
-	}
-//saltBalls.get(i).getX() > width || saltBalls.get(i).getX() < 0 || 
+	
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
 		// TODO Auto-generated method stub
@@ -271,6 +344,32 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		// TODO Auto-generated method stub
 		playerX = e.getX ();
 		playerY = e.getY ();
+	}
+	
+	/**
+	 * Deletes the player projectile after a set amount of bounces 
+	 */
+	public static void deletePlayerProjectile(){
+		if(saltBalls.size() > 0){
+			for(int i = 0; i < saltBalls.size(); i++){
+				if(saltBalls.get(i).isDecayed()){
+					saltBalls.remove(i);
+				}
+			}
+		}
+	}
+//saltBalls.get(i).getX() > width || saltBalls.get(i).getX() < 0 || 
+	/**
+	 * Deletes the enemy projectile after a set amount of time 
+	 */
+	public static void deleteSlugProjectile(){
+		if(slimeBalls.size() > 0){
+			for(int i = 0; i < slimeBalls.size(); i++){
+				if(slimeBalls.get(i).isDecayed()){
+					slimeBalls.remove(i);
+				}
+			}
+		}
 	}
 	
 	public void setKey(char x) {

@@ -17,14 +17,16 @@ import QWithoutA.SaltGamePanel;
  */
 public class PlayerProjectile extends MovingObject {
 
-	
-	public double gravityConstant = 1.0198, initialAcc = 1.98;
+	//
+	public double constantOfGravity = 1.0198, initialAcceleration = 1.98;
 	
     private static int radiusSetter = 6;
 	private int radius;
 	private int counter;
 	private boolean isDecayed = false;
 	private boolean isBouncing = false;
+
+	private boolean Bounced = false;
 	
 	public PlayerProjectile(double x, double y, int left, int right, int top, int bottom) {
 		super(x, y, left + radiusSetter, right - radiusSetter, top + radiusSetter, bottom - radiusSetter);
@@ -48,34 +50,50 @@ public class PlayerProjectile extends MovingObject {
 		int drawX = (int) getX() - (radius);
 		int drawY = (int) getY() - (radius);
 		
-		g.setColor(color);
-		g.drawOval(drawX ,drawY, getRadius() * 2, getRadius() * 2);
 		g.setColor(Color.WHITE);
 		g.fillOval(drawX, drawY, getRadius() * 2, getRadius() * 2);
+		g.setColor(color);
+		g.drawOval(drawX ,drawY, getRadius() * 2, getRadius() * 2);
+		
 	}
 
 	@Override
 	public void animateOneStep() {
 		// TODO Auto-generated method stub
-		counter++;
-			if(counter > 50){
-				isDecayed = true;
-			}
+		if(Bounced){
+			counter++;
+			Bounced = false;
+		}
+		if(counter > 4){
+			isDecayed = true;
+		}
 	}
 	
 	public boolean isDecayed() {
 		return isDecayed;		
 	}
 	public void setProjectileAcceleration(double x) {
-		initialAcc = x;
+		initialAcceleration = x;
 	}
 	public double getProjectileAcceleration() {
-		return initialAcc;
+		return initialAcceleration;
+	}
+	public void setGravityConstant(double x) {
+		constantOfGravity = x;
+	}
+	public double getGravityConstant() {
+		return constantOfGravity;
 	}
 	public void setBouncing(boolean x) {
 		isBouncing = x;
 	}
-	public boolean getIsBouncing(){
+	public boolean getBouncing(){
 		return isBouncing;
+	}
+	public void setHasBounced(boolean x) {
+		Bounced = x;
+	}
+	public boolean getHasBounced(){
+		return Bounced;
 	}
 }
