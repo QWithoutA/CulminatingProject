@@ -20,13 +20,15 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	int height = 550;
 	
 	//an arraylist of blocks
-	ArrayList<NormalBlock> block = new ArrayList<NormalBlock>();
+	ArrayList<FallingBlock> block = new ArrayList<FallingBlock>();
 	//an arraylist of the ground (can also make hills)
 	ArrayList<Ground> ground = new ArrayList<Ground>();
 	//an arraylist of itemblocks
 	ArrayList<ItemBlock> iBlock = new ArrayList<ItemBlock>();
 	//an arraylist of movingplatforms 
 	ArrayList<Platform> mPlat = new ArrayList<Platform>();
+	//an array of falling blocks
+	ArrayList<FallingBlock> fBlock = new ArrayList<FallingBlock>();
 
 	/**
 	 * The pause between repainting (should be set for about 30 frames per
@@ -58,14 +60,16 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 		
 		iBlock.add(new ItemBlock(250, 300, 0, width, 0, height));
 		
-		block.add(new NormalBlock(150, 300, 0, width, 0, height));
-		block.add(new NormalBlock(350, 300, 0, width, 0, height));
+		block.add(new FallingBlock(150, 300, 0, width, 0, height));
+		block.add(new FallingBlock(350, 300, 0, width, 0, height));
 		
 		mPlat.add(new Platform(200, 250, 0, width, 0, height));
 		mPlat.get(0).setXSpeed(14-7);
 		
 		mPlat.add(new Platform(800, 250, 0, width, 0, height));
 		mPlat.get(1).setYSpeed(14-10);
+		
+		fBlock.add(new FallingBlock(500, 250, 0, width, 0, height));
 		
 
 		Thread gameThread = new Thread(this);
@@ -113,6 +117,12 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 			g.setColor(Color.BLACK);  
 			mPlat.get(i).draw(g);
 			  }
+		
+		
+		for (int i = 0; i < fBlock.size(); i++) {  
+			g.setColor(Color.RED);  
+			fBlock.get(i).draw(g);
+			  }
 	}
 	
 	public boolean cheackCollision(){
@@ -121,6 +131,13 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 		}
 	else 
 		return false;
+	
+	if(){
+		return true;
+	}
+	else 
+		return false;
+	
 	}
 	
 	public void keyPressed(KeyEvent arg0) {
