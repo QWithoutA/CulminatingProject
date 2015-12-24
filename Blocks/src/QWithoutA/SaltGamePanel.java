@@ -132,11 +132,13 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	else 
 		return false;
 	
-	if(){
+	/*
+	 	if(){
 		return true;
 	}
 	else 
 		return false;
+		*/
 	
 	}
 	
