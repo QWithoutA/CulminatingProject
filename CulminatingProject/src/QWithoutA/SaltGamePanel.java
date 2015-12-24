@@ -20,7 +20,11 @@ import Entities.Player;
 import Entities.PlayerProjectile;
 import Entities.SlugProjectile;
 
-
+/**
+ * 
+ * @author David
+ *
+ */
 @SuppressWarnings("serial")
 public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, MouseMotionListener, KeyListener {
 	/**
