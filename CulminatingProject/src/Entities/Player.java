@@ -3,6 +3,7 @@
  */
 package Entities;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import QWithoutA.MovingObject;
@@ -14,6 +15,15 @@ import QWithoutA.MovingObject;
 public class Player extends MovingObject{
 
 	/**
+	 * Hitbox for the player model
+	 */
+	private int width;
+	final public int  initialHeight = 70;
+	private int height;
+	
+	private boolean isDown = false;
+	
+	/**
 	 * @param x
 	 * @param y
 	 * @param left
@@ -24,16 +34,24 @@ public class Player extends MovingObject{
 	public Player(double x, double y, int left, int right, int top, int bottom) {
 		super(x, y, left, right, top, bottom);
 		// TODO Auto-generated constructor stub
+		setHeight(initialHeight);
+		setWidth(35);
 		
 	}
 
+	
 	/* (non-Javadoc)
 	 * @see QWithoutA.MovingObject#draw(java.awt.Graphics)
 	 */
 	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
-
+		int drawX = (int) getX();
+		int drawY = (int) getY();
+		g.setColor(Color.YELLOW);
+		g.fillRect(drawX ,drawY, width, height);
+		g.setColor(Color.BLACK);
+		g.drawRect(drawX ,drawY, width, height);
 	}
 
 	/* (non-Javadoc)
@@ -44,5 +62,24 @@ public class Player extends MovingObject{
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	public void setHeight(int x) {
+		// TODO Auto-generated method stub
+		height = x;
+	}
+	
+	public int getHeight() {
+		// TODO Auto-generated method stub
+		return this.height;
+	}
+	
+	public void setWidth(int x) {
+		// TODO Auto-generated method stub
+		width = x;
+	}
+	
+	public int getWidth() {
+		// TODO Auto-generated method stub
+		return this.width;
+	}
 }
