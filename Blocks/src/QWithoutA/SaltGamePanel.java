@@ -20,7 +20,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	int height = 550;
 	
 	//an arraylist of blocks
-	ArrayList<FallingBlock> block = new ArrayList<FallingBlock>();
+	ArrayList<NormalBlock> block = new ArrayList<NormalBlock>();
 	//an arraylist of the ground (can also make hills)
 	ArrayList<Ground> ground = new ArrayList<Ground>();
 	//an arraylist of itemblocks
@@ -60,8 +60,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 		
 		iBlock.add(new ItemBlock(250, 300, 0, width, 0, height));
 		
-		block.add(new FallingBlock(150, 300, 0, width, 0, height));
-		block.add(new FallingBlock(350, 300, 0, width, 0, height));
+		block.add(new NormalBlock(150, 300, 0, width, 0, height));
+		block.add (new NormalBlock(350, 300, 0, width, 0, height));
 		
 		mPlat.add(new Platform(200, 250, 0, width, 0, height));
 		mPlat.get(0).setXSpeed(14-7);
