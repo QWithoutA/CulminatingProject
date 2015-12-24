@@ -1,7 +1,7 @@
 package QWithoutA;
 
-import java.awt.Graphics;
 
+import java.awt.Graphics;
 import QWithoutA.MovingObject;
 
 /**
