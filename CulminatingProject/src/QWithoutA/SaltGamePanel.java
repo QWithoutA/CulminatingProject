@@ -29,7 +29,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	static int width = 1100;
 	static int height = 550;
 	
-	//an arraylist of blocks
+	//an arraylist of the blocks
 	ArrayList<Blocks> block = new ArrayList<Blocks>();
 	//an arraylist of the ground (can also make hills)
 	ArrayList<Ground> ground = new ArrayList<Ground>();
@@ -182,12 +182,13 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 					for(int i = 0; i < slimeBalls.size(); i++){
 						slimeBalls.get(i).setXSpeed(speedCap * signX);
 						slimeBalls.get(i).setYSpeed(0);
+						System.out.println(speedCap * signX);
 					}
 				}
 
 				deletePlayerProjectile();
 				deleteSlugProjectile();
-				System.out.println(saltBalls.size());
+				
 //				for(int i = 0; i<slimeBalls.size(); i++){
 //					if(Math.sqrt(Math.pow(circle[j].getX()-circle[i].getX(),2) + Math.pow(circle[j].getY()-circle[i].getY(),2)) <= circle[i].getRadius() + slimeBalls.get(i).getRadius() + ){
 //

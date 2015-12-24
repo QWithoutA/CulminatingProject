@@ -24,9 +24,6 @@ public class SlugProjectile extends MovingObject {
 	private static int direction;
 	private boolean isDecayed;
 	
-	int drawX;
-	int drawY;
-	
 	int[] xCoords = new int[3];
 	int[] yCoords = new int[3];
 	
@@ -42,16 +39,10 @@ public class SlugProjectile extends MovingObject {
 		super(x, y, left + radiusSetter, right - radiusSetter, top + radiusSetter, bottom - radiusSetter);
 		// TODO Auto-generated constructor stub
 		this.setRadius(radiusSetter);
-		drawX = (int) getX() - (radius);
-		drawY = (int) getY() - (radius);
+		x = (int) getX() - (radius);
+		y = (int) getY() - (radius);
 		
-		 xCoords[0] = drawX + radius;
-		 xCoords[1] = drawX + radius;
-		 xCoords[2] = drawX + radius + triangleTip * direction;
-		 
-		 yCoords[0] = drawY;
-		 yCoords[1] = drawY + (radius*2);
-		 yCoords[2] = drawY + radius;
+		
 	}
 
 	/* (non-Javadoc)
@@ -60,9 +51,15 @@ public class SlugProjectile extends MovingObject {
 	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
-		
+		 xCoords[0] = (int) (getX() + radius);
+		 xCoords[1] = (int) (getX() + radius);
+		 xCoords[2] = (int) (getX() + radius + triangleTip * direction);
+		 
+		 yCoords[0] = (int) getY();
+		 yCoords[1] = (int) (getY() + (radius*2));
+		 yCoords[2] = (int) (getY() + radius);
 		g.setColor(new Color((int) (16), (int)  (255), (int) (16)));
-		g.fillOval(drawX, drawY, getRadius() * 2, getRadius() * 2);
+		g.fillOval((int) getX(), (int) getY(), getRadius() * 2, getRadius() * 2);
 		g.fillPolygon(xCoords, yCoords, triangleSides);
 		
 //		g.setColor(color);
