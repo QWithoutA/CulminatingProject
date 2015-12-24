@@ -133,7 +133,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 		return false;
 	
 	/*
-	 	if(){
+	 	if( if player comes in contact with block then block falls.){
 		return true;
 	}
 	else 
