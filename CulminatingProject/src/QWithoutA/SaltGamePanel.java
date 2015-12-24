@@ -137,13 +137,19 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 				else if(Character.toString(key).equalsIgnoreCase("d")){
 					player[0].setXSpeed(speedCap);
 				}
-				else if(Character.toString(key).equalsIgnoreCase("w")){
+				
+				if(Character.toString(key).equalsIgnoreCase("w")){
 					player[0].setYSpeed(-speedCap);
 				}
 				else if(Character.toString(key).equalsIgnoreCase("s")){
-					player[0].setHeight(player[0].getHeight()/2);
+					player[0].setHeight(player[0].initialHeight/2);
 				}
+				else{
+					player[0].setHeight(player[0].initialHeight);
+				}
+				
 				player[0].setYSpeed((player[0].getYspeed() +  1.98)/ 1.0198);
+				
 				if(player[0].getYspeed() < 0){
 					player[0].setYSpeed(0);
 				}

@@ -17,8 +17,11 @@ public class Player extends MovingObject{
 	/**
 	 * Hitbox for the player model
 	 */
-	private int width = 35;
-	private int height = 70;
+	private int width;
+	final public int  initialHeight = 70;
+	private int height;
+	
+	private boolean isDown = false;
 	
 	/**
 	 * @param x
@@ -31,7 +34,7 @@ public class Player extends MovingObject{
 	public Player(double x, double y, int left, int right, int top, int bottom) {
 		super(x, y, left, right, top, bottom);
 		// TODO Auto-generated constructor stub
-		setHeight(70);
+		setHeight(initialHeight);
 		setWidth(35);
 		
 	}
