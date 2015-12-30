@@ -39,6 +39,13 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	ArrayList<Ground> ground = new ArrayList<Ground>();
 	//an arraylist of the item blocks
 	ArrayList<ItemBlock> iBlock = new ArrayList<ItemBlock>();
+	//an arraylist of movingplatforms 
+	ArrayList<Platform> mPlat = new ArrayList<Platform>();
+	//an array of falling blocks
+	ArrayList<FallingBlock> fBlock = new ArrayList<FallingBlock>();
+
+
+	
 	/**
      * ArrayLists of player projectiles and ranged enemy projectiles
      */
@@ -116,7 +123,14 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		// adds regular platform blocks
 		block.add(new Blocks(150, 300, 0, width, 0, height));
 		block.add(new Blocks(350, 300, 0, width, 0, height));
-		
+		//ads a platform that moves on the x axis
+		mPlat.add(new Platform(200, 250, 0, width, 0, height));
+		mPlat.get(0).setXSpeed(14-7);
+		//adds a platform that moves on the y axis
+		mPlat.add(new Platform(800, 250, 0, width, 0, height));
+		mPlat.get(1).setYSpeed(14-10);
+		//adss a block that falls 
+		fBlock.add(new FallingBlock(500, 250, 0, width, 0, height));
 		player[0] = new Player(30, 400, 0, width, 0, height);
 		
 		//begins game
@@ -128,6 +142,12 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	public void run() {
 		while (true) {
 			repaint();
+			checkCollision();
+			if(checkCollision()){
+				mPlat.get(0).setXSpeed(mPlat.get(0).getXspeed() *-1);
+				mPlat.get(1).setYSpeed(mPlat.get(1).getYspeed() *-1);
+			}
+
 			try {
 				Thread.sleep(pauseDuration);
 
@@ -233,6 +253,15 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 			g.setColor(Color.MAGENTA);  
 			iBlock.get(i).draw(g);
 		}
+		
+		for (int i = 0; i < mPlat.size(); i++) {  
+			g.setColor(Color.BLACK);  
+			mPlat.get(i).draw(g);
+			  }
+		for (int i = 0; i < fBlock.size(); i++) {  
+			g.setColor(Color.RED);  
+			fBlock.get(i).draw(g);
+			  }
 		//Draws the player's projectiles
 		
 		for (int i = 0; i < saltBalls.size(); i++) {
@@ -243,6 +272,24 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 			slimeBalls.get(i).draw(g);
 		}
 	}
+	
+	public boolean checkCollision(){
+		if(mPlat.get(0).getX() + mPlat.get(0).getWidth() > Math.abs(500) || mPlat.get(0).getX() < Math.abs(100)){
+			return true;
+			}
+		else 
+			return false;
+		
+		/*
+		 	if( if player comes in contact with block then block falls.){
+			return true;
+		}
+		else 
+			return false;
+			*/
+		
+		}
+
 
 	/**
 	 * sets the x direction the player's projectile is traveling towards

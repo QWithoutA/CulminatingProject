@@ -24,5 +24,12 @@ public class Ground extends Blocks{
 		// TODO Auto-generated method stub
 		
 	}
+	public int getWidth(){
+		return width;
+	}
+	public int getHeight(){
+		return height;
+	}
+
 
 }
