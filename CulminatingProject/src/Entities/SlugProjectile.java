@@ -104,7 +104,7 @@ public class SlugProjectile extends MovingObject {
 		this.isDecayed = isDecayed;
 	}
 
-	public static void setDirection(int x){
+	public void setDirection(int x){
 		direction = x;
 	}
 }

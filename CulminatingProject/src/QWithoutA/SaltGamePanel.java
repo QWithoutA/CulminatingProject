@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 
 import Entities.Player;
 import Entities.PlayerProjectile;
+import Entities.Slug;
 import Entities.SlugProjectile;
 
 /**
@@ -44,44 +45,72 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	//an array of falling blocks
 	ArrayList<FallingBlock> fBlock = new ArrayList<FallingBlock>();
 
-
-	
 	/**
-     * ArrayLists of player projectiles and ranged enemy projectiles
+     * ArrayLists of player projectiles
      */
     static ArrayList<PlayerProjectile> saltBalls = new ArrayList<PlayerProjectile>();
+    /**
+     * ArrayLists of ranged-enemy projectiles
+     */
     static ArrayList<SlugProjectile> slimeBalls = new ArrayList<SlugProjectile>();
-    
+    /**
+     * Player entity
+     */
     Player[] player = new Player[1];
+    /**
+     * Ranged-enemies commonly known as 'slugs'
+     */
+    static ArrayList<Slug> slugs = new ArrayList<Slug>();
     
 	/**
-	 * The pause between repainting (should be set for about 30 frames per
-	 * second).
+	 * The pause between repainting (should be set for about 30 frames per second).
 	 */
 	final int pauseDuration = 50;
 	
 	/**
 	 * Radiuses of each player projectile 
 	 */
-    int playerProjectileRadius;
-    
+    private int playerProjectileRadius = PlayerProjectile.getRadius();
+    /**
+	 * Speed of each projectile 
+	 */
     private int speedCap = 10;
-
+    /**
+	 * Movement speed of each slug 
+	 */
+    private final int slugSpeed = 5;
+    /**
+	 * Variable value for inversing the horizontal speed 
+	 */
 	private int signX = -1;
-
+	/**
+	 * Variable value for inversing the vertical speed 
+	 */
 	private int signY = 1;
-
+	/**
+	 * X co-ordinate of the player entity 
+	 */
 	private int playerX;
-
+	/**
+	 * Y co-ordinate of the player entity 
+	 */
 	private int playerY;
-	
+	/**
+	 * Variable value for inversing the player projectile speed 
+	 */
 	private int playerProjectileDirection = 1;
+	/**
+	 * Variable value for inversing the slug projectile speed 
+	 */
+	private int slugDirection = 1;
 	/**
 	 * Which key was pressed last
 	 */
 	char key = ' ';
 	
 	public boolean isPlayerProjectileSpawned = false;
+	public boolean isSlugProjectileSpawned = false;
+	
 	private final double playerProjectileMaxHeight = 20;
 	private final double playerProjectileAcceleration = 9.8;
 	
@@ -133,6 +162,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		fBlock.add(new FallingBlock(500, 250, 0, width, 0, height));
 		player[0] = new Player(30, 400, 0, width, 0, height);
 		
+		slugs.add(new Slug(100, 400, 0, width, 0, height));
+		slugs.get(0).setXSpeed(slugSpeed);
 		//begins game
 		Thread gameThread = new Thread(this);
 		gameThread.start();
@@ -142,8 +173,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	public void run() {
 		while (true) {
 			repaint();
-			checkCollision();
-			if(checkCollision()){
+			checkPlatformCollision();
+			if(checkPlatformCollision()){
 				mPlat.get(0).setXSpeed(mPlat.get(0).getXspeed() *-1);
 				mPlat.get(1).setYSpeed(mPlat.get(1).getYspeed() *-1);
 			}
@@ -158,11 +189,21 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 					player[0].setXSpeed(speedCap);
 				}
 				
-				if(Character.toString(key).equalsIgnoreCase("w")){
+				if(Character.toString(key).equalsIgnoreCase("w") && player[0].getYspeed() == 0 && checkPlayerCollision()){
 					player[0].setYSpeed(-speedCap);
 				}
 				else if(Character.toString(key).equalsIgnoreCase("s")){
+					if(!player[0].isCrouching()){
+						player[0].setY((int) (player[0].getY() + player[0].initialHeight/2));
+						player[0].setCrouching(true);
+					}
 					player[0].setHeight(player[0].initialHeight/2);
+				}
+				if(!Character.toString(key).equalsIgnoreCase("s")){
+					if(player[0].isCrouching()){
+						player[0].setCrouching(false);
+						player[0].setY((int) (player[0].getY() - player[0].initialHeight/2));
+					}
 				}
 				else{
 					player[0].setHeight(player[0].initialHeight);
@@ -204,18 +245,36 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 								saltBalls.get(i).setHasBounced(true);
 							}
 						}
-//					if((saltBalls.get(i).getY() <= height) || (saltBalls.get(i).getY() >= 0)){
-//						saltBalls.get(i).setYSpeed(speedCap * -1);
+				}
+				if(slugs.size() > 0){
+					for(int i = 0; i < slugs.size(); i++){
+						if(slugs.get(i).isShooting()){
+							isSlugProjectileSpawned = true;
+							slimeBalls.get(slimeBalls.size() - 1).setDirection(slugDirection);
+							if(slugs.get(i).getXspeed() > 0){
+								slugDirection = 1;
+								slimeBalls.add(new SlugProjectile(slugs.get(i).getX() + slugs.get(i).getWidth() ,slugs.get(i).getY() + slugs.get(i).getHeight()/2, 0, width, 0, height));							
+							}
+							else if(slugs.get(i).getXspeed() < 0){
+								slugDirection = -1;
+								slimeBalls.add(new SlugProjectile(slugs.get(i).getX(),slugs.get(i).getY() + slugs.get(i).getHeight()/2, 0, width, 0, height));
+							}
+							slimeBalls.get(slimeBalls.size()-1).setXSpeed(slugs.get(slimeBalls.size()-1).getXspeed() * slugDirection);
+							slugs.get(i).setShooting(false);
+						}
+						if(slugs.get(i).hitBoundry()){
+							slugs.get(i).setXSpeed(slugs.get(i).getXspeed() * -1);
+							slugs.get(i).movingToBoundry(false);
+						}
+					}
+//
+//					if(slimeBalls.size() > 0){
+//						for(int i = 0; i < slimeBalls.size(); i++){
+//							slimeBalls.get(i).setXSpeed(speedCap * signX);
+//							slimeBalls.get(i).setYSpeed(0);
+//						}
 //					}
 				}
-				if(slimeBalls.size() > 0){
-					for(int i = 0; i < slimeBalls.size(); i++){
-						slimeBalls.get(i).setXSpeed(speedCap * signX);
-						slimeBalls.get(i).setYSpeed(0);
-						System.out.println(speedCap * signX);
-					}
-				}
-
 				deletePlayerProjectile();
 				deleteSlugProjectile();
 				
@@ -262,24 +321,42 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 			g.setColor(Color.RED);  
 			fBlock.get(i).draw(g);
 			  }
-		//Draws the player's projectiles
 		
+		//Draws the player's projectiles
 		for (int i = 0; i < saltBalls.size(); i++) {
 			saltBalls.get(i).draw(g);
 		}
 		player[0].draw(g);
+		for (int i = 0; i < slugs.size(); i++) {
+			slugs.get(i).draw(g);
+		}
 		for (int i = 0; i < slimeBalls.size(); i++) {
 			slimeBalls.get(i).draw(g);
 		}
 	}
 	
-	public boolean checkCollision(){
-		if(mPlat.get(0).getX() + mPlat.get(0).getWidth() > Math.abs(500) || mPlat.get(0).getX() < Math.abs(100)){
-			return true;
+	public boolean checkPlatformCollision(){
+		for (int i = 0; i < ground.size(); i++){
+			if(mPlat.get(i).getX() + mPlat.get(i).getWidth() > 500 || mPlat.get(i).getX() < 100){
+				return true;
+			}	
+		}
+		return false;
+	}
+	public boolean checkPlayerCollision(){
+		for (int i = 0; i < ground.size(); i++){
+			for(int j = 0; j < mPlat.get(i).getWidth(); j++){
+				for(int k = 0; k < player[0].getWidth(); k++){
+				if(player[0].getY() == mPlat.get(i).getY() && player[0].getY() == mPlat.get(i).getX()){
+					return true;
+				}
+				else if(player[0].getY() == mPlat.get(i).getY()){
+					return true;
+				}
+				}
 			}
-		else 
-			return false;
-		
+		}
+		return false;
 		/*
 		 	if( if player comes in contact with block then block falls.){
 			return true;
@@ -289,8 +366,6 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 			*/
 		
 		}
-
-
 	/**
 	 * sets the x direction the player's projectile is traveling towards
 	 */
@@ -315,11 +390,10 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 				isPlayerProjectileSpawned = true;
 			}
 			//shoots slug projectiles
-			else if(Character.toString(key).equalsIgnoreCase("e")){
-				SlugProjectile.setDirection(playerProjectileDirection);
-				slimeBalls.add(new SlugProjectile(playerX, playerY, 0, width, 0, height));
-					
-			}
+//			else if(Character.toString(key).equalsIgnoreCase("e")){
+//				SlugProjectile.setDirection(playerProjectileDirection);
+//				slimeBalls.add(new SlugProjectile(playerX, playerY, 0, width, 0, height));
+//			}
 		}
 		else{
 			isPlayerProjectileSpawned = false;
@@ -429,7 +503,6 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 			}
 		}
 	}
-	
 	public void setKey(char x) {
 		key = x;
 	}

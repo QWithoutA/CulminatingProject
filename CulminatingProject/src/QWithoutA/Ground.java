@@ -7,7 +7,7 @@ public class Ground extends Blocks{
 	private int width = 1150;
 	private int height = 35;
 	public Ground(double x, double y, int left, int right, int top, int bottom) {
-		super(x, y, left + 10, right - 10, top + 10, bottom - 10);
+		super(x, y, left, right, top, bottom);
 		
 	}
 

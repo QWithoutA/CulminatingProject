@@ -21,7 +21,7 @@ public class Player extends MovingObject{
 	final public int  initialHeight = 70;
 	private int height;
 	
-	private boolean isDown = false;
+	private boolean isDown;
 	
 	/**
 	 * @param x
@@ -36,7 +36,7 @@ public class Player extends MovingObject{
 		// TODO Auto-generated constructor stub
 		setHeight(initialHeight);
 		setWidth(35);
-		
+		isDown = false;
 	}
 
 	
@@ -81,5 +81,13 @@ public class Player extends MovingObject{
 	public int getWidth() {
 		// TODO Auto-generated method stub
 		return this.width;
+	}
+	
+	public void setCrouching(boolean x){
+		isDown = x;	
+	}
+	
+	public boolean isCrouching(){
+		return isDown;
 	}
 }
