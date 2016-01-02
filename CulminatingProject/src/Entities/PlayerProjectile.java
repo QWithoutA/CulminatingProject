@@ -13,7 +13,7 @@ import QWithoutA.SaltGamePanel;
  * 
  * 
  * @author Glen Su 
- *	Dec 16, 2015
+ *	Jan 01, 2015
  */
 public class PlayerProjectile extends MovingObject {
 
@@ -22,7 +22,7 @@ public class PlayerProjectile extends MovingObject {
 	
     private static int radiusSetter = 6;
 	private static int radius;
-	private int counter;
+	private static int counter;
 	private boolean isDecayed = false;
 	private boolean isBouncing = false;
 

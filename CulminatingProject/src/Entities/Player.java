@@ -9,8 +9,10 @@ import java.awt.Graphics;
 import QWithoutA.MovingObject;
 
 /**
+ * 
+ * 
  * @author Glen Su
- *	Dec 20, 2015
+ *	Jan 01, 2015
  */
 public class Player extends MovingObject{
 
@@ -18,7 +20,7 @@ public class Player extends MovingObject{
 	 * Hitbox for the player model
 	 */
 	private int width;
-	final public int  initialHeight = 70;
+	final public static int  initialHeight = 70;
 	private int height;
 	
 	private boolean isDown;
@@ -49,9 +51,10 @@ public class Player extends MovingObject{
 		int drawX = (int) getX();
 		int drawY = (int) getY();
 		g.setColor(Color.YELLOW);
-		g.fillRect(drawX ,drawY, width, height);
+		g.fillRect(drawX ,drawY, this.width, this.height);
 		g.setColor(Color.BLACK);
-		g.drawRect(drawX ,drawY, width, height);
+		g.drawRect(drawX ,drawY, this.width, this.height);
+		
 	}
 
 	/* (non-Javadoc)
@@ -65,7 +68,7 @@ public class Player extends MovingObject{
 	
 	public void setHeight(int x) {
 		// TODO Auto-generated method stub
-		height = x;
+		this.height = x;
 	}
 	
 	public int getHeight() {
@@ -75,7 +78,7 @@ public class Player extends MovingObject{
 	
 	public void setWidth(int x) {
 		// TODO Auto-generated method stub
-		width = x;
+		this.width = x;
 	}
 	
 	public int getWidth() {

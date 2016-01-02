@@ -12,7 +12,7 @@ import QWithoutA.MovingObject;
  * 
  * 
  * @author Glen Su
- *	Dec 16, 2015
+ *	Jan 01, 2015
  */
 public class SlugProjectile extends MovingObject {
 
@@ -20,7 +20,7 @@ public class SlugProjectile extends MovingObject {
 	private int radius;
 	private static int triangleTip = -15;
 	private int triangleSides = 3;
-	private int counter = 0;
+	private static int counter = 0;
 	private static int direction;
 	private boolean isDecayed;
 	
@@ -41,7 +41,7 @@ public class SlugProjectile extends MovingObject {
 		this.setRadius(radiusSetter);
 		x = (int) getX() - (radius);
 		y = (int) getY() - (radius);
-		
+		isDecayed = false;
 		
 	}
 
