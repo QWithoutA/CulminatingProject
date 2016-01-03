@@ -114,6 +114,24 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 			gameThread.start();
 			
 		}
+		else if (screenCount == 1) {
+			ground.add(new Ground(0, 525, 0, width-500, 0, height));
+			
+			iBlock.add(new ItemBlock(250, 300, 0, width, 0, height));
+			
+			block.add(new NormalBlock(150, 300, 0, width, 0, height));
+			block.add(new NormalBlock(350, 300, 0, width, 0, height));
+			
+			fallBlock.add(new FallingBlock(500, 400, 0, width, 0, height));
+			
+			mPlat.add(new MovingPlatform(200, 250, 0, width, 0, height));
+			mPlat.get(0).setXSpeed(14-7);
+			
+			mPlat.add(new MovingPlatform(800, 250, 0, width, 0, height));
+			mPlat.get(1).setYSpeed(14-10);
+			
+			player.add(new Player(30, 400, 0, width, 0, height));
+		}
 
 	}
 	
@@ -124,11 +142,13 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 			if(checkCollision()){
 				mPlat.get(0).setXSpeed(mPlat.get(0).getXSpeed() *-1);
 				mPlat.get(1).setYSpeed(mPlat.get(1).getYSpeed() *-1);
-				for (double fall = fallBlock.get(0).getY(); fall <= height; fall--) {
-					fallBlock.get(0).setY(fall); 
+			}
+			if (checkFallBlockCollision()) {
+				for (double fall = fallBlock.get(0).getY(); fall <= height; fall++) {
+					fallBlock.get(0).setY(fallBlock.get(0).getY()-10); 
 				}
 			}
-			
+
 			try {
 				Thread.sleep(pauseDuration);
 
@@ -213,47 +233,80 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 		g.drawString ("Current Key: " + key, 5, 40);
 		g.drawString ("Current Direction: " + playerProjectileDirection, 5, 60);
 		// paints initial ground of main menu/first screen
-		for (int i = 0; i < ground.size(); i++) {
-			g.setColor(Color.GREEN);   
-			ground.get(i).draw(g);
+		if (screenCount == 0) {
+			for (int i = 0; i < ground.size(); i++) {
+				g.setColor(Color.GREEN);   
+				ground.get(i).draw(g);
+			}
+			// paints test platform blocks on main menu/first screen
+			for (int i = 0; i < block.size(); i++) {
+				g.setColor(Color.BLACK);   
+				block.get(i).draw(g);
+			}
+			// paints test item blocks on main menu/first screen
+			for (int i = 0; i < iBlock.size(); i++) {  
+				g.setColor(Color.MAGENTA);  
+				iBlock.get(i).draw(g);
+			}
+			
+			for (int i = 0; i < mPlat.size(); i++) {  
+				g.setColor(Color.BLACK);  
+				mPlat.get(i).draw(g);
+				  }
+			
+			for (int i = 0; i < fallBlock.size(); i++) {  
+				g.setColor(Color.red);  
+				fallBlock.get(i).draw(g);
+				  }
+			//Draws the player's projectiles
+			
+			for (int i = 0; i < saltBalls.size(); i++) {
+				saltBalls.get(i).draw(g);
+			}
+			player.get(0).draw(g);
+			for (int i = 0; i < slimeBalls.size(); i++) {
+				slimeBalls.get(i).draw(g);
+			}
 		}
-		// paints test platform blocks on main menu/first screen
-		for (int i = 0; i < block.size(); i++) {
-			g.setColor(Color.BLACK);   
-			block.get(i).draw(g);
-		}
-		// paints test item blocks on main menu/first screen
-		for (int i = 0; i < iBlock.size(); i++) {  
-			g.setColor(Color.MAGENTA);  
-			iBlock.get(i).draw(g);
-		}
-		
-		for (int i = 0; i < mPlat.size(); i++) {  
-			g.setColor(Color.BLACK);  
-			mPlat.get(i).draw(g);
-			  }
-		
-		for (int i = 0; i < fallBlock.size(); i++) {  
-			g.setColor(Color.red);  
-			fallBlock.get(i).draw(g);
-			  }
-		//Draws the player's projectiles
-		
-		for (int i = 0; i < saltBalls.size(); i++) {
-			saltBalls.get(i).draw(g);
-		}
-		player.get(0).draw(g);
-		for (int i = 0; i < slimeBalls.size(); i++) {
-			slimeBalls.get(i).draw(g);
+		else if (screenCount == 1) {
+			for (int i = 0; i < ground.size(); i++) {
+				g.setColor(Color.RED);   
+				ground.get(i).draw(g);
+			}
+			// paints test platform blocks on main menu/first screen
+			for (int i = 0; i < block.size(); i++) {
+				g.setColor(Color.BLUE);   
+				block.get(i).draw(g);
+			}
+			// paints test item blocks on main menu/first screen
+			for (int i = 0; i < iBlock.size(); i++) {  
+				g.setColor(Color.MAGENTA);  
+				iBlock.get(i).draw(g);
+			}
+			
+			for (int i = 0; i < mPlat.size(); i++) {  
+				g.setColor(Color.BLUE);  
+				mPlat.get(i).draw(g);
+				  }
+			
+			for (int i = 0; i < fallBlock.size(); i++) {  
+				g.setColor(Color.ORANGE);  
+				fallBlock.get(i).draw(g);
+				  }
+			//Draws the player's projectiles
+			
+			for (int i = 0; i < saltBalls.size(); i++) {
+				saltBalls.get(i).draw(g);
+			}
+			player.get(0).draw(g);
+			for (int i = 0; i < slimeBalls.size(); i++) {
+				slimeBalls.get(i).draw(g);
+			}
 		}
 	}
 	
 	// collision method to determine when a certain object (currently moving platform) impacts something (currently a set of coordinates) 
-	public boolean checkCollision(){
-		if(player.get(0).getX() + player.get(0).getWidth() >= fallBlock.get(0).getX() && player.get(0).getY() - player.get(0).getHeight() == fallBlock.get(0).getY()){
-			return true;
-		}
-		
+	public boolean checkCollision(){		
 		if(mPlat.get(0).getX() + mPlat.get(0).getWidth() > Math.abs(500) || mPlat.get(0).getX() < Math.abs(100)){
 		return true;
 		}
@@ -261,6 +314,16 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 		return false;
 		}
 	}
+	
+	public boolean checkFallBlockCollision() {
+		if((player.get(0).getX() + player.get(0).getWidth() >= fallBlock.get(0).getX() + fallBlock.get(0).getWidth()) && (player.get(0).getY() - player.get(0).getHeight() == fallBlock.get(0).getY() + fallBlock.get(0).getHeight())){
+			return true;
+		}
+		else 
+			return false;
+	}
+	
+	
 	
 	
 	
@@ -397,6 +460,16 @@ public class SaltGamePanel  extends JPanel implements Runnable, KeyListener {
 	
 	public char getKey() {
 		return key;
+	}
+	
+	public int screenChange() {
+		if((player.get(0).getX() + player.get(0).getWidth() >= width - 100)) {
+			screenCount++;
+			return screenCount; 
+		}
+		else {
+		return 0; 
+		}
 	}
 
 }
