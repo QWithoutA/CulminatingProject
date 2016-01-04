@@ -67,7 +67,7 @@ public class Slug extends MovingObject {
 		else{
 			
 		}
-		if(paceCounter > 200){
+		if(paceCounter > 40){
 			movingToBoundry(true);
 			paceCounter = 0;
 		}

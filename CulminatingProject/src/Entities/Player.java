@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import QWithoutA.MovingObject;
+import QWithoutA.SaltGamePanel;
 
 /**
  * 
@@ -24,6 +25,8 @@ public class Player extends MovingObject{
 	private int height;
 	
 	private boolean isDown;
+	private boolean isJumping;
+	private int jumpCounter;
 	
 	/**
 	 * @param x
@@ -39,9 +42,10 @@ public class Player extends MovingObject{
 		setHeight(initialHeight);
 		setWidth(35);
 		isDown = false;
+		isJumping = false;
+		jumpCounter = 0;
 	}
 
-	
 	/* (non-Javadoc)
 	 * @see QWithoutA.MovingObject#draw(java.awt.Graphics)
 	 */
@@ -63,11 +67,18 @@ public class Player extends MovingObject{
 	@Override
 	public void animateOneStep() {
 		// TODO Auto-generated method stub
-
+		if(isJumping){
+			SaltGamePanel.player[0].setYSpeed((SaltGamePanel.player[0].getYspeed() +  1.98)/ -1.0198 - 10);
+			jumpCounter++;
+		}
+		if(jumpCounter > 10){
+			jumpCounter = 0;
+			setJumping(false);
+		}
 	}
 	
 	public void setHeight(int x) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated metdhod stub
 		this.height = x;
 	}
 	
@@ -93,4 +104,13 @@ public class Player extends MovingObject{
 	public boolean isCrouching(){
 		return isDown;
 	}
+	
+	public void setJumping(boolean x){
+		isJumping = x;	
+	}
+	
+	public boolean isJumping(){
+		return isJumping;
+	}
+	
 }

@@ -57,7 +57,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
     /**
      * Player entity
      */
-    Player[] player = new Player[1];
+    public static Player[] player = new Player[1];
     /**
      * Ranged-enemies commonly known as 'slugs'
      */
@@ -157,10 +157,10 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		// adds ground arraylist
 		ground.add(new Ground(0, 525, 0, width, 0, height));
 		// adds item block arraylist
-		iBlock.add(new ItemBlock(250, 300, 0, width, 0, height));
+		iBlock.add(new ItemBlock(250, 350, 0, width, 0, height));
 		// adds regular platform blocks
-		block.add(new Blocks(150, 300, 0, width, 0, height));
-		block.add(new Blocks(350, 300, 0, width, 0, height));
+		block.add(new Blocks(150, 350, 0, width, 0, height));
+		block.add(new Blocks(350, 350, 0, width, 0, height));
 		//ads a platform that moves on the x axis
 		mPlat.add(new Platform(200, 250, 0, width, 0, height));
 		mPlat.get(0).setXSpeed(14-7);
@@ -190,6 +190,11 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 				deletePlayerProjectile();
 				deleteSlugProjectile();
 				Thread.sleep(pauseDuration);	
+				if(collisionOfPlayerAndGround()){
+					if(player[0].getYspeed() < 0)
+				    player[0].setYSpeed(0);
+				    player[0].setY((int) (ground.get(0).getY() - player[0].getHeight()));
+				}
 				if(playerProjectileDirection == -1){
 					signX = -1;
 				}
@@ -262,7 +267,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 				
 				if(Character.toString(key).equalsIgnoreCase("w") && player[0].getYspeed() == 0){
 					//if(checkPlayerCollision()){
-						player[0].setYSpeed(-speedCap * 2);
+						player[0].setJumping(true);
 					//}
 				}
 				if(!Character.toString(key).equalsIgnoreCase("s") && player[0].isCrouching()){
@@ -280,7 +285,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 					player[0].setHeight(player[0].initialHeight/2);
 				}
 				
-				if(player[0].getYspeed() != 0){
+				if(player[0].getYspeed() > 0 && !player[0].isJumping() && !collisionOfPlayerAndGround()){
 					player[0].setYSpeed((player[0].getYspeed() +  1.98)/ 1.0198);
 				}
 //				if(player[0].getYspeed() < 0){
@@ -350,6 +355,13 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		for (int i = 0; i < slimeBalls.size(); i++) {
 			slimeBalls.get(i).draw(g);
 		}
+	}
+	public boolean collisionOfPlayerAndGround(){
+		  if(player[0].getY() + player[0].getHeight() > ground.get(0).getY()){
+		   return true;
+		  }
+		  else
+		   return false;
 	}
 	
 	public boolean checkPlatformCollision(){
