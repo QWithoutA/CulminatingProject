@@ -36,7 +36,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	static int height = 550;
 	
 	//an arraylist of the blocks
-	ArrayList<Blocks> block = new ArrayList<Blocks>();
+	ArrayList<Blocks> block = new ArrayList<Blocks>();    
 	//an arraylist of the ground (can also make hills)
 	ArrayList<Ground> ground = new ArrayList<Ground>();
 	//an arraylist of the item blocks
@@ -303,7 +303,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 				}
 
 			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt(); 
+				Thread.currentThread().interrupt();
+				System.out.println("Interrupted");
 			} catch(ArrayIndexOutOfBoundsException e) {
 				
 			}
