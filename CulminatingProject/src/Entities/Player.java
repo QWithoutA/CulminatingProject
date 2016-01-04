@@ -23,6 +23,8 @@ public class Player extends MovingObject{
 	
 	private boolean isDown = false;
 	
+	private int jumpCounter;
+	
 	/**
 	 * @param x
 	 * @param y
