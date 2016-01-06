@@ -68,12 +68,17 @@ public class Player extends MovingObject{
 	public void animateOneStep() {
 		// TODO Auto-generated method stub
 		if(isJumping){
-			SaltGamePanel.player[0].setYSpeed((SaltGamePanel.player[0].getYspeed() +  1.98)/ -1.0198 - 10);
+			SaltGamePanel.player[0].setYSpeed((SaltGamePanel.player[0].getYspeed() +  2.98)/ -1.0198 - 10);
 			jumpCounter++;
 		}
 		if(jumpCounter > 10){
-			jumpCounter = 0;
+			jumpCounter ++;
 			setJumping(false);
+			SaltGamePanel.player[0].setYSpeed((SaltGamePanel.player[0].getYspeed() +  2.98)/ 1.0198);
+		}
+		if(jumpCounter > 20){
+			jumpCounter = 0;
+			
 		}
 	}
 	

@@ -56,6 +56,7 @@ public class PlayerProjectile extends MovingObject {
 		}
 		if(counter > 4){
 			isDecayed = true;
+			
 		}
 	}
 	private void setRadius(int radius) {

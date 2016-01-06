@@ -53,7 +53,7 @@ public class SlugProjectile extends MovingObject {
 		// TODO Auto-generated method stub
 		 xCoords[0] = (int) (getX() + radius);
 		 xCoords[1] = (int) (getX() + radius);
-		 xCoords[2] = (int) (getX() + radius + triangleTip * direction);
+		 xCoords[2] = (int) (getX() + (radius + triangleTip * direction));
 		 
 		 yCoords[0] = (int) getY();
 		 yCoords[1] = (int) (getY() + (radius*2));

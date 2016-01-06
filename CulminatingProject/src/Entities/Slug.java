@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import QWithoutA.MovingObject;
+import QWithoutA.SaltGamePanel;
 
 /**
  * @author Glen Su
@@ -60,19 +61,21 @@ public class Slug extends MovingObject {
 		// TODO Auto-generated method stub
 		shotCounter++;
 		paceCounter++;
-		if (shotCounter > 80){
+		if (shotCounter > 30){
 			setShooting(true);
 			shotCounter = 0;
+			
+			
 		}
 		else{
-			
+			setShooting(false);
 		}
 		if(paceCounter > 40){
 			movingToBoundry(true);
 			paceCounter = 0;
 		}
 		else{
-			
+			movingToBoundry(false);
 		}
 	}
 	public void setWidth(int x){

@@ -49,7 +49,7 @@ public class RoamingEnemy extends MovingObject {
 			paceCounter = 0;
 		}
 		else{
-			
+			movingToBoundry(false);
 		}
 	}
 
