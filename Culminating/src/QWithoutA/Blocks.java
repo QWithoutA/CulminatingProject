@@ -24,5 +24,12 @@ public class Blocks extends MovingObject{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public int getWidth(){
+		return width;
+	}
+	public int getHeight(){
+		return height;
+	}
 
 }
