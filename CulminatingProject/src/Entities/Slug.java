@@ -17,10 +17,9 @@ public class Slug extends MovingObject {
 	
 	private int width;
 	private int height;
-	private static int paceCounter;
-	private static int shotCounter;
-	private static boolean isTurning;
-	private static boolean isShooting;
+	private int shotCounter;
+	private boolean isTurning;
+	private boolean isShooting;
 	/**
 	 * @param x
 	 * @param y
@@ -32,7 +31,6 @@ public class Slug extends MovingObject {
 	public Slug(double x, double y, int left, int right, int top, int bottom) {
 		super(x, y, left, right, top, bottom);
 		// TODO Auto-generated constructor stub
-		paceCounter = 0;
 		shotCounter = 0;
 		setHeight(30);
 		setWidth(55);
@@ -60,7 +58,6 @@ public class Slug extends MovingObject {
 	public void animateOneStep() {
 		// TODO Auto-generated method stub
 		shotCounter++;
-		paceCounter++;
 		if (shotCounter > 30){
 			setShooting(true);
 			shotCounter = 0;
@@ -70,13 +67,7 @@ public class Slug extends MovingObject {
 		else{
 			setShooting(false);
 		}
-		if(paceCounter > 40){
-			movingToBoundry(true);
-			paceCounter = 0;
-		}
-		else{
-			movingToBoundry(false);
-		}
+
 	}
 	public void setWidth(int x){
 		width = x;

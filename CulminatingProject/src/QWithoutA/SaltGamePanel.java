@@ -157,6 +157,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		
 		// adds ground arraylist
 		ground.add(new Ground(0, 525, 0, width, 0, height));
+		ground.get(0).setWidth(ground.get(0).getWidth());
 		// adds item block arraylist
 		iBlock.add(new ItemBlock(250, 350, 0, width, 0, height));
 		// adds regular platform blocks
@@ -228,7 +229,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 				//}
 			}
 
-			if(player[0].getYspeed() > 0 && !player[0].isJumping()){
+			if(player[0].getYspeed() >= 0 && !player[0].isJumping()){
 				player[0].setYSpeed((player[0].getYspeed() +  1.98)/ 1.0198);
 			}
 			//				if(player[0].getYspeed() < 0){
@@ -245,19 +246,17 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 					player[0].setXSpeed(speedCap);
 				}
 				if(Character.toString(key).equalsIgnoreCase("s")){
-					
+					 
 					if(!player[0].isCrouching()){
 						player[0].setCrouching(true);
-					}
-					
-					player[0].setHeight(player[0].initialHeight/2);
-					
-					if(player[0].isCrouching()){
-						player[0].setY((int) (player[0].getY() + player[0].initialHeight/2));
+						player[0].setHeight(player[0].initialHeight/2);
 					}
 				
 				}
-				else{ 
+				else if(!Character.toString(key).equalsIgnoreCase("s")){ 
+					if(player[0].isCrouching()){
+						player[0].setY((int) (player[0].getY() + player[0].initialHeight/2));
+					}
 					player[0].setHeight(player[0].initialHeight);
 					player[0].setCrouching(false);
 				}
@@ -288,8 +287,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 							saltBalls.get(i).setYSpeed((saltBalls.get(i).getYspeed() + saltBalls.get(i).getProjectileAcceleration())
 									/ saltBalls.get(i).getGravityConstant());
 						}
-						if(saltBalls.get(i).getY() > height){
-							saltBalls.get(i).setY((int) saltBalls.get(i).getY() - 10);
+						if(saltBalls.get(i).getY() < ground.get(0).getY()){
+							saltBalls.get(i).setY((int) saltBalls.get(i).getY() - 2);
 						}
 						if(saltBalls.get(i).getYspeed() > -1 && saltBalls.get(i).getYspeed() < 1){
 							saltBalls.get(i).setHasBounced(true);
@@ -426,13 +425,13 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 			return false;
 	}
 	//Collision for the saltballs too the ground so the projectiles don't go through the ground 
-	public boolean collisionOfSaltBallsAndGround(){
-		if(saltBalls.get(0).getY() + saltBalls.get(0).getRadius() == ground.get(0).getY()){
-			return true;
-		}
-		else
-			return false;
-	}      
+//	public boolean collisionOfSaltBallsAndGround(){
+//		if(saltBalls.get(0).getY() + saltBalls.get(0).getRadius() == ground.get(0).getY()){
+//			return true;
+//		}
+//		else
+//			return false;
+//	}      
 	//collision for the player and the falling blocks so he can stand on the falling blocks 
 	public boolean collisionOfPlayerAndFallingBlock(){
 		if(player[0].getY() + player[0].getHeight() > fBlock.get(0).getY()&& (player[0].getX() + player[0].getWidth() < fBlock.get(0).getX() + fBlock.get(0).getWidth()|| player[0].getX() > fBlock.get(0).getX())){
@@ -473,7 +472,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		// TODO Auto-generated method stub
 		key = e.getKeyChar();
 		//limits the number of player projectiles that can spawn
-		if(saltBalls.size() < 50){
+		if(saltBalls.size() < 10){
 			if(Character.toString(key).equalsIgnoreCase("a")){
 				playerProjectileDirection = -1;
 			}

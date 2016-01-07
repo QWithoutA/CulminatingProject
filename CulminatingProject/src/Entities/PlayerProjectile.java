@@ -22,7 +22,7 @@ public class PlayerProjectile extends MovingObject {
 	
     private static int radiusSetter = 6;
 	private static int radius;
-	private static int counter;
+	private int counter;
 	private boolean isDecayed = false;
 	private boolean isBouncing = false;
 
@@ -53,10 +53,11 @@ public class PlayerProjectile extends MovingObject {
 		if(Bounced){
 			counter++;
 			Bounced = false;
+			System.out.println(counter);
 		}
 		if(counter > 4){
 			isDecayed = true;
-			
+			counter = 0;
 		}
 	}
 	private void setRadius(int radius) {

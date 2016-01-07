@@ -4,8 +4,8 @@ import java.awt.Graphics;
 // Ground class serves as bottom platform on which the player character will be by default; separate from ordinary blocks
 public class Ground extends Blocks{
 
-	private int width = 1150;
-	private int height = 35;
+	public int width = 1150;
+	public int height = 35;
 	public Ground(double x, double y, int left, int right, int top, int bottom) {
 		super(x, y, left, right, top, bottom);
 		
@@ -24,12 +24,17 @@ public class Ground extends Blocks{
 		// TODO Auto-generated method stub
 		
 	}
-	public int getWidth(){
-		return width;
-	}
 	public int getHeight(){
 		return height;
 	}
-
-
+	public void setHeight(int x){
+		this.height = x;
+	}
+	
+	public int getWidth(){
+		return width;
+	}
+	public void setWidth(int x){
+		this.width = x;
+	}
 }
