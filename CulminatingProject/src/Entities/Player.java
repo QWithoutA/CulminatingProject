@@ -7,10 +7,13 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import QWithoutA.MovingObject;
+import QWithoutA.SaltGamePanel;
 
 /**
+ * 
+ * 
  * @author Glen Su
- *	Dec 20, 2015
+ *	Jan 01, 2015
  */
 public class Player extends MovingObject{
 
@@ -21,8 +24,8 @@ public class Player extends MovingObject{
 	final public int  initialHeight = 70;
 	private int height;
 	
-	private boolean isDown = false;
-	
+	private boolean isDown;
+	private boolean isJumping;
 	private int jumpCounter;
 	
 	/**
@@ -38,10 +41,11 @@ public class Player extends MovingObject{
 		// TODO Auto-generated constructor stub
 		setHeight(initialHeight);
 		setWidth(35);
-		
+		isDown = false;
+		isJumping = false;
+		jumpCounter = 0;
 	}
 
-	
 	/* (non-Javadoc)
 	 * @see QWithoutA.MovingObject#draw(java.awt.Graphics)
 	 */
@@ -51,9 +55,10 @@ public class Player extends MovingObject{
 		int drawX = (int) getX();
 		int drawY = (int) getY();
 		g.setColor(Color.YELLOW);
-		g.fillRect(drawX ,drawY, width, height);
+		g.fillRect(drawX ,drawY, this.width, this.height);
 		g.setColor(Color.BLACK);
-		g.drawRect(drawX ,drawY, width, height);
+		g.drawRect(drawX ,drawY, this.width, this.height);
+		
 	}
 
 	/* (non-Javadoc)
@@ -62,12 +67,24 @@ public class Player extends MovingObject{
 	@Override
 	public void animateOneStep() {
 		// TODO Auto-generated method stub
-
+		if(isJumping){
+			SaltGamePanel.player[0].setYSpeed((SaltGamePanel.player[0].getYspeed() +  2.98)/ -1.0198 - 10);
+			jumpCounter++;
+		}
+		if(jumpCounter > 10){
+			jumpCounter ++;
+			setJumping(false);
+			SaltGamePanel.player[0].setYSpeed((SaltGamePanel.player[0].getYspeed() +  2.98)/ 1.0198);
+		}
+		if(jumpCounter > 20){
+			jumpCounter = 0;
+			
+		}
 	}
 	
 	public void setHeight(int x) {
-		// TODO Auto-generated method stub
-		height = x;
+		// TODO Auto-generated metdhod stub
+		this.height = x;
 	}
 	
 	public int getHeight() {
@@ -77,11 +94,28 @@ public class Player extends MovingObject{
 	
 	public void setWidth(int x) {
 		// TODO Auto-generated method stub
-		width = x;
+		this.width = x;
 	}
 	
 	public int getWidth() {
 		// TODO Auto-generated method stub
 		return this.width;
 	}
+	
+	public void setCrouching(boolean x){
+		isDown = x;	
+	}
+	
+	public boolean isCrouching(){
+		return isDown;
+	}
+	
+	public void setJumping(boolean x){
+		isJumping = x;	
+	}
+	
+	public boolean isJumping(){
+		return isJumping;
+	}
+	
 }

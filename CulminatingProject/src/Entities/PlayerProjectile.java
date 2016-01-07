@@ -13,7 +13,7 @@ import QWithoutA.SaltGamePanel;
  * 
  * 
  * @author Glen Su 
- *	Dec 16, 2015
+ *	Jan 01, 2015
  */
 public class PlayerProjectile extends MovingObject {
 
@@ -21,7 +21,7 @@ public class PlayerProjectile extends MovingObject {
 	public double constantOfGravity = 1.0198, initialAcceleration = 1.98;
 	
     private static int radiusSetter = 6;
-	private int radius;
+	private static int radius;
 	private int counter;
 	private boolean isDecayed = false;
 	private boolean isBouncing = false;
@@ -34,16 +34,6 @@ public class PlayerProjectile extends MovingObject {
 		this.setRadius(radiusSetter);
 	}
 
-	private void setRadius(int radius) {
-		// TODO Auto-generated method stub
-		this.radius = radius;
-	}
-	
-	public int getRadius() {
-		// TODO Auto-generated method stub
-		return this.radius;
-	}
-	
 	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
@@ -63,15 +53,27 @@ public class PlayerProjectile extends MovingObject {
 		if(Bounced){
 			counter++;
 			Bounced = false;
+			System.out.println(counter);
 		}
 		if(counter > 4){
 			isDecayed = true;
+			counter = 0;
 		}
 	}
-	
+	private void setRadius(int radius) {
+		// TODO Auto-generated method stub
+		this.radius = radius;
+	}
+
+	public static int getRadius() {
+		// TODO Auto-generated method stub
+		return radius;
+	}
+
 	public boolean isDecayed() {
 		return isDecayed;		
 	}
+	
 	public void setProjectileAcceleration(double x) {
 		initialAcceleration = x;
 	}

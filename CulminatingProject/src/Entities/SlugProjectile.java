@@ -12,16 +12,16 @@ import QWithoutA.MovingObject;
  * 
  * 
  * @author Glen Su
- *	Dec 16, 2015
+ *	Jan 01, 2015
  */
 public class SlugProjectile extends MovingObject {
 
 	private static int radiusSetter = 6;
 	private int radius;
-	private static int triangleTip = -15;
+	private int triangleTip = -15;
 	private int triangleSides = 3;
 	private int counter = 0;
-	private static int direction;
+	private int direction;
 	private boolean isDecayed;
 	
 	int[] xCoords = new int[3];
@@ -41,7 +41,7 @@ public class SlugProjectile extends MovingObject {
 		this.setRadius(radiusSetter);
 		x = (int) getX() - (radius);
 		y = (int) getY() - (radius);
-		
+		isDecayed = false;
 		
 	}
 
@@ -53,7 +53,7 @@ public class SlugProjectile extends MovingObject {
 		// TODO Auto-generated method stub
 		 xCoords[0] = (int) (getX() + radius);
 		 xCoords[1] = (int) (getX() + radius);
-		 xCoords[2] = (int) (getX() + radius + triangleTip * direction);
+		 xCoords[2] = (int) (getX() + (radius + triangleTip * direction));
 		 
 		 yCoords[0] = (int) getY();
 		 yCoords[1] = (int) (getY() + (radius*2));
@@ -104,7 +104,7 @@ public class SlugProjectile extends MovingObject {
 		this.isDecayed = isDecayed;
 	}
 
-	public static void setDirection(int x){
+	public void setDirection(int x){
 		direction = x;
 	}
 }
