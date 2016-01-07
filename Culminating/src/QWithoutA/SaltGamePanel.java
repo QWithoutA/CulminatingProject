@@ -1,4 +1,3 @@
-
 package QWithoutA;
 
 import java.awt.BorderLayout;
@@ -16,6 +15,12 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import Entities.Player;
+import Entities.PlayerProjectile;
+import Entities.RoamingEnemy;
+import Entities.Slug;
+import Entities.SlugProjectile;
 
 /**
  * 
@@ -67,8 +72,6 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 */
 	final int pauseDuration = 50;
 	
-	public int screenCount = 0;
-	
 	/**
 	 * Radiuses of each player projectile 
 	 */
@@ -114,6 +117,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 */
 	char key = ' ';
 	
+	public int screenCount = 0;
+	
 	public boolean isPlayerProjectileSpawned = false;
 	public boolean isSlugProjectileSpawned = false;
 	
@@ -154,6 +159,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		
 		// adds ground arraylist
 		ground.add(new Ground(0, 525, 0, width, 0, height));
+		
 		// adds item block arraylist
 		iBlock.add(new ItemBlock(250, 350, 0, width, 0, height));
 		// adds regular platform blocks
@@ -163,7 +169,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		mPlat.add(new Platform(200, 300, 0, width, 0, height));
 		mPlat.get(0).setXSpeed(14-7);
 		//adds a platform that moves on the y axis
-		mPlat.add(new Platform(700, 500, 0, width, 0, height));
+		mPlat.add(new Platform(700, 400, 0, width, 300, 500));
 		mPlat.get(1).setYSpeed(14-10);
 
 		//adds a block that falls 
@@ -171,11 +177,11 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		
 		player[0] = new Player(30, 450, 0, width, 0, height);
 		
-		walkers.add(new RoamingEnemy(400, 500, 0, width, 0, height));
+		walkers.add(new RoamingEnemy(400, 500, 200, 600, 0, height));
 		walkers.get(0).setXSpeed(walkerSpeed);
 		
-		slugs.add(new Slug(500, 500, 0, width, 0, height));
-		slugs.get(0).setXSpeed(slugSpeed);
+		slugs.add(new Slug(500, 500, 400, 600, 0 , height));
+		slugs.get(0).setXSpeed(2*slugSpeed/3);
 		//begins game
 		Thread gameThread = new Thread(this);
 		gameThread.start();
@@ -186,37 +192,53 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		while (true) {
 			repaint();
 			try{
-				deletePlayerProjectile();
-				deleteSlugProjectile();
-				Thread.sleep(pauseDuration);	
-			if(collisionOfPlatformAndBoundriesLeftRight()){
-				mPlat.get(0).setXSpeed(mPlat.get(0).getXspeed() *-1);
-			}
-			if(collisionOfPlatformAndBoundriesUpDown()){
-				mPlat.get(1).setYSpeed(mPlat.get(1).getYspeed() *-1);
-			}
+				Thread.sleep(pauseDuration);
+				
+//			if(collisionOfPlatformAndBoundriesLeftRight()){
+//				mPlat.get(0).setXSpeed(mPlat.get(0).getXspeed() *-1);
+//			}
+//			if(collisionOfPlatformAndBoundriesUpDown()){
+//				mPlat.get(1).setYSpeed(mPlat.get(1).getYspeed() *-1);
+//			}
 			if(collisionOfPlayerAndGround() && player[0].getYspeed() > 0){
 				player[0].setYSpeed(0);
 				player[0].setY((int) (ground.get(0).getY() - player[0].getHeight()));
 			}
-			/*if(collisionOfSaltBallsAndGround()){dwd
+			/*if(collisionOfSaltBallsAndGround()){
 				saltBalls.get(0).setYSpeed((int)(saltBalls.get(0).getY() *-1));
 			}*/
-			if(collisionOfPlayerAndFallingBlock()){
+			if(collisionOfPlayerAndFallingBlock() && player[0].getYspeed() > 0){
 			player[0].setYSpeed(0);
 				player[0].setY((int) (ground.get(0).getY() - player[0].getHeight()));
 			}
-			if(collisionOfPlayerAndItemBlock()){
+			if(collisionOfPlayerAndItemBlock() && player[0].getYspeed() > 0){
 				player[0].setYSpeed(0);
 				player[0].setY((int) (ground.get(0).getY() - player[0].getHeight()));
 			}
-			if(collisionOfPlayerAndNormalBlocks()){
+			if(collisionOfPlayerAndNormalBlocks() && player[0].getYspeed() > 0){
 				player[0].setYSpeed(0);
 				player[0].setY((int) (ground.get(0).getY() - player[0].getHeight()));
 			}
-			if(collisionOfPlayerAndPlatform()){
+			if(collisionOfPlayerAndPlatform() && player[0].getYspeed() > 0){
 				player[0].setYSpeed(0);
 				player[0].setY((int) (ground.get(0).getY() - player[0].getHeight()));
+			}
+			
+			if(Character.toString(key).equalsIgnoreCase("w") && player[0].getYspeed() == 0){
+				//if(checkPlayerCollision()){
+				player[0].setJumping(true);
+				player[0].setY((int) (player[0].getY() -2));
+				//}
+			}
+
+			if(player[0].getYspeed() > 0 && !player[0].isJumping()){
+				player[0].setYSpeed((player[0].getYspeed() +  1.98)/ 1.0198);
+			}
+			//				if(player[0].getYspeed() < 0){
+			//					player[0].setYSpeed(0);
+			//				}
+			if(player[0].getY() > height){
+				player[0].setY((int) (player[0].getY() - height/2));
 			}
 
 				if(Character.toString(key).equalsIgnoreCase("a")){
@@ -225,18 +247,26 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 				else if(Character.toString(key).equalsIgnoreCase("d")){
 					player[0].setXSpeed(speedCap);
 				}
-				else if(Character.toString(key).equalsIgnoreCase("s")){
+				if(Character.toString(key).equalsIgnoreCase("s")){
+					
+					if(!player[0].isCrouching()){
+						player[0].setCrouching(true);
+					}
+					
 					player[0].setHeight(player[0].initialHeight/2);
+					
+					if(player[0].isCrouching()){
+						player[0].setY((int) (player[0].getY() + player[0].initialHeight/2));
+					}
+				
 				}
 				else{ 
 					player[0].setHeight(player[0].initialHeight);
+					player[0].setCrouching(false);
 				}
 				if(player[0].getYspeed() > 0){
 				     player[0].setYSpeed((player[0].getYspeed() +  1.98)/ 1.0198);
 				    }
-				if(player[0].getYspeed() < 0){
-					player[0].setYSpeed(0);
-				}
 				if(player[0].getY() > height){
 					player[0].setY((int) (player[0].getY() - height/2));
 				}
@@ -269,6 +299,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 						}
 					}
 				}
+				
 				if(walkers.size() > 0){
 					for(int i = 0; i < walkers.size(); i++){
 						if(walkers.get(i).hitBoundry()){
@@ -280,7 +311,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 				if(slugs.size() > 0){
 					for(int i = 0; i < slugs.size(); i++){
 						if(slugs.get(i).isShooting()){	
-							if(slugs.get(i).getXspeed() > 0){
+							if(slugs.get(i).getXspeed() >= 0){
 								slugDirection = 1;
 								slimeBalls.add(new SlugProjectile(slugs.get(i).getX() + slugs.get(i).getWidth(), slugs.get(i).getY() + slugs.get(i).getHeight()/4, 0, width, 0, height));							
 							}
@@ -289,31 +320,18 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 								slimeBalls.add(new SlugProjectile(slugs.get(i).getX(), slugs.get(i).getY() + slugs.get(i).getHeight()/4, 0, width, 0, height));
 							}
 							slimeBalls.get(slimeBalls.size() - 1).setDirection(slugDirection);
-							slimeBalls.get(slimeBalls.size() - 1).setXSpeed(slugs.get(i).getXspeed() * slugDirection);
+							slimeBalls.get(slimeBalls.size() - 1).setXSpeed(slugSpeed * slugDirection);
 							slugs.get(i).setShooting(false);
 						}
 						if(slugs.get(i).hitBoundry()){
-							slugs.get(i).setXSpeed(slugSpeed * - 1);
+							slugs.get(i).setXSpeed(2*slugSpeed/3 * - 1);
 							slugs.get(i).movingToBoundry(false);
 						}
 					}
 				}
-
-				if(Character.toString(key).equalsIgnoreCase("w") && player[0].getYspeed() == 0){
-					//if(checkPlayerCollision()){
-					player[0].setJumping(true);
-					//}
-				}
-
-				if(player[0].getYspeed() > 0 && !player[0].isJumping() && !collisionOfPlayerAndGround()){
-					player[0].setYSpeed((player[0].getYspeed() +  1.98)/ 1.0198);
-				}
-				//				if(player[0].getYspeed() < 0){
-				//					player[0].setYSpeed(0);
-				//				}
-				if(player[0].getY() > height){
-					player[0].setY((int) (player[0].getY() - height/2));
-				}
+				
+				deleteSlugProjectile();
+				deletePlayerProjectile();
 
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
@@ -404,7 +422,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 
 	//Collision for the player to the ground so the player does not go through the ground 
 	public boolean collisionOfPlayerAndGround(){
-		if(player[0].getY() + player[0].getHeight() > ground.get(0).getY()){
+		if(player[0].getY() + player[0].getHeight() == ground.get(0).getY()){
 			return true;
 		}
 		else
@@ -412,7 +430,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	}
 	//Collision for the saltballs too the ground so the projectiles don't go through the ground 
 	public boolean collisionOfSaltBallsAndGround(){
-		if(saltBalls.get(0).getY() + saltBalls.get(0).getRadius() > ground.get(0).getY()){
+		if(saltBalls.get(0).getY() + saltBalls.get(0).getRadius() == ground.get(0).getY()){
 			return true;
 		}
 		else
@@ -436,7 +454,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	}
 	//collision for the player to stand on a normal block 
 	public boolean collisionOfPlayerAndNormalBlocks(){
-		if(player[0].getY() + player[0].getHeight() < block.get(0).getY() && (player[0].getX() + player[0].getWidth() < block.get(0).getX() + block.get(0).getWidth()|| player[0].getX() > block.get(0).getX())){
+		if(player[0].getY() + player[0].getHeight() < block.get(0).getY() && (player[0].getX() + player[0].getWidth() < block.get(0).getX() + block.get(0).getWidth() || player[0].getX() > block.get(0).getX())){
 			return true;
 		}
 		else
@@ -476,7 +494,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 			}
 			//shoots slug projectiles
 //			else if(Character.toString(key).equalsIgnoreCase("e")){
-//				SlugProjectile.setDirection(playerProjectileDirection);
+//				slimeBalls.get(slimeBalls.size() - 1).setDirection(playerProjectileDirection);
 //				slimeBalls.add(new SlugProjectile(playerX, playerY, 0, width, 0, height));
 //			}
 		}
@@ -556,7 +574,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	/**
 	 * Deletes the player projectile after a set amount of bounces 
 	 */
-	public static void deletePlayerProjectile(){
+	private static void deletePlayerProjectile(){
 		if(saltBalls.size() > 0){
 			for(int i = 0; i < saltBalls.size(); i++){
 				if(saltBalls.get(i).isDecayed()){
@@ -569,7 +587,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	/**
 	 * Deletes the enemy projectile after a set amount of time 
 	 */
-	public static void deleteSlugProjectile(){
+	private static void deleteSlugProjectile(){
 		if(slimeBalls.size() > 0){
 			for(int i = 0; i < slimeBalls.size(); i++){
 				if(slimeBalls.get(i).isDecayed()){

@@ -27,7 +27,7 @@ public class ItemBlock extends Blocks{
 		
 		g.fillRect(drawX, drawY, getWidth(), getHeight());
 		if (!filledIn) {
-			g.setColor(Color.black);
+			g.setColor(Color.CYAN);
 			g.fillRect(drawX, drawY, width, height);
 		}
 	}
@@ -41,10 +41,6 @@ public class ItemBlock extends Blocks{
 				filledIn = false;
 			else
 				filledIn = true;
-		}
-		if (getX() >= getRight() | getX() <= getLeft()){
-			setX(1100);
-			setY(550);
 		}
 		
 		

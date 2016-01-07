@@ -1,4 +1,9 @@
-package QWithoutA;
+/**
+ * 
+ */
+package Entities;
+
+import java.awt.Graphics;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -6,65 +11,40 @@ import java.awt.Graphics;
 import QWithoutA.MovingObject;
 
 /**
+ * 
  * @author Glen Su
- * Jan 01, 2015
+ *  Jan 01, 2015
  */
-public class Slug extends MovingObject {
+public class RoamingEnemy extends MovingObject {
 	
 	private int width;
 	private int height;
 	private static int paceCounter;
-	private static int shotCounter;
 	private static boolean isTurning;
-	private static boolean isShooting;
-	/**
-	 * @param x
-	 * @param y
-	 * @param left
-	 * @param right
-	 * @param top
-	 * @param bottom
-	 */
-	public Slug(double x, double y, int left, int right, int top, int bottom) {
+	
+	public RoamingEnemy(double x, double y, int left, int right, int top, int bottom) {
 		super(x, y, left, right, top, bottom);
 		// TODO Auto-generated constructor stub
 		paceCounter = 0;
-		shotCounter = 0;
 		setHeight(30);
-		setWidth(55);
-		setShooting(false);
+		setWidth(35);
 		movingToBoundry(false);
 	}
 
-	/* (non-Javadoc)
-	 * @see QWithoutA.MovingObject#draw(java.awt.Graphics)
-	 */
 	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
 		int drawX = (int) getX();
 		int drawY = (int) getY();
 		
-		g.setColor(Color.GREEN);
+		g.setColor(Color.RED);
 		g.fillRect(drawX, drawY, width, height);
 	}
 
-	/* (non-Javadoc)
-	 * @see QWithoutA.MovingObject#animateOneStep()
-	 */
 	@Override
 	public void animateOneStep() {
 		// TODO Auto-generated method stub
-		shotCounter++;
-		paceCounter++;
-		if (shotCounter > 80){
-			setShooting(true);
-			shotCounter = 0;
-		}
-		else{
-			
-		}
-		if(paceCounter > 40){
+		if(paceCounter > 100){
 			movingToBoundry(true);
 			paceCounter = 0;
 		}
@@ -72,6 +52,7 @@ public class Slug extends MovingObject {
 			
 		}
 	}
+
 	public void setWidth(int x){
 		width = x;
 	}
@@ -92,10 +73,4 @@ public class Slug extends MovingObject {
 		return isTurning;
 	}
 	
-	public void setShooting(boolean x){
-		isShooting = x;
-	}
-	public boolean isShooting(){
-		return isShooting;
-	}
 }

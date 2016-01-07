@@ -1,4 +1,4 @@
-package QWithoutA;
+package Entities;
 import java.awt.Color;
 import java.awt.Graphics;
 
