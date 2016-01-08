@@ -89,6 +89,8 @@ public abstract class MovingObject implements Runnable {
 			y += ySpeed;
 			if (y >= bottom | y <= top)
 				ySpeed *= -1;
+			if (x >= right | x <= left)
+				xSpeed *= -1;
 			try {
 				Thread.sleep(pauseDuration);
 			} catch (InterruptedException e) {
