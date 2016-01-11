@@ -23,7 +23,7 @@ public class PlayerProjectile extends MovingObject {
 	
     private static int radiusSetter = 6;
 	private static int radius;
-	private static int counter;
+	private int counter;
 	private boolean isDecayed = false;
 	private boolean isBouncing = false;
 

@@ -19,7 +19,7 @@ public class Player extends MovingObject{
 	 * Hitbox for the player model
 	 */
 	private int width;
-	final public static int  initialHeight = 70;
+	final public int  initialHeight = 70;
 	private int height;
 	
 	private boolean isDown;

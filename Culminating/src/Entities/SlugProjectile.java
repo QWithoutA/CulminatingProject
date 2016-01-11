@@ -15,10 +15,10 @@ public class SlugProjectile extends MovingObject {
 
 	private static int radiusSetter = 6;
 	private int radius;
-	private static int triangleTip = -15;
+	private int triangleTip = -15;
 	private int triangleSides = 3;
-	private static int counter = 0;
-	private static int direction;
+	private int counter = 0;
+	private int direction;
 	private boolean isDecayed;
 	
 	int[] xCoords = new int[3];

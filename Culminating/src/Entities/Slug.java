@@ -13,10 +13,10 @@ public class Slug extends MovingObject {
 	
 	private int width;
 	private int height;
-	private static int paceCounter;
-	private static int shotCounter;
-	private static boolean isTurning;
-	private static boolean isShooting;
+	private int paceCounter;
+	private int shotCounter;
+	private boolean isTurning;
+	private boolean isShooting;
 	/**
 	 * @param x
 	 * @param y

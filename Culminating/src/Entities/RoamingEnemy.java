@@ -19,8 +19,8 @@ public class RoamingEnemy extends MovingObject {
 	
 	private int width;
 	private int height;
-	private static int paceCounter;
-	private static boolean isTurning;
+	private int paceCounter;
+	private boolean isTurning;
 	
 	public RoamingEnemy(double x, double y, int left, int right, int top, int bottom) {
 		super(x, y, left, right, top, bottom);
