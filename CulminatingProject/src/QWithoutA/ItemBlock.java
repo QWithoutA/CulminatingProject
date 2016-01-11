@@ -23,7 +23,6 @@ public class ItemBlock extends FallingBlock{
 		int drawX = (int) getX();
 		int drawY = (int) getY();
 		
-	
 		g.fillRect(drawX, drawY, getWidth(), getHeight());
 		if (!filledIn) {
 			g.setColor(Color.CYAN);

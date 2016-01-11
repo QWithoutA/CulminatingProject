@@ -1,8 +1,9 @@
+
 package QWithoutA;
 
 import java.awt.Graphics;
 
-public class FallingBlock extends NormalBlock{
+public class FallingBlock extends Blocks{
 
 	private int width = 25;
 	private int height = 25;
@@ -22,6 +23,5 @@ public class FallingBlock extends NormalBlock{
 	@Override
 	public void animateOneStep() {
 		// TODO Auto-generated method stub
-		
 	}
 }

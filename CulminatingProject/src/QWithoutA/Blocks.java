@@ -2,12 +2,12 @@ package QWithoutA;
 
 import java.awt.Graphics;
 
-public class Ground extends FallingBlock{
+public class Blocks extends MovingObject{
 
-	public int width = 1150;
-	public int height = 35;
-	public Ground(double x, double y, int left, int right, int top, int bottom) {
-		super(x, y, left, right, top, bottom);
+	private int width = 35;
+	private int height = 35;
+	public Blocks(double x, double y, int left, int right, int top, int bottom) {
+		super(x, y, left + 10, right - 10, top + 10, bottom - 10);
 		
 	}
 
@@ -24,18 +24,12 @@ public class Ground extends FallingBlock{
 		// TODO Auto-generated method stub
 		
 	}
-
-	public int getHeight(){
-		return height;
-	}
-	public void setHeight(int x){
-		this.height = x;
-	}
 	
 	public int getWidth(){
 		return width;
 	}
-	public void setWidth(int x){
-		this.width = x;
+	public int getHeight(){
+		return height;
 	}
+
 }
