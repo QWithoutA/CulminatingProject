@@ -4,15 +4,16 @@
 package Entities;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 import QWithoutA.MovingObject;
+import QWithoutA.SaltGamePanel;
 
 /**
  * @author Glen Su
  *	Dec 20, 2015
  */
 public class Player extends MovingObject{
-
 	/**
 	 * @param x
 	 * @param y
@@ -24,7 +25,7 @@ public class Player extends MovingObject{
 	public Player(double x, double y, int left, int right, int top, int bottom) {
 		super(x, y, left, right, top, bottom);
 		// TODO Auto-generated constructor stub
-		
+
 	}
 
 	/* (non-Javadoc)
@@ -33,7 +34,6 @@ public class Player extends MovingObject{
 	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
-
 	}
 
 	/* (non-Javadoc)

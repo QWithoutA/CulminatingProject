@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 
 import Entities.PlayerProjectile;
 import Entities.SlugProjectile;
+//import Images.Imageloader;
 
 /**
  * 
@@ -37,7 +38,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, K
 	ArrayList<Ground> ground = new ArrayList<Ground>();
 	//an arraylist of the item blocks
 	ArrayList<ItemBlock> iBlock = new ArrayList<ItemBlock>();
-	
+
 	/**
      * ArrayLists of player projectiles and ranged enemy projectiles
      */
