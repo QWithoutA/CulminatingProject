@@ -31,6 +31,7 @@ public class Ground extends NormalBlock{
 	public int getHeight(){
 		return height;
 	}
+<<<<<<< HEAD
 	
 	public void setWidth() {
 		this.width = width;
@@ -39,5 +40,8 @@ public class Ground extends NormalBlock{
 	public void setHeight() {
 		this.height = height;
 	}
+=======
+
+>>>>>>> refs/remotes/origin/master
 
 }
