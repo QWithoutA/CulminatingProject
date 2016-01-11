@@ -137,7 +137,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 
 //		JOptionPane.showMessageDialog(frame, "To win this game, make your way past enemies and holes to get the item at the end." + "\n" 
 //			+ "If you happen to die, you will have to restart your journey.", "Welcome", JOptionPane.INFORMATION_MESSAGE);
-
+  
 		frame.setVisible(true);
 		frame.setLocation(100, 100);
 		Container c = frame.getContentPane();
