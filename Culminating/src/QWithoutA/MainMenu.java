@@ -7,8 +7,13 @@ import java.awt.Rectangle;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import QWithoutA.SaltGamePanel;
+import QWithoutA.SaltGamePanel.STATE;
 
 public class MainMenu implements MouseListener {
+	
+	private int mouseX;
+	private int mouseY;
 	
 	public static Rectangle playButton = new Rectangle(500, 300, 100, 50);
 	public static Rectangle helpButton = new Rectangle(500, 400, 100, 50);
@@ -31,27 +36,39 @@ public class MainMenu implements MouseListener {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
+	public void mouseClicked(MouseEvent e) {
+		mouseX = e.getX ();
+		mouseY = e.getY ();
+		if (mouseX >= playButton.x && mouseX <= playButton.x + 100) {
+			if (mouseY >= playButton.y && mouseY <= playButton.y + 50) {
+				SaltGamePanel.State = SaltGamePanel.STATE.GAME;
+			}
+		}
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		mouseX = e.getX ();
+		mouseY = e.getY ();
+		if (mouseX >= playButton.x && mouseX <= playButton.x + 100) {
+			if (mouseY >= playButton.y && mouseY <= playButton.y + 50) {
+				SaltGamePanel.State = STATE.GAME;
+			}
+		}
+	}
+	
+	@Override
+	public void mouseEntered(MouseEvent e) {
 		
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {
+	public void mouseExited(MouseEvent e) {
 		
 	}
 
 	@Override
-	public void mouseExited(MouseEvent arg0) {
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
+	public void mousePressed(MouseEvent e) {
 		
 	}
 

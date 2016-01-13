@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Menu;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -12,6 +13,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.awt.Rectangle;
+import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -120,6 +123,18 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	
 	public int screenCount = 0;
 	
+	private int mouseX;
+	/**
+	 * X co-ordinate of the mouse 
+	 */
+	private int mouseY;
+	/**
+	 * Y co-ordinate of the mouse 
+	 */
+	public static Rectangle playButton = new Rectangle(500, 300, 100, 50);
+	public static Rectangle helpButton = new Rectangle(500, 400, 100, 50);
+	public static Rectangle quitButton = new Rectangle(500, 500, 100, 50);
+	
 	public boolean isPlayerProjectileSpawned = false;
 	public boolean isSlugProjectileSpawned = false;
 	
@@ -132,7 +147,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		MENU,
 		GAME
 	};
-	public STATE State = STATE.MENU;
+	public static STATE State = STATE.MENU;
 	
 	public static void main(String[] args) {
 
@@ -152,6 +167,23 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		frame.pack();
 		frame.setTitle("The Adventures of Salt Man");
 		frame.setResizable(false);
+	}
+	
+	public static void renderMainMenu(Graphics g) {
+		boolean click = false;
+		Graphics2D g2d = (Graphics2D) g;
+		Font fnt0 = new Font("Comic Sans MS", Font.BOLD, 50);
+		g.setFont(fnt0);
+		g.setColor(Color.BLACK);
+		g.drawString("The Adventures of Salt Man", 250, 250);
+		Font fnt1 = new Font("arial", Font.BOLD, 30);
+		g.setFont(fnt1);
+		g.drawString("Play", playButton.x + 19, playButton.y + 35);
+		g2d.draw(playButton);
+		g.drawString("Help", helpButton.x + 19, helpButton.y + 35);
+		g2d.draw(helpButton);
+		g.drawString("Quit", quitButton.x + 19, quitButton.y + 35);
+		g2d.draw(quitButton);
 	}
 
 	public SaltGamePanel(){
@@ -203,7 +235,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 				repaint();
 				try{
 					Thread.sleep(pauseDuration);
-					
+
 	//			if(collisionOfPlatformAndBoundriesLeftRight()){
 	//				mPlat.get(0).setXSpeed(mPlat.get(0).getXspeed() *-1);
 	//			}
@@ -404,7 +436,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 				}
 		}
 		else if (State == State.MENU) {
-			MainMenu.render(g);
+			renderMainMenu(g);
 		}
 	}
 	
@@ -543,6 +575,18 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		playerX = e.getX ();
 		playerY = e.getY ();
 		repaint ();
+		
+		if (State == STATE.MENU) {
+			mouseX = e.getX ();
+			mouseY = e.getY ();
+			mouseX = e.getX ();
+			mouseY = e.getY ();
+			if (mouseX >= playButton.x && mouseX <= playButton.x + 100) {
+				if (mouseY >= playButton.y && mouseY <= playButton.y + 50) {
+					State = STATE.GAME;
+				}
+			}
+		}
 	}
 
 	@Override
