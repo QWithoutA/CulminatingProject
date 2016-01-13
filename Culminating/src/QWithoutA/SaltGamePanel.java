@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Menu;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -127,6 +128,12 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	
 	public double initialVelocity = Math.sqrt(-2*playerProjectileAcceleration *playerProjectileMaxHeight);
 
+	public enum STATE{
+		MENU,
+		GAME
+	};
+	public STATE State = STATE.MENU;
+	
 	public static void main(String[] args) {
 
 		// Set up main window (using Swing's Jframe)
@@ -157,31 +164,33 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		addMouseListener (this);
 		addMouseMotionListener(this);
 		
-		// adds ground arraylist
-		ground.add(new Ground(0, 525, 0, width, 0, height));
-		
-		// adds item block arraylist
-		iBlock.add(new ItemBlock(250, 350, 0, width, 0, height));
-		// adds regular platform blocks
-		block.add(new Blocks(150, 350, 0, width, 0, height));
-		block.add(new Blocks(350, 350, 0, width, 0, height));
-		//ads a platform that moves on the x axis
-		mPlat.add(new Platform(200, 300, 0, width, 0, height));
-		mPlat.get(0).setXSpeed(14-7);
-		//adds a platform that moves on the y axis
-		mPlat.add(new Platform(700, 400, 0, width, 300, 500));
-		mPlat.get(1).setYSpeed(14-10);
-
-		//adds a block that falls 
-		fBlock.add(new FallingBlock(500, 250, 0, width, 0, height));
-		
-		player[0] = new Player(30, 450, 0, width, 0, height);
-		
-		walkers.add(new RoamingEnemy(400, 500, 200, 600, 0, height));
-		walkers.get(0).setXSpeed(walkerSpeed);
-		
-		slugs.add(new Slug(500, 500, 400, 600, 0 , height));
-		slugs.get(0).setXSpeed(2*slugSpeed/3);
+		if (State == State.GAME) {
+			// adds ground arraylist
+			ground.add(new Ground(0, 525, 0, width, 0, height));
+			
+			// adds item block arraylist
+			iBlock.add(new ItemBlock(250, 350, 0, width, 0, height));
+			// adds regular platform blocks
+			block.add(new Blocks(150, 350, 0, width, 0, height));
+			block.add(new Blocks(350, 350, 0, width, 0, height));
+			//ads a platform that moves on the x axis
+			mPlat.add(new Platform(200, 300, 0, width, 0, height));
+			mPlat.get(0).setXSpeed(14-7);
+			//adds a platform that moves on the y axis
+			mPlat.add(new Platform(700, 400, 0, width, 300, 500));
+			mPlat.get(1).setYSpeed(14-10);
+	
+			//adds a block that falls 
+			fBlock.add(new FallingBlock(500, 250, 0, width, 0, height));
+			
+			player[0] = new Player(30, 450, 0, width, 0, height);
+			
+			walkers.add(new RoamingEnemy(400, 500, 200, 600, 0, height));
+			walkers.get(0).setXSpeed(walkerSpeed);
+			
+			slugs.add(new Slug(500, 500, 400, 600, 0 , height));
+			slugs.get(0).setXSpeed(2*slugSpeed/3);
+		}
 		//begins game
 		Thread gameThread = new Thread(this);
 		gameThread.start();
@@ -189,203 +198,213 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	}
 	
 	public void run() {
-		while (true) {
-			repaint();
-			try{
-				Thread.sleep(pauseDuration);
+		if (State == State.GAME) {
+			while (true) {
+				repaint();
+				try{
+					Thread.sleep(pauseDuration);
+					
+	//			if(collisionOfPlatformAndBoundriesLeftRight()){
+	//				mPlat.get(0).setXSpeed(mPlat.get(0).getXspeed() *-1);
+	//			}
+	//			if(collisionOfPlatformAndBoundriesUpDown()){
+	//				mPlat.get(1).setYSpeed(mPlat.get(1).getYspeed() *-1);
+	//			}
+				if(collisionOfPlayerAndGround() && player[0].getYspeed() > 0){
+					player[0].setYSpeed(0);
+					player[0].setY((int) (ground.get(0).getY() - player[0].getHeight()));
+				}
+				/*if(collisionOfSaltBallsAndGround()){
+					saltBalls.get(0).setYSpeed((int)(saltBalls.get(0).getY() *-1));
+				}*/
+				if(collisionOfPlayerAndFallingBlock() && player[0].getYspeed() > 0){
+				player[0].setYSpeed(0);
+					player[0].setY((int) (ground.get(0).getY() - player[0].getHeight()));
+				}
+				if(collisionOfPlayerAndItemBlock() && player[0].getYspeed() > 0){
+					player[0].setYSpeed(0);
+					player[0].setY((int) (ground.get(0).getY() - player[0].getHeight()));
+				}
+				if(collisionOfPlayerAndNormalBlocks() && player[0].getYspeed() > 0){
+					player[0].setYSpeed(0);
+					player[0].setY((int) (ground.get(0).getY() - player[0].getHeight()));
+				}
+				if(collisionOfPlayerAndPlatform() && player[0].getYspeed() > 0){
+					player[0].setYSpeed(0);
+					player[0].setY((int) (ground.get(0).getY() - player[0].getHeight()));
+				}
 				
-//			if(collisionOfPlatformAndBoundriesLeftRight()){
-//				mPlat.get(0).setXSpeed(mPlat.get(0).getXspeed() *-1);
-//			}
-//			if(collisionOfPlatformAndBoundriesUpDown()){
-//				mPlat.get(1).setYSpeed(mPlat.get(1).getYspeed() *-1);
-//			}
-			if(collisionOfPlayerAndGround() && player[0].getYspeed() > 0){
-				player[0].setYSpeed(0);
-				player[0].setY((int) (ground.get(0).getY() - player[0].getHeight()));
-			}
-			/*if(collisionOfSaltBallsAndGround()){
-				saltBalls.get(0).setYSpeed((int)(saltBalls.get(0).getY() *-1));
-			}*/
-			if(collisionOfPlayerAndFallingBlock() && player[0].getYspeed() > 0){
-			player[0].setYSpeed(0);
-				player[0].setY((int) (ground.get(0).getY() - player[0].getHeight()));
-			}
-			if(collisionOfPlayerAndItemBlock() && player[0].getYspeed() > 0){
-				player[0].setYSpeed(0);
-				player[0].setY((int) (ground.get(0).getY() - player[0].getHeight()));
-			}
-			if(collisionOfPlayerAndNormalBlocks() && player[0].getYspeed() > 0){
-				player[0].setYSpeed(0);
-				player[0].setY((int) (ground.get(0).getY() - player[0].getHeight()));
-			}
-			if(collisionOfPlayerAndPlatform() && player[0].getYspeed() > 0){
-				player[0].setYSpeed(0);
-				player[0].setY((int) (ground.get(0).getY() - player[0].getHeight()));
-			}
-			
-			if(Character.toString(key).equalsIgnoreCase("w") && player[0].getYspeed() == 0){
-				//if(checkPlayerCollision()){
-				player[0].setJumping(true);
-				player[0].setY((int) (player[0].getY() -2));
-				//}
-			}
-
-			if(player[0].getYspeed() > 0 && !player[0].isJumping()){
-				player[0].setYSpeed((player[0].getYspeed() +  1.98)/ 1.0198);
-			}
-			//				if(player[0].getYspeed() < 0){
-			//					player[0].setYSpeed(0);
-			//				}
-			if(player[0].getY() > height){
-				player[0].setY((int) (player[0].getY() - height/2));
-			}
-
-				if(Character.toString(key).equalsIgnoreCase("a")){
-					player[0].setXSpeed(-speedCap);
+				if(Character.toString(key).equalsIgnoreCase("w") && player[0].getYspeed() == 0){
+					//if(checkPlayerCollision()){
+					player[0].setJumping(true);
+					player[0].setY((int) (player[0].getY() -2));
+					//}
 				}
-				else if(Character.toString(key).equalsIgnoreCase("d")){
-					player[0].setXSpeed(speedCap);
+	
+				if(player[0].getYspeed() > 0 && !player[0].isJumping()){
+					player[0].setYSpeed((player[0].getYspeed() +  1.98)/ 1.0198);
 				}
-				if(Character.toString(key).equalsIgnoreCase("s")){
-					
-					if(!player[0].isCrouching()){
-						player[0].setCrouching(true);
-					}
-					
-					player[0].setHeight(player[0].initialHeight/2);
-					
-					if(player[0].isCrouching()){
-						player[0].setY((int) (player[0].getY() + player[0].initialHeight/2));
-					}
-				
-				}
-				else{ 
-					player[0].setHeight(player[0].initialHeight);
-					player[0].setCrouching(false);
-				}
-				if(player[0].getYspeed() > 0){
-				     player[0].setYSpeed((player[0].getYspeed() +  1.98)/ 1.0198);
-				    }
+				//				if(player[0].getYspeed() < 0){
+				//					player[0].setYSpeed(0);
+				//				}
 				if(player[0].getY() > height){
 					player[0].setY((int) (player[0].getY() - height/2));
 				}
-				if(playerProjectileDirection == -1){
-					signX = -1;
-				}
-				else if(playerProjectileDirection == 1){
-					signX = 1;
-				}
-				if(saltBalls.size() > 0){
-					if(isPlayerProjectileSpawned){
-						saltBalls.get(saltBalls.size()-1).setColor(new Color((int) (16), (int)  (16), (int) (16)));
-						saltBalls.get(saltBalls.size()-1).setXSpeed(speedCap * signX);
-						saltBalls.get(saltBalls.size()-1).setYSpeed(speedCap);
-						isPlayerProjectileSpawned = false;
+	
+					if(Character.toString(key).equalsIgnoreCase("a")){
+						player[0].setXSpeed(-speedCap);
 					}
-					for(int i = 0; i<saltBalls.size(); i++){
-						if(saltBalls.get(i).getBouncing() && saltBalls.get(i).getYspeed() == 0){
-							saltBalls.get(i).setYSpeed(saltBalls.get(i).getYspeed());
-						}
-						else{
-							saltBalls.get(i).setYSpeed((saltBalls.get(i).getYspeed() + saltBalls.get(i).getProjectileAcceleration())
-									/ saltBalls.get(i).getGravityConstant());
-						}
-						if(saltBalls.get(i).getY() > height){
-							saltBalls.get(i).setY((int) saltBalls.get(i).getY() - 10);
-						}
-						if(saltBalls.get(i).getYspeed() > -1 && saltBalls.get(i).getYspeed() < 1){
-							saltBalls.get(i).setHasBounced(true);
-						}
+					else if(Character.toString(key).equalsIgnoreCase("d")){
+						player[0].setXSpeed(speedCap);
 					}
-				}
-				
-				if(walkers.size() > 0){
-					for(int i = 0; i < walkers.size(); i++){
-						if(walkers.get(i).hitBoundry()){
-							walkers.get(i).setXSpeed(slugSpeed * - 1);
-							walkers.get(i).movingToBoundry(false);
+					if(Character.toString(key).equalsIgnoreCase("s")){
+						
+						if(!player[0].isCrouching()){
+							player[0].setCrouching(true);
 						}
+						
+						player[0].setHeight(player[0].initialHeight/2);
+						
+						if(player[0].isCrouching()){
+							player[0].setY((int) (player[0].getY() + player[0].initialHeight/2));
+						}
+					
 					}
-				}
-				if(slugs.size() > 0){
-					for(int i = 0; i < slugs.size(); i++){
-						if(slugs.get(i).isShooting()){	
-							if(slugs.get(i).getXspeed() >= 0){
-								slugDirection = 1;
-								slimeBalls.add(new SlugProjectile(slugs.get(i).getX() + slugs.get(i).getWidth(), slugs.get(i).getY() + slugs.get(i).getHeight()/4, 0, width, 0, height));							
+					else{ 
+						player[0].setHeight(player[0].initialHeight);
+						player[0].setCrouching(false);
+					}
+					if(player[0].getYspeed() > 0){
+					     player[0].setYSpeed((player[0].getYspeed() +  1.98)/ 1.0198);
+					    }
+					if(player[0].getY() > height){
+						player[0].setY((int) (player[0].getY() - height/2));
+					}
+					if(playerProjectileDirection == -1){
+						signX = -1;
+					}
+					else if(playerProjectileDirection == 1){
+						signX = 1;
+					}
+					if(saltBalls.size() > 0){
+						if(isPlayerProjectileSpawned){
+							saltBalls.get(saltBalls.size()-1).setColor(new Color((int) (16), (int)  (16), (int) (16)));
+							saltBalls.get(saltBalls.size()-1).setXSpeed(speedCap * signX);
+							saltBalls.get(saltBalls.size()-1).setYSpeed(speedCap);
+							isPlayerProjectileSpawned = false;
+						}
+						for(int i = 0; i<saltBalls.size(); i++){
+							if(saltBalls.get(i).getBouncing() && saltBalls.get(i).getYspeed() == 0){
+								saltBalls.get(i).setYSpeed(saltBalls.get(i).getYspeed());
 							}
-							else if(slugs.get(i).getXspeed() < 0){
-								slugDirection = -1;
-								slimeBalls.add(new SlugProjectile(slugs.get(i).getX(), slugs.get(i).getY() + slugs.get(i).getHeight()/4, 0, width, 0, height));
+							else{
+								saltBalls.get(i).setYSpeed((saltBalls.get(i).getYspeed() + saltBalls.get(i).getProjectileAcceleration())
+										/ saltBalls.get(i).getGravityConstant());
 							}
-							slimeBalls.get(slimeBalls.size() - 1).setDirection(slugDirection);
-							slimeBalls.get(slimeBalls.size() - 1).setXSpeed(slugSpeed * slugDirection);
-							slugs.get(i).setShooting(false);
-						}
-						if(slugs.get(i).hitBoundry()){
-							slugs.get(i).setXSpeed(2*slugSpeed/3 * - 1);
-							slugs.get(i).movingToBoundry(false);
+							if(saltBalls.get(i).getY() > height){
+								saltBalls.get(i).setY((int) saltBalls.get(i).getY() - 10);
+							}
+							if(saltBalls.get(i).getYspeed() > -1 && saltBalls.get(i).getYspeed() < 1){
+								saltBalls.get(i).setHasBounced(true);
+							}
 						}
 					}
+					
+					if(walkers.size() > 0){
+						for(int i = 0; i < walkers.size(); i++){
+							if(walkers.get(i).hitBoundry()){
+								walkers.get(i).setXSpeed(slugSpeed * - 1);
+								walkers.get(i).movingToBoundry(false);
+							}
+						}
+					}
+					if(slugs.size() > 0){
+						for(int i = 0; i < slugs.size(); i++){
+							if(slugs.get(i).isShooting()){	
+								if(slugs.get(i).getXspeed() >= 0){
+									slugDirection = 1;
+									slimeBalls.add(new SlugProjectile(slugs.get(i).getX() + slugs.get(i).getWidth(), slugs.get(i).getY() + slugs.get(i).getHeight()/4, 0, width, 0, height));							
+								}
+								else if(slugs.get(i).getXspeed() < 0){
+									slugDirection = -1;
+									slimeBalls.add(new SlugProjectile(slugs.get(i).getX(), slugs.get(i).getY() + slugs.get(i).getHeight()/4, 0, width, 0, height));
+								}
+								slimeBalls.get(slimeBalls.size() - 1).setDirection(slugDirection);
+								slimeBalls.get(slimeBalls.size() - 1).setXSpeed(slugSpeed * slugDirection);
+								slugs.get(i).setShooting(false);
+							}
+							if(slugs.get(i).hitBoundry()){
+								slugs.get(i).setXSpeed(2*slugSpeed/3 * - 1);
+								slugs.get(i).movingToBoundry(false);
+							}
+						}
+					}
+					
+					deleteSlugProjectile();
+					deletePlayerProjectile();
+	
+				} catch (InterruptedException e) {
+					Thread.currentThread().interrupt();
+					System.out.println("Interrupted");
+				} catch(ArrayIndexOutOfBoundsException e) {
+					
 				}
-				
-				deleteSlugProjectile();
-				deletePlayerProjectile();
-
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-				System.out.println("Interrupted");
-			} catch(ArrayIndexOutOfBoundsException e) {
-				
 			}
+		}
+		else if (State == State.MENU) {
+			
 		}
 	}
 	
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		g.drawString ("Number of salt balls: " + saltBalls.size(), 5, 20);
-		g.drawString ("Number of slime balls: " + slimeBalls.size(), 5, 40);
-		g.drawString ("Current Key: " + key, 5, 60);
-		g.drawString ("Current Direction: " + playerProjectileDirection, 5, 80);
-		// paints initial ground of main menu/first screen
-		for (int i = 0; i < ground.size(); i++) {
-			g.setColor(Color.GREEN);   
-			ground.get(i).draw(g);
+			super.paintComponent(g);
+			if (State == State.GAME) {
+				g.drawString ("Number of salt balls: " + saltBalls.size(), 5, 20);
+				g.drawString ("Number of slime balls: " + slimeBalls.size(), 5, 40);
+				g.drawString ("Current Key: " + key, 5, 60);
+				g.drawString ("Current Direction: " + playerProjectileDirection, 5, 80);
+				// paints initial ground of main menu/first screen
+				for (int i = 0; i < ground.size(); i++) {
+					g.setColor(Color.GREEN);   
+					ground.get(i).draw(g);
+				}
+				// paints test platform blocks on main menu/first screen
+				for (int i = 0; i < block.size(); i++) {
+					g.setColor(Color.BLACK);   
+					block.get(i).draw(g);
+				}
+				// paints test item blocks on main menu/first screen
+				for (int i = 0; i < iBlock.size(); i++) {  
+					g.setColor(Color.MAGENTA);  
+					iBlock.get(i).draw(g);
+				}
+				
+				for (int i = 0; i < mPlat.size(); i++) {  
+					g.setColor(Color.BLACK);  
+					mPlat.get(i).draw(g);
+					  }
+				for (int i = 0; i < fBlock.size(); i++) {  
+					g.setColor(Color.RED);  
+					fBlock.get(i).draw(g);
+					  }
+				
+				//Draws the player's projectiles
+				player[0].draw(g);
+				for (int i = 0; i < saltBalls.size(); i++) {
+					saltBalls.get(i).draw(g);
+				}
+				for (int i = 0; i < walkers.size(); i++) {
+					walkers.get(i).draw(g);
+				}		
+				for (int i = 0; i < slugs.size(); i++) {
+					slugs.get(i).draw(g);
+				}
+				for (int i = 0; i < slimeBalls.size(); i++) {
+					slimeBalls.get(i).draw(g);
+				}
 		}
-		// paints test platform blocks on main menu/first screen
-		for (int i = 0; i < block.size(); i++) {
-			g.setColor(Color.BLACK);   
-			block.get(i).draw(g);
-		}
-		// paints test item blocks on main menu/first screen
-		for (int i = 0; i < iBlock.size(); i++) {  
-			g.setColor(Color.MAGENTA);  
-			iBlock.get(i).draw(g);
-		}
-		
-		for (int i = 0; i < mPlat.size(); i++) {  
-			g.setColor(Color.BLACK);  
-			mPlat.get(i).draw(g);
-			  }
-		for (int i = 0; i < fBlock.size(); i++) {  
-			g.setColor(Color.RED);  
-			fBlock.get(i).draw(g);
-			  }
-		
-		//Draws the player's projectiles
-		player[0].draw(g);
-		for (int i = 0; i < saltBalls.size(); i++) {
-			saltBalls.get(i).draw(g);
-		}
-		for (int i = 0; i < walkers.size(); i++) {
-			walkers.get(i).draw(g);
-		}		
-		for (int i = 0; i < slugs.size(); i++) {
-			slugs.get(i).draw(g);
-		}
-		for (int i = 0; i < slimeBalls.size(); i++) {
-			slimeBalls.get(i).draw(g);
+		else if (State == State.MENU) {
+			MainMenu.render(g);
 		}
 	}
 	
@@ -473,33 +492,34 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 * sets the x direction the player's projectile is traveling towards
 	 */
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		key = e.getKeyChar();
-		//limits the number of player projectiles that can spawn
-		if(saltBalls.size() < 50){
-			if(Character.toString(key).equalsIgnoreCase("a")){
-				playerProjectileDirection = -1;
-			}
-			else if(Character.toString(key).equalsIgnoreCase("d")){
-				playerProjectileDirection = 1;
-			}
-			else if(Character.toString(key).equalsIgnoreCase(" ")){
-				if(playerProjectileDirection == 1){
-					saltBalls.add(new PlayerProjectile(player[0].getX() + player[0].getWidth(), player[0].getY() + player[0].getHeight()/2, 0, width, 0, (int) ground.get(0).getY()));
+		if (State == State.GAME) {
+			key = e.getKeyChar();
+			//limits the number of player projectiles that can spawn
+			if(saltBalls.size() < 50){
+				if(Character.toString(key).equalsIgnoreCase("a")){
+					playerProjectileDirection = -1;
 				}
-				else if(playerProjectileDirection == -1){
-					saltBalls.add(new PlayerProjectile(player[0].getX(), player[0].getY() + player[0].getHeight()/2, 0, width, 0, (int) ground.get(0).getY()));
+				else if(Character.toString(key).equalsIgnoreCase("d")){
+					playerProjectileDirection = 1;
 				}
-				isPlayerProjectileSpawned = true;
+				else if(Character.toString(key).equalsIgnoreCase(" ")){
+					if(playerProjectileDirection == 1){
+						saltBalls.add(new PlayerProjectile(player[0].getX() + player[0].getWidth(), player[0].getY() + player[0].getHeight()/2, 0, width, 0, (int) ground.get(0).getY()));
+					}
+					else if(playerProjectileDirection == -1){
+						saltBalls.add(new PlayerProjectile(player[0].getX(), player[0].getY() + player[0].getHeight()/2, 0, width, 0, (int) ground.get(0).getY()));
+					}
+					isPlayerProjectileSpawned = true;
+				}
+				//shoots slug projectiles
+	//			else if(Character.toString(key).equalsIgnoreCase("e")){
+	//				slimeBalls.get(slimeBalls.size() - 1).setDirection(playerProjectileDirection);
+	//				slimeBalls.add(new SlugProjectile(playerX, playerY, 0, width, 0, height));
+	//			}
 			}
-			//shoots slug projectiles
-//			else if(Character.toString(key).equalsIgnoreCase("e")){
-//				slimeBalls.get(slimeBalls.size() - 1).setDirection(playerProjectileDirection);
-//				slimeBalls.add(new SlugProjectile(playerX, playerY, 0, width, 0, height));
-//			}
-		}
-		else{
-			isPlayerProjectileSpawned = false;
+			else{
+				isPlayerProjectileSpawned = false;
+			}
 		}
 		
 	}
