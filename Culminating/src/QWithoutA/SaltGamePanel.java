@@ -2,6 +2,7 @@ package QWithoutA;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -228,7 +229,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	}
 	
 	public void run() {
-		if (State == State.GAME) {
+		if (State == STATE.GAME) {
 			while (true) {
 				repaint();
 				try{
@@ -381,14 +382,14 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 				}
 			}
 		}
-		else if (State == State.MENU) {
+		else if (State == STATE.MENU) {
 			
 		}
 	}
 	
 	public void paintComponent(Graphics g) {
 			super.paintComponent(g);
-			if (State == State.GAME) {
+			if (State == STATE.GAME) {
 				g.drawString ("Number of salt balls: " + saltBalls.size(), 5, 20);
 				g.drawString ("Number of slime balls: " + slimeBalls.size(), 5, 40);
 				g.drawString ("Current Key: " + key, 5, 60);
@@ -433,7 +434,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 					slimeBalls.get(i).draw(g);
 				}
 		}
-		else if (State == State.MENU) {
+		else if (State == STATE.MENU) {
 			renderMainMenu(g);
 		}
 	}
@@ -522,7 +523,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 * sets the x direction the player's projectile is traveling towards
 	 */
 	public void keyPressed(KeyEvent e) {
-		if (State == State.GAME) {
+		if (State == STATE.GAME) {
 			key = e.getKeyChar();
 			//limits the number of player projectiles that can spawn
 			if(saltBalls.size() < 50){
@@ -562,21 +563,15 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 	
 	/**
 	 * 
 	 */	
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		playerX = e.getX ();
-		playerY = e.getY ();
 		repaint ();
 		
 		if (State == STATE.MENU) {
-			mouseX = e.getX ();
-			mouseY = e.getY ();
 			mouseX = e.getX ();
 			mouseY = e.getY ();
 			if (mouseX >= playButton.x && mouseX <= playButton.x + 100) {
@@ -584,8 +579,17 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 					State = STATE.GAME;
 				}
 			}
+			else if (mouseX >= helpButton.x && mouseX <= helpButton.x + 100) {
+				if (mouseY >= helpButton.y && mouseY <= helpButton.y + 50) {
+				Component frame = null;
+				JOptionPane.showMessageDialog(frame, "Nobody needs help with a side-scroller, pussy.", "HELP", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
 		}
-	}
+		/*else if (State == STATE.GAME) {
+			run();
+		}
+	*/}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
