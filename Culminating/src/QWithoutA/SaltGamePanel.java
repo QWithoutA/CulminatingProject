@@ -196,33 +196,31 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		addMouseListener (this);
 		addMouseMotionListener(this);
 		
-		if (State == State.GAME) {
-			// adds ground arraylist
-			ground.add(new Ground(0, 525, 0, width, 0, height));
+		// adds ground arraylist
+		ground.add(new Ground(0, 525, 0, width, 0, height));
 			
-			// adds item block arraylist
-			iBlock.add(new ItemBlock(250, 350, 0, width, 0, height));
-			// adds regular platform blocks
-			block.add(new Blocks(150, 350, 0, width, 0, height));
-			block.add(new Blocks(350, 350, 0, width, 0, height));
-			//ads a platform that moves on the x axis
-			mPlat.add(new Platform(200, 300, 0, width, 0, height));
-			mPlat.get(0).setXSpeed(14-7);
-			//adds a platform that moves on the y axis
-			mPlat.add(new Platform(700, 400, 0, width, 300, 500));
-			mPlat.get(1).setYSpeed(14-10);
+		// adds item block arraylist
+		iBlock.add(new ItemBlock(250, 350, 0, width, 0, height));
+		// adds regular platform blocks
+		block.add(new Blocks(150, 350, 0, width, 0, height));
+		block.add(new Blocks(350, 350, 0, width, 0, height));
+		//ads a platform that moves on the x axis
+		mPlat.add(new Platform(200, 300, 0, width, 0, height));
+		mPlat.get(0).setXSpeed(14-7);
+		//adds a platform that moves on the y axis
+		mPlat.add(new Platform(700, 400, 0, width, 300, 500));
+		mPlat.get(1).setYSpeed(14-10);
 	
-			//adds a block that falls 
-			fBlock.add(new FallingBlock(500, 250, 0, width, 0, height));
+		//adds a block that falls 
+		fBlock.add(new FallingBlock(500, 250, 0, width, 0, height));
 			
-			player[0] = new Player(30, 450, 0, width, 0, height);
+		player[0] = new Player(30, 450, 0, width, 0, height);
 			
-			walkers.add(new RoamingEnemy(400, 500, 200, 600, 0, height));
-			walkers.get(0).setXSpeed(walkerSpeed);
-			
-			slugs.add(new Slug(500, 500, 400, 600, 0 , height));
-			slugs.get(0).setXSpeed(2*slugSpeed/3);
-		}
+		walkers.add(new RoamingEnemy(400, 500, 200, 600, 0, height));
+		walkers.get(0).setXSpeed(walkerSpeed);
+		
+		slugs.add(new Slug(500, 500, 400, 600, 0 , height));
+		slugs.get(0).setXSpeed(2*slugSpeed/3);
 		//begins game
 		Thread gameThread = new Thread(this);
 		gameThread.start();
