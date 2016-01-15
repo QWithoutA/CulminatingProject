@@ -61,8 +61,6 @@ public class Slug extends MovingObject {
 		if (shotCounter > 30){
 			setShooting(true);
 			shotCounter = 0;
-			
-			
 		}
 		else{
 			setShooting(false);

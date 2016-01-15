@@ -52,12 +52,11 @@ public class PlayerProjectile extends MovingObject {
 		// TODO Auto-generated method stub
 		if(Bounced){
 			counter++;
-			Bounced = false;
-			System.out.println(counter);
 		}
-		if(counter > 4){
+		if(counter > 25){
 			isDecayed = true;
 			counter = 0;
+			setHasBounced(false);
 		}
 	}
 	private void setRadius(int radius) {
