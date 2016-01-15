@@ -26,11 +26,15 @@ public class ItemBlock extends NormalBlock{
 		int drawY = (int) getY();
 		
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 		g.fillRect(drawX, drawY, width, height);
 =======
 		g.fillRect(drawX, drawY, getWidth(), getHeight());
 >>>>>>> refs/remotes/origin/master
+=======
+		g.fillRect(drawX, drawY, getWidth(), getHeight());
+>>>>>>> refs/remotes/origin/su
 		if (!filledIn) {
 			g.setColor(Color.black);
 			g.fillRect(drawX, drawY, width, height);
@@ -51,6 +55,10 @@ public class ItemBlock extends NormalBlock{
 			setX(1100);
 			setY(550);
 		}
+<<<<<<< HEAD
+=======
+		
+>>>>>>> refs/remotes/origin/su
 		
 		
 	}

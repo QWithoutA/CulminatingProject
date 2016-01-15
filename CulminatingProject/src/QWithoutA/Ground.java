@@ -8,7 +8,7 @@ public class Ground extends NormalBlock{
 	private int width = 1150;
 	private int height = 35;
 	public Ground(double x, double y, int left, int right, int top, int bottom) {
-		super(x, y, left + 10, right - 10, top + 10, bottom - 10);
+		super(x, y, left, right, top, bottom);
 		
 	}
 
@@ -25,6 +25,7 @@ public class Ground extends NormalBlock{
 		// TODO Auto-generated method stub
 		
 	}
+<<<<<<< HEAD
 	public int getWidth(){
 		return width;
 	}
@@ -44,4 +45,19 @@ public class Ground extends NormalBlock{
 
 >>>>>>> refs/remotes/origin/master
 
+=======
+	public int getHeight(){
+		return height;
+	}
+	public void setHeight(int x){
+		this.height = x;
+	}
+	
+	public int getWidth(){
+		return width;
+	}
+	public void setWidth(int x){
+		this.width = x;
+	}
+>>>>>>> refs/remotes/origin/su
 }

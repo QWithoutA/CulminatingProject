@@ -570,10 +570,9 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 */	
 	public void mouseClicked(MouseEvent e) {
 		repaint ();
-		
+		mouseX = e.getX ();
+		mouseY = e.getY ();
 		if (State == STATE.MENU) {
-			mouseX = e.getX ();
-			mouseY = e.getY ();
 			if (mouseX >= playButton.x && mouseX <= playButton.x + 100) {
 				if (mouseY >= playButton.y && mouseY <= playButton.y + 50) {
 					State = STATE.GAME;
@@ -586,10 +585,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 				}
 			}
 		}
-		/*else if (State == STATE.GAME) {
-			run();
-		}
-	*/}
+	}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
