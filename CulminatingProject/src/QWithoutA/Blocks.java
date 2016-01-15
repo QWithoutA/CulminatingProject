@@ -2,7 +2,7 @@ package QWithoutA;
 
 import java.awt.Graphics;
 
-public class Blocks extends MovingObject{
+public class Blocks extends StaticObject{
 
 	private int width = 35;
 	private int height = 35;

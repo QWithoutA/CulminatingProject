@@ -1,56 +1,9 @@
-/**
- * 
- */
 package Entities;
 
-<<<<<<< HEAD
-import java.awt.Graphics;
-
-import QWithoutA.MovingObject;
-
-/**
- * @author Jenny-Dell
- *
- */
-public class Slug extends MovingObject {
-
-	/**
-	 * @param x
-	 * @param y
-	 * @param left
-	 * @param right
-	 * @param top
-	 * @param bottom
-	 */
-	public Slug(double x, double y, int left, int right, int top, int bottom) {
-		super(x, y, left, right, top, bottom);
-		// TODO Auto-generated constructor stub
-	}
-
-	/* (non-Javadoc)
-	 * @see QWithoutA.MovingObject#draw(java.awt.Graphics)
-	 */
-	@Override
-	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/* (non-Javadoc)
-	 * @see QWithoutA.MovingObject#animateOneStep()
-	 */
-	@Override
-	public void animateOneStep() {
-		// TODO Auto-generated method stub
-
-	}
-
-=======
 import java.awt.Color;
 import java.awt.Graphics;
 
 import QWithoutA.MovingObject;
-import QWithoutA.SaltGamePanel;
 
 /**
  * @author Glen Su
@@ -60,6 +13,7 @@ public class Slug extends MovingObject {
 	
 	private int width;
 	private int height;
+	private int paceCounter;
 	private int shotCounter;
 	private boolean isTurning;
 	private boolean isShooting;
@@ -74,6 +28,7 @@ public class Slug extends MovingObject {
 	public Slug(double x, double y, int left, int right, int top, int bottom) {
 		super(x, y, left, right, top, bottom);
 		// TODO Auto-generated constructor stub
+		paceCounter = 0;
 		shotCounter = 0;
 		setHeight(30);
 		setWidth(55);
@@ -101,16 +56,21 @@ public class Slug extends MovingObject {
 	public void animateOneStep() {
 		// TODO Auto-generated method stub
 		shotCounter++;
-		if (shotCounter > 30){
+		paceCounter++;
+		if (shotCounter > 80){
 			setShooting(true);
 			shotCounter = 0;
-			
-			
 		}
 		else{
-			setShooting(false);
+			
 		}
-
+		if(paceCounter > 40){
+			movingToBoundry(true);
+			paceCounter = 0;
+		}
+		else{
+			
+		}
 	}
 	public void setWidth(int x){
 		width = x;
@@ -138,5 +98,4 @@ public class Slug extends MovingObject {
 	public boolean isShooting(){
 		return isShooting;
 	}
->>>>>>> refs/remotes/origin/su
 }

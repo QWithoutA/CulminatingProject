@@ -3,8 +3,8 @@ package QWithoutA;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class ItemBlock extends NormalBlock{
-	
+public class ItemBlock extends Blocks{
+	// item block dispenses power ups when jumped into, as opposed to regular platform blocks
 	private int counter;
 	private int flashSpeed;
 	private boolean filledIn;
@@ -25,18 +25,9 @@ public class ItemBlock extends NormalBlock{
 		int drawX = (int) getX();
 		int drawY = (int) getY();
 		
-<<<<<<< HEAD
-<<<<<<< HEAD
-	
-		g.fillRect(drawX, drawY, width, height);
-=======
 		g.fillRect(drawX, drawY, getWidth(), getHeight());
->>>>>>> refs/remotes/origin/master
-=======
-		g.fillRect(drawX, drawY, getWidth(), getHeight());
->>>>>>> refs/remotes/origin/su
 		if (!filledIn) {
-			g.setColor(Color.black);
+			g.setColor(Color.CYAN);
 			g.fillRect(drawX, drawY, width, height);
 		}
 	}
@@ -51,23 +42,8 @@ public class ItemBlock extends NormalBlock{
 			else
 				filledIn = true;
 		}
-		if (getX() >= getRight() | getX() <= getLeft()){
-			setX(1100);
-			setY(550);
-		}
-<<<<<<< HEAD
-=======
-		
->>>>>>> refs/remotes/origin/su
 		
 		
-	}
-	
-	public int getWidth(){
-		return width;
-	}
-	public int getHeight(){
-		return height;
 	}
 
 }

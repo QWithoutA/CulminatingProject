@@ -1,9 +1,8 @@
 package QWithoutA;
 
 import java.awt.Graphics;
-//Ground class serves as bottom platform on which the player character will be by default; separate from ordinary blocks
-
-public class Ground extends NormalBlock{
+// Ground class serves as bottom platform on which the player character will be by default; separate from ordinary blocks
+public class Ground extends Blocks{
 
 	private int width = 1150;
 	private int height = 35;
@@ -25,39 +24,18 @@ public class Ground extends NormalBlock{
 		// TODO Auto-generated method stub
 		
 	}
-<<<<<<< HEAD
 	public int getWidth(){
 		return width;
 	}
 	public int getHeight(){
 		return height;
 	}
-<<<<<<< HEAD
-	
-	public void setWidth() {
+
+	public void setWidth(int width){
 		this.width = width;
 	}
-	
-	public void setHeight() {
+	public void setHeight(int height){
 		this.height = height;
 	}
-=======
 
->>>>>>> refs/remotes/origin/master
-
-=======
-	public int getHeight(){
-		return height;
-	}
-	public void setHeight(int x){
-		this.height = x;
-	}
-	
-	public int getWidth(){
-		return width;
-	}
-	public void setWidth(int x){
-		this.width = x;
-	}
->>>>>>> refs/remotes/origin/su
 }

@@ -81,7 +81,7 @@ public abstract class MovingObject implements Runnable {
 	public void stopThread() {
 		moving = false;
 	}
-// double check run method later.
+// double cheack run method later.
 	public void run() {
 		while (moving) {
 			animateOneStep();
@@ -89,8 +89,6 @@ public abstract class MovingObject implements Runnable {
 			y += ySpeed;
 			if (y >= bottom | y <= top)
 				ySpeed *= -1;
-			if (x >= right | x <= left)
-				xSpeed *= -1;
 			try {
 				Thread.sleep(pauseDuration);
 			} catch (InterruptedException e) {
@@ -132,12 +130,12 @@ public abstract class MovingObject implements Runnable {
 	}
 	
 
-	public double getXSpeed(){
+	public double getXspeed(){
 		return xSpeed;
 	}
 	
 
-	public double getYSpeed(){
+	public double getYspeed(){
 		return ySpeed;
 	}
 
@@ -153,13 +151,13 @@ public abstract class MovingObject implements Runnable {
 	
 
 
-	public void setX(double x) {
+	public void setX(int x) {
 		this.x = x;
 	}
 	
 
-	public void setY(double d) {
-		this.y = d;
+	public void setY(int y) {
+		this.y = y;
 	}
 	
 	public void setColor(Color color) {
