@@ -249,6 +249,11 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 						}
 					}
 				}
+				//lags the game like hell
+				if(isPlayerHit()){
+					System.out.println("Died!");
+				}
+				
 //			if(collisionOfPlayerAndPlatform() && player.get(0).getYspeed() > 0){
 //				player.get(0).setYSpeed(0);
 //				player.get(0).setY((int) (mPlat.get(0).getY() - player.get(0).getHeight()));
@@ -443,22 +448,53 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	}
 		
 	public boolean isPlayerHit(){
+		//If the player touches a slug hitbox anywhere for now
 		for (int i = 0; i < slugs.size(); i++){
-			for(int j = 0; j < slugs.get(i).getWidth(); j++){
-				for(int k = 0; k < player.get(0).getWidth(); k++){
-					if(player.get(0).getY() + player.get(0).getHeight() + k == mPlatHorizontal.get(i).getY() + j && player.get(0).getX() + k == mPlatHorizontal.get(i).getX() + j){
-						return true;
-					}
-					else if(player.get(0).getY() == mPlatHorizontal.get(i).getY()){
-						return true;
+			for(int slugWidth = 0; slugWidth < slugs.get(i).getWidth(); slugWidth++){
+				for(int slugHeight = 0; slugHeight < slugs.get(i).getWidth(); slugHeight++){
+					for(int playerWidth = 0; playerWidth < player.get(0).getHeight(); playerWidth++){
+						for(int playerHeight = 0; playerHeight < player.get(0).getHeight(); playerHeight++){
+							if(player.get(0).getY() + playerHeight == slugs.get(i).getY() + slugHeight && player.get(0).getX() + playerWidth == slugs.get(i).getX() + slugHeight){
+								return true;
+							}
+						}
 					}
 				}
 			}
 		}
-		
+		//If the player touches a walker hitbox anywhere for now
+		for (int i = 0; i < walkers.size(); i++){
+			for(int walkerWidth = 0; walkerWidth < walkers.get(i).getWidth(); walkerWidth++){
+				for(int walkerHeight = 0; walkerHeight < walkers.get(i).getWidth(); walkerHeight++){
+					for(int playerWidth = 0; playerWidth < player.get(0).getHeight(); playerWidth++){
+						for(int playerHeight = 0; playerHeight < player.get(0).getHeight(); playerHeight++){
+							if(player.get(0).getY() + playerHeight == walkers.get(i).getY() + walkerHeight && player.get(0).getX() + playerWidth == walkers.get(i).getX() + walkerHeight){
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		//if the player touches a slime ball
+		for (int i = 0; i < slimeBalls.size(); i++){
+			for(int playerWidth = 0; playerWidth < player.get(0).getHeight(); playerWidth++){
+				for(int playerHeight = 0; playerHeight < player.get(0).getHeight(); playerHeight++){
+					if(slugDirection == 1){
+						if(player.get(0).getX() + playerHeight <= slimeBalls.get(i).getX() + slimeBalls.get(i).getRadius() && player.get(0).getX() + playerWidth >= slimeBalls.get(i).getX() - slimeBalls.get(i).getRadius() && player.get(0).getY() + playerHeight <= slimeBalls.get(i).getY() + slimeBalls.get(i).getRadius() && player.get(0).getY() + playerWidth >= slimeBalls.get(i).getY() - slimeBalls.get(i).getRadius()*2){
+							return true;
+						}
+					}
+					else if(slugDirection == -1){
+						if(player.get(0).getX() + playerHeight <= slimeBalls.get(i).getX() + slimeBalls.get(i).getRadius()*2 && player.get(0).getX() + playerWidth >= slimeBalls.get(i).getX() - slimeBalls.get(i).getRadius() && player.get(0).getY() + playerHeight <= slimeBalls.get(i).getY() + slimeBalls.get(i).getRadius() && player.get(0).getY() + playerWidth >= slimeBalls.get(i).getY() - slimeBalls.get(i).getRadius()){
+							return true;
+						}
+					}
+				}
+			}
+		}
 		return false;
 	}
-
 	//Collision for the player to the ground so the player does not go through the ground 
 	public int collisionOfPlayerAndGround(int i){
 		if((player.get(0).getY() + player.get(0).getHeight() >= ground.get(i).getY() && player.get(0).getY() + player.get(0).getHeight() <= ground.get(i).getY() + ground.get(i).getHeight()) && (player.get(0).getX() <= ground.get(i).getX() + ground.get(i).getWidth() && player.get(0).getX() + player.get(0).getWidth() >= ground.get(i).getX())){
