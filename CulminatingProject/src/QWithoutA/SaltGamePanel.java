@@ -190,8 +190,11 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		walkers.get(0).setXSpeed(walkerSpeed);
 		walkers.get(0).setYSpeed(walkerSpeed/2);
 		
-		slugs.add(new Slug(500, 500, 400, 600, 0 , height));
+		slugs.add(new Slug(500, 450, 400, 600, 0 , height));
 		slugs.get(0).setXSpeed(2*slugSpeed/3);
+		
+		slugs.add(new Slug(500, 400, 400, 600, 0 , height));
+		slugs.get(1).setXSpeed(2*slugSpeed/3);
 		//begins game
 		Thread gameThread = new Thread(this);
 		gameThread.start();
@@ -210,187 +213,188 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 //			if(collisionOfPlatformAndBoundriesUpDown()){
 //				mPlat.get(1).setYSpeed(mPlat.get(1).getYspeed() *-1);
 //			}
-				for(int i = 0; i<ground.size(); i++){
-					if(player.get(0).getYspeed() > 0){
-						switch(collisionOfPlayerAndGround(i)){
-						case 1:
-						player.get(0).setYSpeed(0);
-						player.get(0).setY((int) (ground.get(i).getY() - player.get(0).getHeight()));
-						}
-					}
-				}
-				for(int i = 0; i<fBlock.size(); i++){
-					if(player.get(0).getYspeed() > 0){
-						switch(collisionOfPlayerAndFallingBlock(i)){
-						case 1:
-							player.get(0).setYSpeed(0);
-							player.get(0).setY((int) (fBlock.get(i).getY() - player.get(0).getHeight()));
-							
-						}
-					}
-				}
-				for(int i = 0; i<iBlock.size(); i++){
-					if(player.get(0).getYspeed() > 0){
-						switch(collisionOfPlayerAndItemBlock(i)){
-						case 1:
-						player.get(0).setYSpeed(0);
-						player.get(0).setY((int) (iBlock.get(i).getY() - player.get(0).getHeight()));
-					}
-					}
-				}
-				for(int i = 0; i<block.size(); i++){
-					if(player.get(0).getYspeed() > 0){
-						switch(collisionOfPlayerAndNormalBlocks(i)){
-						case 1:
-							player.get(0).setYSpeed(0);
-							player.get(0).setY((int) (block.get(i).getY() - player.get(0).getHeight()));
-						case 2:
-							player.get(0).setXSpeed(0);
-						}
-					}
-				}
-//			if(collisionOfPlayerAndPlatform() && player.get(0).getYspeed() > 0){
-//				player.get(0).setYSpeed(0);
-//				player.get(0).setY((int) (mPlat.get(0).getY() - player.get(0).getHeight()));
-//			}
-			
-				if(Character.toString(key).equalsIgnoreCase("w") && player.get(0).getYspeed() == 0){
-					player.get(0).setJumping(true);
-				}
-				if(player.get(0).isJumping()){
-					player.get(0).setYSpeed((player.get(0).getYspeed() +  3.98)/ -1.0198 - 15);
-				}
-				if(player.get(0).getJumpCount() > 20){
-					player.get(0).setY((int) (player.get(0).getY() -2));
-				}
-				else if(player.get(0).getJumpCount() > 10){
-					player.get(0).setYSpeed(((player.get(0).getYspeed() + 1.98)/ 1.0198));
-					player.get(0).setJumping(false);
-				}
-				
-
-			if(!player.get(0).isJumping()){
-				player.get(0).setYSpeed((player.get(0).getYspeed() +  1.98)/ 1.0198);
-			}
-			//				if(player.get(0).getYspeed() < 0){
-			//					player.get(0).setYSpeed(0);
-			//				}
-			if(player.get(0).getY() > height){
-				player.get(0).setY((int) (player.get(0).getY() - height/4));
-			}
-
-				if(Character.toString(key).equalsIgnoreCase("a")){
-					player.get(0).setXSpeed(-speedCap);
-				}
-				else if(Character.toString(key).equalsIgnoreCase("d")){
-					player.get(0).setXSpeed(speedCap);
-				}
-				
-				if(Character.toString(key).equalsIgnoreCase("s")){
-					 
-					if(!player.get(0).isCrouching()){
-						player.get(0).setCrouching(true);
-						player.get(0).setY((int) (player.get(0).getY() + player.get(0).initialHeight/2));
-						player.get(0).setHeight(player.get(0).initialHeight/2);
-					}
-				
-				}
-				
-				if(!Character.toString(key).equalsIgnoreCase("s")){ 
-					if(player.get(0).isCrouching()){
-						player.get(0).setY((int) (player.get(0).getY() - player.get(0).initialHeight/2));
-						player.get(0).setCrouching(false);
-					}
-					player.get(0).setHeight(player.get(0).initialHeight);
-					
-				}
-				
-				if(player.get(0).getYspeed() < 0){ 
-				     player.get(0).setYSpeed((player.get(0).getYspeed() +  1.98)/ 1.0198);
-				}
-				
-				if(player.get(0).getY() >= height-1){
-					System.out.println("You Died!");
-					player.get(0).setY((int) (player.get(0).getY() - height/2));
-					slugs.get(0).setXSpeed(0);
-					walkers.get(0).setXSpeed(0);
-					mPlatHorizontal.get(0).setXSpeed(0);
-					mPlatHorizontal.get(1).setYSpeed(0);
-					
-				}
-				if(playerProjectileDirection == -1){
-					signX = -1;
-				}
-				else if(playerProjectileDirection == 1){
-					signX = 1;
-				}
-				if(saltBalls.size() > 0){
-					if(isPlayerProjectileSpawned){
-						saltBalls.get(saltBalls.size()-1).setColor(new Color((int) (16), (int)  (16), (int) (16)));
-						saltBalls.get(saltBalls.size()-1).setXSpeed(speedCap * signX);
-						saltBalls.get(saltBalls.size()-1).setYSpeed(speedCap);
-						isPlayerProjectileSpawned = false;
-					}
-					for(int i = 0; i<saltBalls.size(); i++){
-						if(saltBalls.get(i).getBouncing() && saltBalls.get(i).getYspeed() == 0){
-							saltBalls.get(i).setYSpeed(saltBalls.get(i).getYspeed());
-						}
-						else{
-							saltBalls.get(i).setYSpeed((saltBalls.get(i).getYspeed() + saltBalls.get(i).getProjectileAcceleration())
-									/ saltBalls.get(i).getGravityConstant());
-						}
-						if(saltBalls.get(i).getY() >= ground.get(0).getY()){
-							saltBalls.get(i).setY((int) ground.get(0).getY() - 2);
-						}
-						if(saltBalls.get(i).getYspeed() > -1 && saltBalls.get(i).getYspeed() < 1){
-							saltBalls.get(i).setHasBounced(true);
-						}
-					}
-				}
-				
-				if(walkers.size() > 0){
-					for(int i = 0; i < walkers.size(); i++){
-						if(walkers.get(i).hitBoundry()){
-							walkers.get(i).setXSpeed(slugSpeed * - 1);
-							walkers.get(i).setYSpeed((walkers.get(i).getYspeed() +  1.98)/ 1.0198);
-							walkers.get(i).movingToBoundry(false);
-						}
-						if(walkers.get(i).getYspeed() < 0){ 
-							walkers.get(i).setYSpeed((walkers.get(i).getYspeed() +  1.98)/ 1.0198);
-						}
-					}
-				}
-				
-				if(slugs.size() > 0){
-					for(int i = 0; i < slugs.size(); i++){
-						if(slugs.get(i).isShooting()){	
-							if(slugs.get(i).getXspeed() >= 0){
-								slugDirection = 1;
-								slimeBalls.add(new SlugProjectile(slugs.get(i).getX() + slugs.get(i).getWidth(), slugs.get(i).getY() + slugs.get(i).getHeight()/4, 0 - width, width *2, 0, height));							
+				if(player.size() > 0){
+					for(int i = 0; i<ground.size(); i++){
+						if(player.get(0).getYspeed() > 0){
+							switch(collisionOfPlayerAndGround(i)){
+							case 1:
+								player.get(0).setYSpeed(0);
+								player.get(0).setY((int) (ground.get(i).getY() - player.get(0).getHeight()));
 							}
-							else if(slugs.get(i).getXspeed() < 0){
-								slugDirection = -1;
-								slimeBalls.add(new SlugProjectile(slugs.get(i).getX(), slugs.get(i).getY() + slugs.get(i).getHeight()/4, 0 - width, width*2, 0, height));
-							}
-							slimeBalls.get(slimeBalls.size() - 1).setDirection(slugDirection);
-							slimeBalls.get(slimeBalls.size() - 1).setXSpeed(slugSpeed * slugDirection);
-							slugs.get(i).setShooting(false);
-						}
-						if(slugs.get(i).hitBoundry()){
-							slugs.get(i).setXSpeed(2*slugSpeed/3 * - 1);
-							slugs.get(i).movingToBoundry(false);
 						}
 					}
-				}
-				
-				deleteSlugProjectile();
-				deletePlayerProjectile();
+					for(int i = 0; i<fBlock.size(); i++){
+						if(player.get(0).getYspeed() > 0){
+							switch(collisionOfPlayerAndFallingBlock(i)){
+							case 1:
+								player.get(0).setYSpeed(0);
+								player.get(0).setY((int) (fBlock.get(i).getY() - player.get(0).getHeight()));
 
+							}
+						}
+					}
+					for(int i = 0; i<iBlock.size(); i++){
+						if(player.get(0).getYspeed() > 0){
+							switch(collisionOfPlayerAndItemBlock(i)){
+							case 1:
+								player.get(0).setYSpeed(0);
+								player.get(0).setY((int) (iBlock.get(i).getY() - player.get(0).getHeight()));
+							}
+						}
+					}
+					for(int i = 0; i<block.size(); i++){
+						if(player.get(0).getYspeed() > 0){
+							switch(collisionOfPlayerAndNormalBlocks(i)){
+							case 1:
+								player.get(0).setYSpeed(0);
+								player.get(0).setY((int) (block.get(i).getY() - player.get(0).getHeight()));
+							case 2:
+								player.get(0).setXSpeed(0);
+							}
+						}
+					}
+					//			if(collisionOfPlayerAndPlatform() && player.get(0).getYspeed() > 0){
+					//				player.get(0).setYSpeed(0);
+					//				player.get(0).setY((int) (mPlat.get(0).getY() - player.get(0).getHeight()));
+					//			}
+
+					if(Character.toString(key).equalsIgnoreCase("w") && player.get(0).getYspeed() == 0){
+						player.get(0).setJumping(true);
+					}
+					if(player.get(0).isJumping()){
+						player.get(0).setYSpeed((player.get(0).getYspeed() +  3.98)/ -1.0198 - 15);
+					}
+					if(player.get(0).getJumpCount() > 20){
+						player.get(0).setY((int) (player.get(0).getY() -2));
+					}
+					else if(player.get(0).getJumpCount() > 10){
+						player.get(0).setYSpeed(((player.get(0).getYspeed() + 1.98)/ 1.0198));
+						player.get(0).setJumping(false);
+					}
+
+
+					if(!player.get(0).isJumping()){
+						player.get(0).setYSpeed((player.get(0).getYspeed() +  1.98)/ 1.0198);
+					}
+					//				if(player.get(0).getYspeed() < 0){
+					//					player.get(0).setYSpeed(0);
+					//				}
+					if(player.get(0).getY() > height){
+						player.get(0).setY((int) (player.get(0).getY() - height/4));
+					}
+
+					if(Character.toString(key).equalsIgnoreCase("a")){
+						player.get(0).setXSpeed(-speedCap);
+					}
+					else if(Character.toString(key).equalsIgnoreCase("d")){
+						player.get(0).setXSpeed(speedCap);
+					}
+
+					if(Character.toString(key).equalsIgnoreCase("s")){
+
+						if(!player.get(0).isCrouching()){
+							player.get(0).setCrouching(true);
+							player.get(0).setY((int) (player.get(0).getY() + player.get(0).initialHeight/2));
+							player.get(0).setHeight(player.get(0).initialHeight/2);
+						}
+
+					}
+
+					if(!Character.toString(key).equalsIgnoreCase("s")){ 
+						if(player.get(0).isCrouching()){
+							player.get(0).setY((int) (player.get(0).getY() - player.get(0).initialHeight/2));
+							player.get(0).setCrouching(false);
+						}
+						player.get(0).setHeight(player.get(0).initialHeight);
+
+					}
+
+					if(player.get(0).getYspeed() < 0){ 
+						player.get(0).setYSpeed((player.get(0).getYspeed() +  1.98)/ 1.0198);
+					}
+
+					if(player.get(0).getY() >= height-1){
+						System.out.println("You Died!");
+						player.get(0).setY((int) (player.get(0).getY() - height/2));
+						slugs.get(0).setXSpeed(0);
+						walkers.get(0).setXSpeed(0);
+						mPlatHorizontal.get(0).setXSpeed(0);
+						mPlatHorizontal.get(1).setYSpeed(0);
+						player.remove(0);
+					}
+					if(playerProjectileDirection == -1){
+						signX = -1;
+					}
+					else if(playerProjectileDirection == 1){
+						signX = 1;
+					}
+					if(saltBalls.size() > 0){
+						if(isPlayerProjectileSpawned){
+							saltBalls.get(saltBalls.size()-1).setColor(new Color((int) (16), (int)  (16), (int) (16)));
+							saltBalls.get(saltBalls.size()-1).setXSpeed(speedCap * signX);
+							saltBalls.get(saltBalls.size()-1).setYSpeed(speedCap);
+							isPlayerProjectileSpawned = false;
+						}
+						for(int i = 0; i<saltBalls.size(); i++){
+							if(saltBalls.get(i).getBouncing() && saltBalls.get(i).getYspeed() == 0){
+								saltBalls.get(i).setYSpeed(saltBalls.get(i).getYspeed());
+							}
+							else{
+								saltBalls.get(i).setYSpeed((saltBalls.get(i).getYspeed() + saltBalls.get(i).getProjectileAcceleration())
+										/ saltBalls.get(i).getGravityConstant());
+							}
+							if(saltBalls.get(i).getY() >= ground.get(0).getY()){
+								saltBalls.get(i).setY((int) ground.get(0).getY() - 2);
+							}
+							if(saltBalls.get(i).getYspeed() > -1 && saltBalls.get(i).getYspeed() < 1){
+								saltBalls.get(i).setHasBounced(true);
+							}
+						}
+					}
+
+					if(walkers.size() > 0){
+						for(int i = 0; i < walkers.size(); i++){
+							if(walkers.get(i).hitBoundry()){
+								walkers.get(i).setXSpeed(slugSpeed * - 1);
+								walkers.get(i).setYSpeed((walkers.get(i).getYspeed() +  1.98)/ 1.0198);
+								walkers.get(i).movingToBoundry(false);
+							}
+							if(walkers.get(i).getYspeed() < 0){ 
+								walkers.get(i).setYSpeed((walkers.get(i).getYspeed() +  1.98)/ 1.0198);
+							}
+						}
+					}
+
+					if(slugs.size() > 0){
+						for(int i = 0; i < slugs.size(); i++){
+							if(slugs.get(i).isShooting()){	
+								if(slugs.get(i).getXspeed() >= 0){
+									slugDirection = 1;
+									slimeBalls.add(new SlugProjectile(slugs.get(i).getX() + slugs.get(i).getWidth(), slugs.get(i).getY() + slugs.get(i).getHeight()/4, 0 - width, width *2, 0, height));							
+								}
+								else if(slugs.get(i).getXspeed() < 0){
+									slugDirection = -1;
+									slimeBalls.add(new SlugProjectile(slugs.get(i).getX(), slugs.get(i).getY() + slugs.get(i).getHeight()/4, 0 - width, width*2, 0, height));
+								}
+								slimeBalls.get(slimeBalls.size() - 1).setDirection(slugDirection);
+								slimeBalls.get(slimeBalls.size() - 1).setXSpeed(slugSpeed * slugDirection);
+								slugs.get(i).setShooting(false);
+							}
+							if(slugs.get(i).hitBoundry()){
+								slugs.get(i).setXSpeed(2*slugSpeed/3 * - 1);
+								slugs.get(i).movingToBoundry(false);
+							}
+						}
+					}
+
+					deleteSlugProjectile();
+					deletePlayerProjectile();
+				}
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 				System.out.println("Interrupted");
 			} catch(ArrayIndexOutOfBoundsException e) {
-				
+
 			}
 		}
 	}
