@@ -132,6 +132,9 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	/**
 	 * Y co-ordinate of the mouse 
 	 */
+	
+	public boolean checkState;
+	
 	public static Rectangle playButton = new Rectangle(500, 300, 100, 50);
 	public static Rectangle helpButton = new Rectangle(500, 400, 100, 50);
 	public static Rectangle quitButton = new Rectangle(500, 500, 100, 50);
@@ -552,6 +555,13 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 				isPlayerProjectileSpawned = false;
 			}
 		}
+		else if (State == STATE.MENU) {
+			key = e.getKeyChar();
+			/*if (e == ) {
+				
+			}
+			*/
+		}
 		
 	}
 
@@ -581,9 +591,12 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 			else if (mouseX >= helpButton.x && mouseX <= helpButton.x + 100) {
 				if (mouseY >= helpButton.y && mouseY <= helpButton.y + 50) {
 				Component frame = null;
-				JOptionPane.showMessageDialog(frame, "Nobody needs help with a side-scroller, pussy.", "HELP", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(frame, "", "HELP", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
+		}
+		else {
+			
 		}
 	}
 
