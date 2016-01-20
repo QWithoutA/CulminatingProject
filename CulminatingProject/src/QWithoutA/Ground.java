@@ -4,8 +4,8 @@ import java.awt.Graphics;
 
 public class Ground extends FallingBlock{
 
-	public int width = 1150;
-	public int height = 35;
+	private int width = 1150;
+	private int height = 35;
 	public Ground(double x, double y, int left, int right, int top, int bottom) {
 		super(x, y, left, right, top, bottom);
 		

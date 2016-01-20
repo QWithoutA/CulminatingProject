@@ -68,17 +68,13 @@ public class Player extends MovingObject{
 	public void animateOneStep() {
 		// TODO Auto-generated method stub
 		if(isJumping){
-			SaltGamePanel.player[0].setYSpeed((SaltGamePanel.player[0].getYspeed() +  2.98)/ -1.0198 - 10);
 			jumpCounter++;
 		}
 		if(jumpCounter > 10){
 			jumpCounter ++;
-			setJumping(false);
-			SaltGamePanel.player[0].setYSpeed((SaltGamePanel.player[0].getYspeed() +  2.98)/ 1.0198);
 		}
 		if(jumpCounter > 20){
 			jumpCounter = 0;
-			
 		}
 	}
 	
@@ -100,6 +96,14 @@ public class Player extends MovingObject{
 	public int getWidth() {
 		// TODO Auto-generated method stub
 		return this.width;
+	}
+	public void setJumpCount(int x) {
+		// TODO Auto-generated method stub
+		this.jumpCounter = x;
+	}
+	public int getJumpCount() {
+		// TODO Auto-generated method stub
+		return this.jumpCounter;
 	}
 	
 	public void setCrouching(boolean x){
