@@ -5,6 +5,10 @@ package Entities;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import QWithoutA.MovingObject;
 import QWithoutA.SaltGamePanel;
@@ -20,6 +24,7 @@ public class Slug extends MovingObject {
 	private int shotCounter;
 	private boolean isTurning;
 	private boolean isShooting;
+	private BufferedImage image;
 	/**
 	 * @param x
 	 * @param y
@@ -36,6 +41,11 @@ public class Slug extends MovingObject {
 		setWidth(55);
 		setShooting(false);
 		movingToBoundry(false);
+		try {
+	        image = ImageIO.read(Player.class.getResourceAsStream("/Images/Snail.png"));
+	    } catch (IOException e) {
+	    	e.printStackTrace();
+	    }
 	}
 
 	/* (non-Javadoc)
@@ -47,8 +57,8 @@ public class Slug extends MovingObject {
 		int drawX = (int) getX();
 		int drawY = (int) getY();
 		
-		g.setColor(Color.GREEN);
-		g.fillRect(drawX, drawY, width, height);
+		
+		g.drawImage(image, drawX, drawY, this.width, this.height, null);
 	}
 
 	/* (non-Javadoc)

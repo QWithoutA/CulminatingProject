@@ -10,6 +10,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -119,6 +120,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 */
 	char key = ' ';
 	
+	BufferedImage buffer1;
+	
 	public boolean isPlayerProjectileSpawned = false;
 	public boolean isSlugProjectileSpawned = false;
 	
@@ -159,7 +162,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		
 		// adds ground arraylist
 		ground.add(new Ground(0, 525, 0, width, 0, height));
-		ground.get(0).setWidth(ground.get(0).getWidth()/2);
+		ground.get(0).setWidth(ground.get(0).getWidth()/3);
 		// adds item block arraylist
 		iBlock.add(new ItemBlock(250, 350, 0, width, 0, height));
 		// adds regular platform blocks
@@ -183,6 +186,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		
 		slugs.add(new Slug(500, 500, 400, 600, 0 , height));
 		slugs.get(0).setXSpeed(2*slugSpeed/3);
+		slugs.add(new Slug(750, 500, 700, 900, 0 , height));
+		slugs.get(1).setXSpeed(2*slugSpeed/3);
 		//begins game
 		Thread gameThread = new Thread(this);
 		gameThread.start();
@@ -353,6 +358,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		g.drawString ("Number of slime balls: " + slimeBalls.size(), 5, 40);
 		g.drawString ("Current Key: " + key, 5, 60);
 		g.drawString ("Current Direction: " + playerProjectileDirection, 5, 80);
+		g.drawImage(buffer1, 0, 0, null);
 		// paints initial ground of main menu/first screen
 		for (int i = 0; i < ground.size(); i++) {
 			g.setColor(Color.GREEN);   
