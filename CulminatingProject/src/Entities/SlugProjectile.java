@@ -107,4 +107,37 @@ public class SlugProjectile extends MovingObject {
 	public void setDirection(int x){
 		direction = x;
 	}
+	public boolean checkCollision(Player entity){
+		//If the player touches a slug hitbox anywhere for now
+		if(entity.getX() >= this.getX()){ //entity on right side of slug
+			if(entity.getX() > this.getX() + this.getRadius()){
+				return false;
+			}
+			else if(entity.getY() + entity.getHeight() > this.getY()){
+				return false;
+			}
+			else if(entity.getY() < this.getY() + this.getRadius()){
+				return false;
+			}
+		}	
+		else if(entity.getX() + entity.getWidth() <= this.getX()){// left side of slug
+			if(entity.getX() < this.getX() - entity.getWidth()){
+				return false;
+			}
+			else if(entity.getY() + entity.getHeight() > this.getY()){
+				return false;
+			}
+			else if(entity.getY() < this.getY() + this.getRadius()){
+				return false;
+			}
+		}
+		else if(entity.getY() + entity.getHeight() < this.getY()){
+			return false;
+		}
+		else if(entity.getY() > this.getY() + this.getRadius()){
+			return false;
+		}
+	
+		return true;
+	}
 }

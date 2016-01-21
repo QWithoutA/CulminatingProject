@@ -2,6 +2,9 @@ package QWithoutA;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
+
+import Entities.Player;
 
 public abstract class MovingObject implements Runnable {
 

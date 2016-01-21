@@ -1,6 +1,7 @@
 package QWithoutA;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 public class Blocks extends MovingObject{
 
@@ -31,5 +32,5 @@ public class Blocks extends MovingObject{
 	public int getHeight(){
 		return height;
 	}
-
+	
 }

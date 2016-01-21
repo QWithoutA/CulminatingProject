@@ -5,6 +5,7 @@ package Entities;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import QWithoutA.MovingObject;
 import QWithoutA.SaltGamePanel;
@@ -92,5 +93,51 @@ public class Slug extends MovingObject {
 	}
 	public boolean isShooting(){
 		return isShooting;
+	}
+	
+	public boolean checkCollision(Player entity){
+		//If the player touches a slug hitbox anywhere for now
+		if(entity.getX() >= this.getX()){ //entity on right side of slug
+			if(entity.getX() > this.getX() + this.getWidth()){
+				return false;
+			}
+			else if(entity.getY() + entity.getHeight() > this.getY()){
+				return false;
+			}
+			else if(entity.getY() < this.getY() + this.getHeight()){
+				return false;
+			}
+		}	
+		else if(entity.getX() + entity.getWidth() <= this.getX()){// left side of slug
+			if(entity.getX() < this.getX() - entity.getWidth()){
+				return false;
+			}
+			else if(entity.getY() + entity.getHeight() > this.getY()){
+				return false;
+			}
+			else if(entity.getY() < this.getY() + this.getHeight()){
+				return false;
+			}
+		}
+		else if(entity.getY() + entity.getHeight() < this.getY()){
+			return false;
+		}
+		else if(entity.getY() > this.getY() + this.getHeight()){
+			return false;
+		}
+	
+		return true;
+	}
+	public static void main(String[] args){
+		ArrayList<Slug> slugs = new ArrayList<Slug>();
+		slugs.add(new Slug(500, 450, 400, 600, 0 , 1100));
+		slugs.get(0).setXSpeed(7);
+		ArrayList<Player> player = new ArrayList<Player>();
+		player.add(new Player(550, 425, 400, 600, -0, 1100*2));
+		if(slugs.get(0).checkCollision(player.get(0))){
+			System.out.println("died");
+		}
+		System.out.println("running");
+		System.exit(0);
 	}
 }

@@ -72,5 +72,36 @@ public class RoamingEnemy extends MovingObject {
 	public boolean hitBoundry(){
 		return isTurning;
 	}
-	
+	public boolean checkCollision(Player entity){
+		//If the player touches a slug hitbox anywhere for now
+		if(entity.getX() >= this.getX()){ //entity on right side of slug
+			if(entity.getX() > this.getX() + this.getWidth()){
+				return false;
+			}
+			else if(entity.getY() + entity.getHeight() > this.getY()){
+				return false;
+			}
+			else if(entity.getY() < this.getY() + this.getHeight()){
+				return false;
+			}
+		}	
+		else if(entity.getX() + entity.getWidth() <= this.getX()){// left side of slug
+			if(entity.getX() < this.getX() - entity.getWidth()){
+				return false;
+			}
+			else if(entity.getY() + entity.getHeight() > this.getY()){
+				return false;
+			}
+			else if(entity.getY() < this.getY() + this.getHeight()){
+				return false;
+			}
+		}
+		else if(entity.getY() + entity.getHeight() < this.getY()){
+			return false;
+		}
+		else if(entity.getY() > this.getY() + this.getHeight()){
+			return false;
+		}
+		return true;
+	}
 }

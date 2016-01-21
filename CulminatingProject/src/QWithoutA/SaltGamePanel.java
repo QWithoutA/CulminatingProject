@@ -188,12 +188,12 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		
 		walkers.add(new RoamingEnemy(400, 500, 200, 600, 0, height));
 		walkers.get(0).setXSpeed(walkerSpeed);
-		walkers.get(0).setYSpeed(walkerSpeed/2);
+//		walkers.get(0).setYSpeed(walkerSpeed/2);
 		
 		slugs.add(new Slug(500, 450, 400, 600, 0 , height));
 		slugs.get(0).setXSpeed(2*slugSpeed/3);
 		
-		slugs.add(new Slug(500, 400, 400, 600, 0 , height));
+		slugs.add(new Slug(800, 500, 800, 1000, 0 , height));
 		slugs.get(1).setXSpeed(2*slugSpeed/3);
 		//begins game
 		Thread gameThread = new Thread(this);
@@ -253,9 +253,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 					}
 				}
 				//lags the game like hell
-				if(isPlayerHit()){
-					System.out.println("Died!");
-				}
+				
 				
 //			if(collisionOfPlayerAndPlatform() && player.get(0).getYspeed() > 0){
 //				player.get(0).setYSpeed(0);
@@ -310,13 +308,15 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 						player.get(0).setCrouching(false);
 					}
 					player.get(0).setHeight(player.get(0).initialHeight);
-					
 				}
 				
 				if(player.get(0).getYspeed() < 0){ 
 				     player.get(0).setYSpeed((player.get(0).getYspeed() +  1.98)/ 1.0198);
 				}
-				
+			
+//				if(isPlayerHit()){
+//					System.out.println("dead");
+//				}
 				if(player.get(0).getY() >= height-1){
 					System.out.println("You Died!");
 					player.get(0).setY((int) (player.get(0).getY() - height/2));
@@ -366,6 +366,9 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 						if(walkers.get(i).getYspeed() < 0){ 
 							walkers.get(i).setYSpeed((walkers.get(i).getYspeed() +  1.98)/ 1.0198);
 						}
+						if(walkers.get(i).checkCollision(player.get(0))){
+							System.out.println("died");
+						}
 					}
 				}
 				
@@ -387,6 +390,14 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 						if(slugs.get(i).hitBoundry()){
 							slugs.get(i).setXSpeed(2*slugSpeed/3 * - 1);
 							slugs.get(i).movingToBoundry(false);
+						}
+						if(slugs.get(i).checkCollision(player.get(0))){
+							System.out.println("died");
+						}
+					}
+					for(int i = 0; i< slimeBalls.size(); i++){
+						if(slimeBalls.get(i).checkCollision(player.get(0))){
+							System.out.println("died");
 						}
 					}
 				}
@@ -451,20 +462,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	}
 		
 	public boolean isPlayerHit(){
-		//If the player touches a slug hitbox anywhere for now
-		for (int i = 0; i < slugs.size(); i++){
-			for(int slugWidth = 0; slugWidth < slugs.get(i).getWidth(); slugWidth++){
-				for(int slugHeight = 0; slugHeight < slugs.get(i).getWidth(); slugHeight++){
-					for(int playerWidth = 0; playerWidth < player.get(0).getHeight(); playerWidth++){
-						for(int playerHeight = 0; playerHeight < player.get(0).getHeight(); playerHeight++){
-							if(player.get(0).getY() + playerHeight == slugs.get(i).getY() + slugHeight && player.get(0).getX() + playerWidth == slugs.get(i).getX() + slugHeight){
-								return true;
-							}
-						}
-					}
-				}
-			}
-		}
+		
 		//If the player touches a walker hitbox anywhere for now
 		for (int i = 0; i < walkers.size(); i++){
 			for(int walkerWidth = 0; walkerWidth < walkers.get(i).getWidth(); walkerWidth++){
@@ -481,7 +479,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		}
 		//if the player touches a slime ball
 		for (int i = 0; i < slimeBalls.size(); i++){
-			for(int playerWidth = 0; playerWidth < player.get(0).getHeight(); playerWidth++){
+			for(int playerWidth = 0; playerWidth < player.get(0).getWidth(); playerWidth++){
 				for(int playerHeight = 0; playerHeight < player.get(0).getHeight(); playerHeight++){
 					if(slugDirection == 1){
 						if(player.get(0).getX() + playerHeight <= slimeBalls.get(i).getX() + slimeBalls.get(i).getRadius() && player.get(0).getX() + playerWidth >= slimeBalls.get(i).getX() - slimeBalls.get(i).getRadius() && player.get(0).getY() + playerHeight <= slimeBalls.get(i).getY() + slimeBalls.get(i).getRadius() && player.get(0).getY() + playerWidth >= slimeBalls.get(i).getY() - slimeBalls.get(i).getRadius()*2){
