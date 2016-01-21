@@ -97,7 +97,7 @@ public class Slug extends MovingObject {
 	
 	public boolean checkCollision(Player entity){
 		//If the player touches a slug hitbox anywhere for now
-		if(entity.getX() >= this.getX()){ //entity on right side of slug
+		if(entity.getX() >= this.getX()+ this.getWidth()){ //entity on right side of slug
 			if(entity.getX() > this.getX() + this.getWidth()){
 				return false;
 			}
