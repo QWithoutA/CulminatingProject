@@ -2,6 +2,12 @@ package QWithoutA;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import Entities.Player;
 
 public class ItemBlock extends Blocks{
 	// item block dispenses power ups when jumped into, as opposed to regular platform blocks
@@ -11,12 +17,18 @@ public class ItemBlock extends Blocks{
 
 	private int width = 35;
 	private int height = 35;
+	private BufferedImage image;
 	public ItemBlock(double x, double y, int left, int right, int top, int bottom) {
 		super(x, y, left + 10, right - 10, top + 10, bottom - 10);
 		
 		counter = 0;
 		flashSpeed = (int) (10);
 		filledIn = true;
+		try {
+	        image = ImageIO.read(Player.class.getResourceAsStream("/Images/Item Block.png"));
+	    } catch (IOException e) {
+	    	e.printStackTrace();
+	    }
 	}
 
 	@Override
@@ -26,6 +38,7 @@ public class ItemBlock extends Blocks{
 		int drawY = (int) getY();
 		
 		g.fillRect(drawX, drawY, getWidth(), getHeight());
+		g.drawImage(image, drawX, drawY, this.width, this.height, null);
 		if (!filledIn) {
 			g.setColor(Color.black);
 			g.fillRect(drawX, drawY, width, height);
@@ -34,20 +47,7 @@ public class ItemBlock extends Blocks{
 
 	@Override
 	public void animateOneStep() {
-		counter++;
-		if (counter == flashSpeed) {
-			counter = 0;
-			if (filledIn)
-				filledIn = false;
-			else
-				filledIn = true;
-		}
-		if (getX() >= getRight() | getX() <= getLeft()){
-			setX(1100);
-			setY(550);
-		}
-		
 		
 	}
-
 }
+	

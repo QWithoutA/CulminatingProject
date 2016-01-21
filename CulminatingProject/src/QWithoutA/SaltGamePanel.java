@@ -10,6 +10,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -21,6 +22,7 @@ import Entities.PlayerProjectile;
 import Entities.RoamingEnemy;
 import Entities.Slug;
 import Entities.SlugProjectile;
+//import Images.Imageloader;
 
 /**
  * 
@@ -59,7 +61,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 * an array of falling blocks
 	 */
 	ArrayList<FallingBlock> fBlock = new ArrayList<FallingBlock>();
-	/**
+	/**>
      * ArrayLists of player projectiles
      */
     static ArrayList<PlayerProjectile> saltBalls = new ArrayList<PlayerProjectile>();
@@ -122,6 +124,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 */
 	char key = ' ';
 	
+	BufferedImage buffer1;
+	
 	public boolean isPlayerProjectileSpawned = false;
 	public boolean isSlugProjectileSpawned = false;
 	
@@ -140,7 +144,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 
 //		JOptionPane.showMessageDialog(frame, "To win this game, make your way past enemies and holes to get the item at the end." + "\n" 
 //			+ "If you happen to die, you will have to restart your journey.", "Welcome", JOptionPane.INFORMATION_MESSAGE);
-
+  
 		frame.setVisible(true);
 		frame.setLocation(100, 100);
 		Container c = frame.getContentPane();
@@ -192,6 +196,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		
 		slugs.add(new Slug(500, 500, 400, 600, 0 , height));
 		slugs.get(0).setXSpeed(2*slugSpeed/3);
+		slugs.add(new Slug(750, 500, 700, 900, 0 , height));
+		slugs.get(1).setXSpeed(2*slugSpeed/3);
 		//begins game
 		Thread gameThread = new Thread(this);
 		gameThread.start();
@@ -386,6 +392,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		g.drawString ("Number of slime balls: " + slimeBalls.size(), 5, 40);
 		g.drawString ("Current Key: " + key, 5, 60);
 		g.drawString ("Current Direction: " + playerProjectileDirection, 5, 80);
+		g.drawImage(buffer1, 0, 0, null);
 		// paints initial ground of main menu/first screen
 		for (int i = 0; i < ground.size(); i++) {
 			g.setColor(Color.GREEN);   

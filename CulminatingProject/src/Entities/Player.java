@@ -5,9 +5,15 @@ package Entities;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.imageio.ImageIO;
 
 import QWithoutA.MovingObject;
 import QWithoutA.SaltGamePanel;
+
 
 /**
  * 
@@ -27,7 +33,9 @@ public class Player extends MovingObject{
 	private boolean isDown;
 	private boolean isJumping;
 	private int jumpCounter;
-	
+
+	private BufferedImage image;
+
 	/**
 	 * @param x
 	 * @param y
@@ -39,25 +47,33 @@ public class Player extends MovingObject{
 	public Player(double x, double y, int left, int right, int top, int bottom) {
 		super(x, y, left, right, top, bottom);
 		// TODO Auto-generated constructor stub
+
+
+
 		setHeight(initialHeight);
 		setWidth(35);
 		isDown = false;
 		isJumping = false;
 		jumpCounter = 0;
+		
+		try {
+	        image = ImageIO.read(Player.class.getResourceAsStream("/Images/Saltman.png"));
+	    } catch (IOException e) {
+	    	e.printStackTrace();
+	    }
+		
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see QWithoutA.MovingObject#draw(java.awt.Graphics)
 	 */
 	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
+
 		int drawX = (int) getX();
 		int drawY = (int) getY();
-		g.setColor(Color.YELLOW);
-		g.fillRect(drawX ,drawY, this.width, this.height);
-		g.setColor(Color.BLACK);
-		g.drawRect(drawX ,drawY, this.width, this.height);
+		g.drawImage(image, drawX, drawY, this.width, this.height, null);
 		
 	}
 
