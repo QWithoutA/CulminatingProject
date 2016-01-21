@@ -135,9 +135,10 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	
 	public boolean checkState;
 	
-	public static Rectangle playButton = new Rectangle(500, 300, 100, 50);
+	/*public static Rectangle playButton = new Rectangle(500, 300, 100, 50);
 	public static Rectangle helpButton = new Rectangle(500, 400, 100, 50);
 	public static Rectangle quitButton = new Rectangle(500, 500, 100, 50);
+	*/
 	
 	public boolean isPlayerProjectileSpawned = false;
 	public boolean isSlugProjectileSpawned = false;
@@ -147,11 +148,15 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	
 	public double initialVelocity = Math.sqrt(-2*playerProjectileAcceleration *playerProjectileMaxHeight);
 
+	private MainMenu mainMenu;
+
 	public enum STATE{
 		MENU,
 		GAME
 	};
+	
 	public static STATE State = STATE.MENU;
+	
 	
 	public static void main(String[] args) {
 
@@ -173,7 +178,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		frame.setResizable(false);
 	}
 	
-	public static void renderMainMenu(Graphics g) {
+	/*public static void renderMainMenu(Graphics g) {
 		boolean click = false;
 		Graphics2D g2d = (Graphics2D) g;
 		Font fnt0 = new Font("Comic Sans MS", Font.BOLD, 50);
@@ -189,16 +194,21 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		g.drawString("Quit", quitButton.x + 19, quitButton.y + 35);
 		g2d.draw(quitButton);
 	}
-
+	*/
 	public SaltGamePanel(){
 		this.setPreferredSize(new Dimension(width, height));
 		this.setBackground(Color.CYAN);
 		//this.setFocusable(true);
-		
+		State = STATE.MENU;
 		setFocusable(true);
 		addKeyListener(this);
 		addMouseListener (this);
 		addMouseMotionListener(this);
+		
+		this.addMouseListener(new MouseInput());
+		
+		//adds main menu
+		mainMenu = new MainMenu();
 		
 		// adds ground arraylist
 		ground.add(new Ground(0, 525, 0, width, 0, height));
@@ -438,7 +448,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 				}
 		}
 		else if (State == STATE.MENU) {
-			renderMainMenu(g);
+			MainMenu.render(g);
 		}
 	}
 	
@@ -555,14 +565,6 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 				isPlayerProjectileSpawned = false;
 			}
 		}
-		else if (State == STATE.MENU) {
-			key = e.getKeyChar();
-			/*if (e == ) {
-				
-			}
-			*/
-		}
-		
 	}
 
 	public void keyReleased(KeyEvent e) {
@@ -580,7 +582,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 */	
 	public void mouseClicked(MouseEvent e) {
 		repaint ();
-		mouseX = e.getX ();
+		/*mouseX = e.getX ();
 		mouseY = e.getY ();
 		if (State == STATE.MENU) {
 			if (mouseX >= playButton.x && mouseX <= playButton.x + 100) {
@@ -595,9 +597,10 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 				}
 			}
 		}
-		else {
+		else if (State == STATE.GAME){
 			
 		}
+		*/
 	}
 
 	@Override
