@@ -185,7 +185,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		//adds a block that falls 
 		fBlock.add(new FallingBlock(500, 250, 0, width, 0, height));
 		
-		player.add(new Player(30, 250, -width, width*2, -height, height*2));
+		player.add(new Player(30, 250,	0, width, 0, height));
 		
 		walkers.add(new RoamingEnemy(475, 460, 450, 545, 0, height));
 		walkers.get(0).setXSpeed(walkerSpeed);
@@ -242,6 +242,13 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 						player.get(0).setY((int) (mPlatVertical.get(i).getY() - player.get(0).getHeight()));
 					}
 				}		
+				
+				for(int i = 0; i<slimeBalls.size(); i++){
+					if(collisionOfPlayerAndSlimeballs(i) && player.get(0).getYspeed() > 0){
+						player.get(0).setYSpeed(0);
+						player.get(0).setY((int) (slimeBalls.get(i).getY() - player.get(0).getHeight()));
+					}
+				}
 			
 				if(Character.toString(key).equalsIgnoreCase("w") && player.get(0).getYspeed() == 0){
 					player.get(0).setJumping(true);
@@ -485,7 +492,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		if(player.get(0).getY() + player.get(0).getHeight() > mPlatHorizontal.get(i).getY() + 1 && (player.get(0).getX() < mPlatHorizontal.get(i).getX() + mPlatHorizontal.get(i).getWidth() && player.get(0).getX() + player.get(0).getWidth() > mPlatHorizontal.get(i).getX())){
 			return true;
 		}
-		else if (player.get(0).getY() + player.get(0).getHeight() < mPlatHorizontal.get(i).getY() + mPlatHorizontal.get(i).getHeight() && player.get(0).getX() < mPlatHorizontal.get(i).getX() + mPlatHorizontal.get(i).getWidth() && player.get(0).getX() + player.get(0).getWidth() > mPlatHorizontal.get(i).getX()){
+		else if ((player.get(0).getY() + player.get(0).getHeight() < mPlatHorizontal.get(i).getY() + mPlatHorizontal.get(i).getHeight()) && player.get(0).getX() < mPlatHorizontal.get(i).getX() + mPlatHorizontal.get(i).getWidth() && player.get(0).getX() + player.get(0).getWidth() > mPlatHorizontal.get(i).getX()){
 			return true;
 		}
 		else
@@ -497,12 +504,20 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		if((player.get(0).getY() + player.get(0).getHeight() > mPlatVertical.get(i).getY() + 1 && (player.get(0).getX() < mPlatVertical.get(i).getX() + mPlatVertical.get(i).getWidth() && player.get(0).getX() + player.get(0).getWidth() > mPlatVertical.get(i).getX()))){
 				return true;
 		}
-		else if (player.get(0).getY() + player.get(0).getHeight() < mPlatHorizontal.get(i).getY() + mPlatHorizontal.get(i).getHeight() && player.get(0).getX() < mPlatHorizontal.get(i).getX() + mPlatHorizontal.get(i).getWidth() && player.get(0).getX() + player.get(0).getWidth() > mPlatHorizontal.get(i).getX()){
+		else if (player.get(0).getY() + player.get(0).getHeight() < mPlatHorizontal.get(i).getY()  + mPlatHorizontal.get(i).getHeight()&& player.get(0).getX() < mPlatHorizontal.get(i).getX() + mPlatHorizontal.get(i).getWidth() && player.get(0).getX() + player.get(0).getWidth() > mPlatHorizontal.get(i).getX()){
 			return true;
 		}
 		else
 			return false;
 		}
+		public boolean collisionOfPlayerAndSlimeballs(int i){
+			if(player.get(0).getX() + player.get(0).getWidth() < slimeBalls.get(0).getRadius()){
+				return true;
+			}
+		else
+			return false;
+		}
+		
 		
 	//collision for the player to stand on a normal block 
 	public boolean collisionOfPlayerAndNormalBlocks(int i){
