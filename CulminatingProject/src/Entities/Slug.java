@@ -5,7 +5,11 @@ package Entities;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import QWithoutA.MovingObject;
 import QWithoutA.SaltGamePanel;
@@ -29,6 +33,7 @@ public class Slug extends MovingObject {
 	 * @param top
 	 * @param bottom
 	 */
+	private BufferedImage image;
 	public Slug(double x, double y, int left, int right, int top, int bottom) {
 		super(x, y, left, right, top, bottom);
 		// TODO Auto-generated constructor stub
@@ -37,6 +42,11 @@ public class Slug extends MovingObject {
 		setWidth(55);
 		setShooting(false);
 		movingToBoundry(false);
+		try{
+			image = ImageIO.read(Player.class.getResourceAsStream("/Images/Snail.png"));
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 
 	/* (non-Javadoc)
@@ -47,9 +57,9 @@ public class Slug extends MovingObject {
 		// TODO Auto-generated method stub
 		int drawX = (int) getX();
 		int drawY = (int) getY();
-		
-		g.setColor(Color.GREEN);
-		g.fillRect(drawX, drawY, width, height);
+		g.drawImage(image, drawX, drawY, this.width, this.height, null);
+//		g.setColor(Color.GREEN);
+//		g.fillRect(drawX, drawY, width, height);
 	}
 
 	/* (non-Javadoc)

@@ -175,6 +175,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		//adds regular blocks
 		block.add(new Blocks(150, 350, 0, width, 0, height));
 		block.add(new Blocks(350, 350, 0, width, 0, height));
+		block.add(new Blocks(550, 400, 0, width, 0, height));
 		//adds a platform that moves on the x axis
 		mPlatHorizontal.add(new Platform(800, 300, 750, 1000, 0, height));
 		mPlatHorizontal.get(0).setXSpeed(3);
