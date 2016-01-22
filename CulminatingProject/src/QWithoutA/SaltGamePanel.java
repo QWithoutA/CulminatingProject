@@ -21,6 +21,7 @@ import Entities.PlayerProjectile;
 import Entities.RoamingEnemy;
 import Entities.Slug;
 import Entities.SlugProjectile;
+//import Images.Imageloader;
 
 /**
  * 
@@ -129,7 +130,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	private final double playerProjectileAcceleration = 9.8;
 	
 	public double initialVelocity = Math.sqrt(-2*playerProjectileAcceleration *playerProjectileMaxHeight);
-
+	
 	public static void main(String[] args) {
 
 		// Set up main window (using Swing's Jframe)
@@ -137,10 +138,10 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(new Dimension(1100, 550));
 		frame.setAutoRequestFocus(false);
-
+		
 //		JOptionPane.showMessageDialog(frame, "To win this game, make your way past enemies and holes to get the item at the end." + "\n" 
 //			+ "If you happen to die, you will have to restart your journey.", "Welcome", JOptionPane.INFORMATION_MESSAGE);
-
+		
 		frame.setVisible(true);
 		frame.setLocation(100, 100);
 		Container c = frame.getContentPane();

@@ -5,6 +5,7 @@ package Entities;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 import QWithoutA.MovingObject;
 import QWithoutA.SaltGamePanel;
@@ -27,7 +28,6 @@ public class Player extends MovingObject{
 	private boolean isDown;
 	private boolean isJumping;
 	private int jumpCounter;
-	
 	/**
 	 * @param x
 	 * @param y
@@ -39,6 +39,9 @@ public class Player extends MovingObject{
 	public Player(double x, double y, int left, int right, int top, int bottom) {
 		super(x, y, left, right, top, bottom);
 		// TODO Auto-generated constructor stub
+
+
+
 		setHeight(initialHeight);
 		setWidth(35);
 		isDown = false;
@@ -52,6 +55,7 @@ public class Player extends MovingObject{
 	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
+
 		int drawX = (int) getX();
 		int drawY = (int) getY();
 		g.setColor(Color.YELLOW);
