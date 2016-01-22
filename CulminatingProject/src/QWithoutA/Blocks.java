@@ -3,6 +3,8 @@ package QWithoutA;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import Entities.Player;
+
 public class Blocks extends MovingObject{
 
 	private int width = 35;
@@ -32,5 +34,157 @@ public class Blocks extends MovingObject{
 	public int getHeight(){
 		return height;
 	}
-	
+
+	public boolean checkStandingCollision(Player entity){
+		//If the player touches a block hitbox on top
+//		if(entity.getX() > this.getX()+ this.getWidth()){ //right side of block
+//			if(entity.getX() > this.getX() + this.getWidth()){
+//				return false;
+//			}
+//			// top side of block
+//			else if(entity.getY() + entity.getHeight() > this.getY()){
+//				return false;
+//			}
+//			// bottom side of block
+//			else if(entity.getY() < this.getY() + this.getHeight()){
+//				return false;
+//			}
+//		}	
+//		else if(entity.getX() + entity.getWidth() < this.getX()){//left side of block
+//			if(entity.getX() < this.getX() - entity.getWidth()){
+//				return false;
+//			}
+//			// top side of block
+//			else if(entity.getY() + entity.getHeight() > this.getY()){
+//				return false;
+//			}
+//			// bottom side of block
+//			else if(entity.getY() < this.getY() + this.getHeight()){
+//				return false;
+//			}
+//		}
+		// top side of block
+		if(entity.getX() > this.getX() + this.getWidth()){
+				return false;
+			}
+			else if(entity.getX() + entity.getWidth() < this.getX() ){
+				return false;
+			}
+			else if(entity.getY() < this.getY() - entity.getHeight()){
+				return false;
+			}
+			else if(entity.getY()< this.getY() - entity.getHeight() ){
+				return false;
+		}
+		// bottom side of block
+//		else if(entity.getY() > this.getY() + this.getHeight()){
+//			if(entity.getX() + entity.getHeight() < this.getX()){
+//				return false;
+//			}
+//			else if(entity.getX() < this.getX() - entity.getWidth()){
+//				return false;
+//			}
+//			else if(entity.getY() > this.getY() + entity.getHeight()){
+//				return false;
+//			}
+//		}
+		return true;
+	}
+
+	public boolean checkBreakingCollision(Player entity){
+		//If the player touches a block hitbox below
+		if(entity.getX() >= this.getX()+ this.getWidth()){ //entity on right side of block
+			if(entity.getX() > this.getX() + this.getWidth()){
+				return false;
+			}
+			else if(entity.getY() < this.getY() + this.getHeight()){
+				return false;
+			}
+			else if(entity.getY() > this.getY() + this.getHeight()){
+				return false;
+			}
+		}	
+		else if(entity.getX() + entity.getWidth() <= this.getX()){// left side of block
+			if(entity.getX() < this.getX() - entity.getWidth()){
+				return false;
+			}
+			else if(entity.getY() < this.getY() + this.getHeight()){
+				return false;
+			}
+			else if(entity.getY() > this.getY() + this.getHeight()){
+				return false;
+			}
+		}
+		// top side of block
+		else if(entity.getY() + entity.getHeight() < this.getY()){
+			if(entity.getX() > this.getX() + this.getWidth()){
+				return false;
+			}
+			else if(entity.getX() < this.getX() - entity.getWidth()){
+				return false;
+			}
+			else if(entity.getY() < this.getY() - entity.getHeight()){
+				return false;
+			}
+		}
+		// bottom side of block
+		else if(entity.getY() > this.getY() + this.getHeight()){
+			return false;
+		}
+		return true;
+	}
+	public boolean checkSideCollision(Player entity){
+		//If the player touches a block hitbox on the sides
+		if(entity.getX() >= this.getX()+ this.getWidth()){ //entity on right side of block
+			if(entity.getX() > this.getX() + this.getWidth()){
+				return false;
+			}
+			// top side of block
+			else if(entity.getY() + entity.getHeight() > this.getY()){
+				return false;
+			}
+			// bottom side of block
+			else if(entity.getY() < this.getY() + this.getHeight()){
+				return false;
+			}
+		}	
+		else if(entity.getX() + entity.getWidth() <= this.getX()){// left side of block
+			if(entity.getX() < this.getX() - entity.getWidth()){
+				return false;
+			}
+			// top side of block
+			else if(entity.getY() + entity.getHeight() > this.getY()){
+				return false;
+			}
+			// bottom side of block
+			else if(entity.getY() < this.getY() + this.getHeight()){
+				return false;
+			}
+		}
+		// top side of block
+		else if(entity.getY() + entity.getHeight() < this.getY()){
+			if(entity.getX() > this.getX() + this.getWidth()){
+				return false;
+			}
+			else if(entity.getX() < this.getX() - entity.getWidth()){
+				return false;
+			}
+			else if(entity.getY() < this.getY() - entity.getHeight()){
+				return false;
+			}
+		}
+		// bottom side of block
+		else if(entity.getY() > this.getY() + this.getHeight()){
+			if(entity.getX() + entity.getHeight() < this.getX()){
+				return false;
+			}
+			else if(entity.getX() < this.getX() - entity.getWidth()){
+				return false;
+			}
+			else if(entity.getY() > this.getY() + entity.getHeight()){
+				return false;
+			}
+		}
+		return true;
+	}
 }

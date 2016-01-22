@@ -101,10 +101,12 @@ public class Slug extends MovingObject {
 			if(entity.getX() > this.getX() + this.getWidth()){
 				return false;
 			}
-			else if(entity.getY() + entity.getHeight() > this.getY()){
+			// top side of slug
+			else if(entity.getY() + entity.getHeight() < this.getY()){
 				return false;
 			}
-			else if(entity.getY() < this.getY() + this.getHeight()){
+			// bottom side of slug
+			else if(entity.getY() > this.getY() + this.getHeight()){
 				return false;
 			}
 		}	
@@ -112,20 +114,32 @@ public class Slug extends MovingObject {
 			if(entity.getX() < this.getX() - entity.getWidth()){
 				return false;
 			}
-			else if(entity.getY() + entity.getHeight() > this.getY()){
+			// top side of slug
+			else if(entity.getY() + entity.getHeight() < this.getY()){
 				return false;
 			}
-			else if(entity.getY() < this.getY() + this.getHeight()){
+			// bottom side of slug
+			else if(entity.getY() > this.getY() + this.getHeight()){
 				return false;
 			}
 		}
+		// top side of slug
 		else if(entity.getY() + entity.getHeight() < this.getY()){
 			return false;
 		}
+		// bottom side of slug
 		else if(entity.getY() > this.getY() + this.getHeight()){
-			return false;
+			if(entity.getX() + entity.getHeight() < this.getX()){
+				return false;
+			}
+			else if(entity.getX() < this.getX() - entity.getWidth()){
+				return false;
+			}
+			else if(entity.getY() > this.getY() + entity.getHeight()){
+				return false;
+			}
 		}
-	
+
 		return true;
 	}
 	public static void main(String[] args){

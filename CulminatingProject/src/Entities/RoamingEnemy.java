@@ -78,10 +78,12 @@ public class RoamingEnemy extends MovingObject {
 			if(entity.getX() > this.getX() + this.getWidth()){
 				return false;
 			}
-			else if(entity.getY() + entity.getHeight() > this.getY()){
+			// top side of a roaming enemy
+			else if(entity.getY() + entity.getHeight() < this.getY()){
 				return false;
 			}
-			else if(entity.getY() < this.getY() + this.getHeight()){
+			// bottom side of a roaming enemy
+			else if(entity.getY() > this.getY() + this.getHeight()){
 				return false;
 			}
 		}	
@@ -89,18 +91,38 @@ public class RoamingEnemy extends MovingObject {
 			if(entity.getX() < this.getX() - entity.getWidth()){
 				return false;
 			}
-			else if(entity.getY() + entity.getHeight() > this.getY()){
+			// top side of a roaming enemy
+			else if(entity.getY() + entity.getHeight() < this.getY()){
 				return false;
 			}
-			else if(entity.getY() < this.getY() + this.getHeight()){
+			// bottom side of a roaming enemy
+			else if(entity.getY() > this.getY() + this.getHeight()){
 				return false;
 			}
 		}
+		// top side of a roaming enemy
 		else if(entity.getY() + entity.getHeight() < this.getY()){
-			return false;
+			if(entity.getX() > this.getX() + this.getWidth()){
+				return false;
+			}
+			else if(entity.getX() > this.getX() - entity.getWidth()){
+				return false;
+			}
+			else if(entity.getY() < this.getY() - entity.getHeight()){
+				return false;
+			}
 		}
+		// bottom side of a roaming enemy
 		else if(entity.getY() > this.getY() + this.getHeight()){
-			return false;
+			if(entity.getX() + entity.getHeight() < this.getX()){
+				return false;
+			}
+			else if(entity.getX() < this.getX() - entity.getWidth()){
+				return false;
+			}
+			else if(entity.getY() > this.getY() + entity.getHeight()){
+				return false;
+			}
 		}
 		return true;
 	}
