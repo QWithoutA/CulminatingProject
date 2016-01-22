@@ -34,6 +34,9 @@ public class Player extends MovingObject{
 	private boolean isJumping;
 	private int jumpCounter;
 
+	/**
+	 * Contains the image used for the player
+	 */
 	private BufferedImage image;
 
 	/**
