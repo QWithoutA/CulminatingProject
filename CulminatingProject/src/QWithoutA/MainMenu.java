@@ -6,15 +6,13 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.JOptionPane;
 
 import QWithoutA.SaltGamePanel;
 import QWithoutA.SaltGamePanel.STATE;
 
-public class MainMenu implements MouseListener {
+public class MainMenu  {
 	
 	private int mouseX;
 	private int mouseY;
@@ -39,66 +37,6 @@ public class MainMenu implements MouseListener {
 			g.drawString("Quit", quitButton.x + 19, quitButton.y + 35);
 			g2d.draw(quitButton);
 		}
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-//		mouseX = e.getX ();
-//		mouseY = e.getY ();
-//		if (SaltGamePanel.State == STATE.MENU) {
-//			if (mouseX >= playButton.x && mouseX <= playButton.x + 100) {
-//				if (mouseY >= playButton.y && mouseY <= playButton.y + 50) {
-//					SaltGamePanel.State = STATE.GAME;
-//				}
-//			}
-//			else if (mouseX >= helpButton.x && mouseX <= helpButton.x + 100) {
-//				if (mouseY >= helpButton.y && mouseY <= helpButton.y + 50) {
-//				Component frame = null;
-//				JOptionPane.showMessageDialog(frame, "", "HELP", JOptionPane.INFORMATION_MESSAGE);
-//				}
-//			}
-//		}
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-/*		mouseX = e.getX ();
-		mouseY = e.getY ();
-		if (mouseX >= playButton.x && mouseX <= playButton.x + 100) {
-			if (mouseY >= playButton.y && mouseY <= playButton.y + 50) {
-				SaltGamePanel.State = STATE.GAME;
-			}
-		}
-*/		
-	}
-	
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-//		mouseX = e.getX ();
-//		mouseY = e.getY ();
-//		if (SaltGamePanel.State == STATE.MENU) {
-//			if (mouseX >= playButton.x && mouseX <= playButton.x + 100) {
-//				if (mouseY >= playButton.y && mouseY <= playButton.y + 50) {
-//					SaltGamePanel.State = STATE.GAME;
-//				}
-//			}
-//			else if (mouseX >= helpButton.x && mouseX <= helpButton.x + 100) {
-//				if (mouseY >= helpButton.y && mouseY <= helpButton.y + 50) {
-//				Component frame = null;
-//				JOptionPane.showMessageDialog(frame, "", "HELP", JOptionPane.INFORMATION_MESSAGE);
-//				}
-//			}
-//		}
 	}
 
 }

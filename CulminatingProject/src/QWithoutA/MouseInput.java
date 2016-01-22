@@ -12,13 +12,16 @@ public class MouseInput implements MouseListener {
 	public static Rectangle helpButton = new Rectangle(500, 400, 100, 50);
 	public static Rectangle quitButton = new Rectangle(500, 500, 100, 50);
 	
-
-	public MouseInput() {
-		
-	}
-
 	public void mouseClicked(MouseEvent e) {
-		
+		int mouseX = e.getX();
+		int mouseY = e.getY();
+		if (SaltGamePanel.State == STATE.MENU){
+			if (mouseX >= playButton.x && mouseX <= playButton.x + 100) {
+				if (mouseY >= playButton.y && mouseY <= playButton.y + 50) {
+					SaltGamePanel.State = SaltGamePanel.STATE.GAME;
+				}
+			}
+		}
 	}
 
 	public void mouseEntered(MouseEvent e) {
@@ -30,15 +33,15 @@ public class MouseInput implements MouseListener {
 	}
 
 	public void mousePressed(MouseEvent e) {
-		int mouseX = e.getX ();
-		int mouseY = e.getY ();
-		
-		if (mouseX >= playButton.x && mouseX <= playButton.x + 100) {
-		if (mouseY >= playButton.y && mouseY <= playButton.y + 50) {
-			SaltGamePanel.State = STATE.GAME;
+		int mouseX = e.getX();
+		int mouseY = e.getY();
+		if (SaltGamePanel.State == STATE.MENU){
+			if (mouseX >= playButton.x && mouseX <= playButton.x + 100) {
+				if (mouseY >= playButton.y && mouseY <= playButton.y + 50) {
+					SaltGamePanel.State = SaltGamePanel.STATE.GAME;
+				}
 			}
 		}
-
 	}
 
 	public void mouseReleased(MouseEvent e) {
