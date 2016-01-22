@@ -73,7 +73,7 @@ public class Blocks extends MovingObject{
 			else if(entity.getY() < this.getY() - entity.getHeight()){
 				return false;
 			}
-			else if(entity.getY()< this.getY() - entity.getHeight() ){
+			else if(entity.getY() > this.getY() - entity.getHeight() ){
 				return false;
 		}
 		// bottom side of block
