@@ -34,7 +34,7 @@ public class RoamingEnemy extends MovingObject {
 		setWidth(35);
 		movingToBoundry(false);
 		try{
-			image = ImageIO.read(Player.class.getResourceAsStream("/Images/Saltman.png"));
+			image = ImageIO.read(Player.class.getResourceAsStream("/Images/Item Block(Used).png"));
 		}catch(IOException e){
 			e.printStackTrace();
 		}

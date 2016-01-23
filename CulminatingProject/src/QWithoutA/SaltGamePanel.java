@@ -84,7 +84,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	/**
 	 * The pause between repainting (should be set for about 30 frames per second).
 	 */
-	final int pauseDuration = 50;
+	final int pauseDuration = 40;
 	
 	/**
 	 * Radiuses of each player projectile 
@@ -175,7 +175,9 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		//adds regular blocks
 		block.add(new Blocks(150, 350, 0, width, 0, height));
 		block.add(new Blocks(350, 350, 0, width, 0, height));
-		block.add(new Blocks(550, 400, 0, width, 0, height));
+		for(int i = 0; i<5; i++){
+		block.add(new Blocks(525 + (i * 35), 400, 0, width, 0, height));
+		}
 		//adds a platform that moves on the x axis
 		mPlatHorizontal.add(new Platform(800, 300, 750, 1000, 0, height));
 		mPlatHorizontal.get(0).setXSpeed(3);
