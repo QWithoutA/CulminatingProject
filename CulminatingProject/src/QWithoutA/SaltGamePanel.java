@@ -183,7 +183,12 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		
 		this.addMouseListener(new MouseInput());
 		
-		this.levelGlen();
+		//this.levelGlen();
+		this.levelTimothy();
+		//this.levelRosauro();
+		//this.levelDavid();
+	
+		
 		//adds main menu
 		mainMenu = new MainMenu();
 		
@@ -195,6 +200,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		
 	}	
 	
+	//the first level that glen created 
 	public void levelGlen(){
 		ground.add(new Ground(0, 525, 0, width, 0, height));
 		ground.get(0).setWidth(ground.get(0).getWidth()/2);
@@ -229,10 +235,47 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		walkers.add(new RoamingEnemy(400, 500, 200, 600, 0, height));
 		walkers.get(0).setXSpeed(walkerSpeed);
 		
-		slugs.add(new Slug(500, 450, 400, 550, 0 , height));
+		slugs.add(new Slug(500, 460, 400, 550, 0 , height));
 		slugs.get(0).setXSpeed(2*slugSpeed/3);
+		
 		slugs.add(new Slug(750, 500, 700, 900, 0 , height));
 		slugs.get(1).setXSpeed(2*slugSpeed/3);
+	}
+	
+	// the first level that Timothy created 
+	public void levelTimothy(){
+		ground.add(new Ground(0, 525, 0, width, 0, height));
+		ground.get(0).setWidth(ground.get(0).getWidth()/3);
+		
+		ground.add(new Ground(750, 525, 0, width, 0, height));
+		ground.get(1).setWidth(ground.get(1).getWidth()/3);
+		
+		ground.add(new Ground(448, 300, 500, width, 0, height));
+		ground.get(2).setWidth(ground.get(2).getWidth()/9);
+		
+		// adds item blocks
+		iBlock.add(new ItemBlock(250, 350, 0, width, 0, height));
+		//adds regular blocks
+		block.add(new Blocks(150, 350, 0, width, 0, height));
+		block.add(new Blocks(350, 350, 0, width, 0, height));
+		
+		for(int i = 0; i<5; i++){
+		block.add(new Blocks(525 + (i * 35), 400, 0, width, 0, height));
+		}
+		
+		//adds a platform that moves on the x axis
+		mPlatHorizontal.add(new Platform(800, 300, 750, 1000, 0, height));
+		mPlatHorizontal.get(0).setXSpeed(3);
+
+		//adds a block that falls 
+		player.add(new Player(30, 250, 0, width, 0, height));
+	}
+	
+	// the first level that Rosauro created 
+	public void levelRosauro(){
+	}
+	// the first level that David created 
+	public void levelDavid(){
 	}
 	
 	public void run() {
@@ -243,23 +286,23 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 				try{
 					Thread.sleep(pauseDuration);
 					for(int i = 0; i<ground.size(); i++){
-						if(ground.get(i).checkStandingCollision(player.get(0)) && player.get(0).getYspeed() >= 0){
+						if(ground.get(i).checkStandingCollision(player.get(0)) && player.get(0).getYspeed() > 0){
 							player.get(0).setYSpeed(0);
 							player.get(0).setY((int) (ground.get(i).getY() - player.get(0).getHeight()));
-							System.out.println("on top");
+							//System.out.println("on top");
 						}
 						if(ground.get(i).checkBottomCollision(player.get(0)) && player.get(0).getYspeed() < 0){
 							player.get(0).setY((int) ground.get(i).getY() + ground.get(i).getHeight());
 							player.get(0).setJumping(false);
-							System.out.println("bottom");
+							//System.out.println("bottom");
 						}
 						if(ground.get(i).checkLeftSideCollision(player.get(0))){
 							player.get(0).setX((int) ground.get(i).getX() - player.get(0).getWidth() - 5);
-							System.out.println("left side hit");
+							//System.out.println("left side hit");
 						}
 						else if(ground.get(i).checkRightSideCollision(player.get(0))){
 							player.get(0).setX((int) ground.get(i).getX() + ground.get(i).getWidth() + 5);
-							System.out.println("right side hit");
+							//System.out.println("right side hit");
 						}
 					}
 					
