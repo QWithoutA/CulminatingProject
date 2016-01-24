@@ -37,9 +37,7 @@ public class Blocks extends MovingObject{
 	@Override
 	public void animateOneStep() {
 		// TODO Auto-generated method stub
-		
 	}
-	
 	public int getWidth(){
 		return width;
 	}
@@ -49,8 +47,7 @@ public class Blocks extends MovingObject{
 
 	public boolean checkStandingCollision(Player entity){
 		//If the player touches a block hitbox on top
-		if(entity.getX() > this.getX()+ this.getWidth()){ //right side of hitbox
-			
+		if(entity.getX() > this.getX()+ this.getWidth()){ //right side of hitbox			
 			if(entity.getX() + entity.getWidth() < this.getX()){
 				return false;
 			}
@@ -66,8 +63,7 @@ public class Blocks extends MovingObject{
 				return false;
 			}
 		}	
-		else if(entity.getX() + entity.getWidth() < this.getX()){//left side of hitbox
-			
+		else if(entity.getX() + entity.getWidth() < this.getX()){//left side of hitbox			
 			if(entity.getX() < this.getX() - entity.getWidth()){
 				return false;
 			}
@@ -84,8 +80,7 @@ public class Blocks extends MovingObject{
 			}
 		}
 		// top side of hitbox
-		else if(entity.getY() < this.getY() - entity.getHeight()){		
-			
+		else if(entity.getY() < this.getY() - entity.getHeight()){				
 			if(entity.getY() > this.getY() - entity.getHeight()+10){
 				return false;
 			}
@@ -101,7 +96,6 @@ public class Blocks extends MovingObject{
 		}
 		// bottom side of hitbox
 		else if(entity.getY() > this.getY() - entity.getHeight()+10){
-			
 			if(entity.getX() + entity.getHeight() < this.getX()){
 				return false;
 			}
@@ -137,7 +131,6 @@ public class Blocks extends MovingObject{
 			}
 		}	
 		else if(entity.getX() + entity.getWidth() < this.getX()){//left side of hitbox
-
 			if(entity.getX() < this.getX() - entity.getWidth()){
 				return false;
 			}
@@ -155,7 +148,6 @@ public class Blocks extends MovingObject{
 		}
 		// top side of hitbox
 		else if(entity.getY() < this.getY() + this.getHeight()+10){		
-
 			if(entity.getY() > this.getY() + this.getHeight()){
 				return false;
 			}
@@ -171,7 +163,6 @@ public class Blocks extends MovingObject{
 		}
 		// bottom side of hitbox
 		else if(entity.getY() > this.getY() + this.getHeight()){
-
 			if(entity.getX() + entity.getWidth() < this.getX()){
 				return false;
 			}
