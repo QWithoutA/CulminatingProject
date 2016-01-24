@@ -183,11 +183,19 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		
 		this.addMouseListener(new MouseInput());
 		
+		this.levelGlen();
 		//adds main menu
 		mainMenu = new MainMenu();
 		
 		State = STATE.MENU;
-		// adds ground to stand on
+
+		//begins game
+		Thread gameThread = new Thread(this);
+		gameThread.start();
+		
+	}	
+	
+	public void levelGlen(){
 		ground.add(new Ground(0, 525, 0, width, 0, height));
 		ground.get(0).setWidth(ground.get(0).getWidth()/2);
 		
@@ -220,17 +228,13 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		
 		walkers.add(new RoamingEnemy(400, 500, 200, 600, 0, height));
 		walkers.get(0).setXSpeed(walkerSpeed);
-//		walkers.get(0).setYSpeed(walkerSpeed/2);
 		
 		slugs.add(new Slug(500, 450, 400, 550, 0 , height));
 		slugs.get(0).setXSpeed(2*slugSpeed/3);
 		slugs.add(new Slug(750, 500, 700, 900, 0 , height));
 		slugs.get(1).setXSpeed(2*slugSpeed/3);
-		//begins game
-		Thread gameThread = new Thread(this);
-		gameThread.start();
-		
-	}	
+	}
+	
 	public void run() {
 		while (true) {
 			this.requestFocusInWindow();
@@ -786,4 +790,5 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	public char getKey() {
 		return key;
 	}
+	
 }
