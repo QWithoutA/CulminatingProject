@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import QWithoutA.MovingObject;
 import QWithoutA.SaltGamePanel;
 
+
 /**
  * 
  * 
@@ -31,7 +32,9 @@ public class Player extends MovingObject{
 	private boolean isDown;
 	private boolean isJumping;
 	private int jumpCounter;
-	
+	/**
+	 * Contains the image used for the player
+	 */
 	private BufferedImage image;
 	/**
 	 * @param x
@@ -59,7 +62,7 @@ public class Player extends MovingObject{
 			e.printStackTrace();
 		}
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see QWithoutA.MovingObject#draw(java.awt.Graphics)
 	 */
@@ -74,7 +77,6 @@ public class Player extends MovingObject{
 //		g.fillRect(drawX ,drawY, this.width, this.height);
 //		g.setColor(Color.BLACK);
 //		g.drawRect(drawX ,drawY, this.width, this.height);
-		
 	}
 
 	/* (non-Javadoc)

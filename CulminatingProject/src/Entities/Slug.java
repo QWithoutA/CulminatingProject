@@ -6,7 +6,9 @@ package Entities;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+
 import java.io.IOException;
+
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -16,7 +18,7 @@ import QWithoutA.SaltGamePanel;
 
 /**
  * @author Glen Su
- * Jan 01, 2015
+ * Jan 23, 2015
  */
 public class Slug extends MovingObject {
 	
@@ -25,6 +27,7 @@ public class Slug extends MovingObject {
 	private int shotCounter;
 	private boolean isTurning;
 	private boolean isShooting;
+	private BufferedImage image;
 	/**
 	 * @param x
 	 * @param y
@@ -33,7 +36,6 @@ public class Slug extends MovingObject {
 	 * @param top
 	 * @param bottom
 	 */
-	private BufferedImage image;
 	public Slug(double x, double y, int left, int right, int top, int bottom) {
 		super(x, y, left, right, top, bottom);
 		// TODO Auto-generated constructor stub

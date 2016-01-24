@@ -10,6 +10,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -25,7 +26,7 @@ import Entities.SlugProjectile;
 
 /**
  * 
- * @author David
+ * @author Team QWithoutA
  *
  */
 @SuppressWarnings("serial")
@@ -60,6 +61,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 * an array of falling blocks
 	 */
 	ArrayList<FallingBlock> fBlock = new ArrayList<FallingBlock>();
+
 	/**
      * ArrayLists of player projectiles
      */
@@ -128,7 +130,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	
 	private final double playerProjectileMaxHeight = 20;
 	private final double playerProjectileAcceleration = 9.8;
-	
+
 	public double initialVelocity = Math.sqrt(-2*playerProjectileAcceleration *playerProjectileMaxHeight);
 	
 	public static void main(String[] args) {
@@ -139,7 +141,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		frame.setSize(new Dimension(1100, 550));
 		frame.setAutoRequestFocus(false);
 		
-//		JOptionPane.showMessageDialog(frame, "To win this game, make your way past enemies and holes to get the item at the end." + "\n" 
+//		JOptionPane.showMessageDialog(frame, "To win this game, survive as long as you can against enemies until the time runs out." + "\n" 
 //			+ "If you happen to die, you will have to restart your journey.", "Welcome", JOptionPane.INFORMATION_MESSAGE);
 		
 		frame.setVisible(true);
@@ -150,7 +152,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		frame.setTitle("The Adventures of Salt Man");
 		frame.setResizable(false);
 	}
-
+	
 	public SaltGamePanel(){
 		this.setPreferredSize(new Dimension(width, height));
 		this.setBackground(Color.CYAN);
@@ -187,24 +189,21 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 
 		//adds a block that falls 
 		fBlock.add(new FallingBlock(500, 250, 0, width, 0, height));
-		
 		player.add(new Player(30, 250, -width, width*2, -height, height*2));
 		
 		walkers.add(new RoamingEnemy(400, 500, 200, 600, 0, height));
 		walkers.get(0).setXSpeed(walkerSpeed);
-//		walkers.get(0).setYSpeed(walkerSpeed/2);
+		walkers.get(0).setYSpeed(walkerSpeed/2);
 		
-		slugs.add(new Slug(500, 450, 400, 600, 0 , height));
+		slugs.add(new Slug(500, 500, 400, 600, 0 , height));
 		slugs.get(0).setXSpeed(2*slugSpeed/3);
-		
-		slugs.add(new Slug(800, 500, 800, 1000, 0 , height));
+		slugs.add(new Slug(750, 500, 700, 900, 0 , height));
 		slugs.get(1).setXSpeed(2*slugSpeed/3);
 		//begins game
 		Thread gameThread = new Thread(this);
 		gameThread.start();
 		
-	}
-	
+	}	
 	public void run() {
 		while (true) {
 			repaint();

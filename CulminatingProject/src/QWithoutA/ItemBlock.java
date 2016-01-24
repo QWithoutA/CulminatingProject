@@ -17,7 +17,6 @@ public class ItemBlock extends Blocks{
 
 	private int width = 35;
 	private int height = 35;
-	
 	private BufferedImage image;
 	public ItemBlock(double x, double y, int left, int right, int top, int bottom) {
 		super(x, y, left + 10, right - 10, top + 10, bottom - 10);
@@ -47,20 +46,7 @@ public class ItemBlock extends Blocks{
 
 	@Override
 	public void animateOneStep() {
-		counter++;
-		if (counter == flashSpeed) {
-			counter = 0;
-			if (filledIn)
-				filledIn = false;
-			else
-				filledIn = true;
-		}
-		if (getX() >= getRight() | getX() <= getLeft()){
-			setX(1100);
-			setY(550);
-		}
-		
 		
 	}
-
 }
+	
