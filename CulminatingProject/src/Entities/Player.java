@@ -47,9 +47,6 @@ public class Player extends MovingObject{
 	public Player(double x, double y, int left, int right, int top, int bottom) {
 		super(x, y, left, right, top, bottom);
 		// TODO Auto-generated constructor stub
-
-
-
 		setHeight(initialHeight);
 		setWidth(35);
 		isDown = false;
