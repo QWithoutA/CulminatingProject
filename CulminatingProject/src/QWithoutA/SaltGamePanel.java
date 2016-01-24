@@ -26,7 +26,7 @@ import Entities.SlugProjectile;
 
 /**
  * 
- * @author David
+ * @author Team QWithoutA
  *
  */
 @SuppressWarnings("serial")
@@ -61,7 +61,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 * an array of falling blocks
 	 */
 	ArrayList<FallingBlock> fBlock = new ArrayList<FallingBlock>();
-	/**>
+
+	/**
      * ArrayLists of player projectiles
      */
     static ArrayList<PlayerProjectile> saltBalls = new ArrayList<PlayerProjectile>();
@@ -85,7 +86,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	/**
 	 * The pause between repainting (should be set for about 30 frames per second).
 	 */
-	final int pauseDuration = 50;
+	final int pauseDuration = 40;
 	
 	/**
 	 * Radiuses of each player projectile 
@@ -124,16 +125,14 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 */
 	char key = ' ';
 	
-	BufferedImage buffer1;
-	
 	public boolean isPlayerProjectileSpawned = false;
 	public boolean isSlugProjectileSpawned = false;
 	
 	private final double playerProjectileMaxHeight = 20;
 	private final double playerProjectileAcceleration = 9.8;
-	
-	public double initialVelocity = Math.sqrt(-2*playerProjectileAcceleration *playerProjectileMaxHeight);
 
+	public double initialVelocity = Math.sqrt(-2*playerProjectileAcceleration *playerProjectileMaxHeight);
+	
 	public static void main(String[] args) {
 
 		// Set up main window (using Swing's Jframe)
@@ -141,10 +140,10 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(new Dimension(1100, 550));
 		frame.setAutoRequestFocus(false);
-
-//		JOptionPane.showMessageDialog(frame, "To win this game, make your way past enemies and holes to get the item at the end." + "\n" 
+		
+//		JOptionPane.showMessageDialog(frame, "To win this game, survive as long as you can against enemies until the time runs out." + "\n" 
 //			+ "If you happen to die, you will have to restart your journey.", "Welcome", JOptionPane.INFORMATION_MESSAGE);
-  
+		
 		frame.setVisible(true);
 		frame.setLocation(100, 100);
 		Container c = frame.getContentPane();
@@ -153,7 +152,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		frame.setTitle("The Adventures of Salt Man");
 		frame.setResizable(false);
 	}
-
+	
 	public SaltGamePanel(){
 		this.setPreferredSize(new Dimension(width, height));
 		this.setBackground(Color.CYAN);
@@ -178,6 +177,9 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		//adds regular blocks
 		block.add(new Blocks(150, 350, 0, width, 0, height));
 		block.add(new Blocks(350, 350, 0, width, 0, height));
+		for(int i = 0; i<5; i++){
+		block.add(new Blocks(525 + (i * 35), 400, 0, width, 0, height));
+		}
 		//adds a platform that moves on the x axis
 		mPlatHorizontal.add(new Platform(800, 300, 750, 1000, 0, height));
 		mPlatHorizontal.get(0).setXSpeed(3);
@@ -187,7 +189,6 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 
 		//adds a block that falls 
 		fBlock.add(new FallingBlock(500, 250, 0, width, 0, height));
-		
 		player.add(new Player(30, 250, -width, width*2, -height, height*2));
 		
 		walkers.add(new RoamingEnemy(400, 500, 200, 600, 0, height));
@@ -202,8 +203,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		Thread gameThread = new Thread(this);
 		gameThread.start();
 		
-	}
-	
+	}	
 	public void run() {
 		while (true) {
 			repaint();
@@ -217,29 +217,55 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 //				mPlat.get(1).setYSpeed(mPlat.get(1).getYspeed() *-1);
 //			}
 				for(int i = 0; i<ground.size(); i++){
-					if(collisionOfPlayerAndGround(i) && player.get(0).getYspeed() > 0){
+					if(player.get(0).getYspeed() > 0){
+						switch(collisionOfPlayerAndGround(i)){
+						case 1:
 						player.get(0).setYSpeed(0);
 						player.get(0).setY((int) (ground.get(i).getY() - player.get(0).getHeight()));
+						}
 					}
 				}
 				for(int i = 0; i<fBlock.size(); i++){
-					if(collisionOfPlayerAndFallingBlock(i) && player.get(0).getYspeed() > 0){
-						player.get(0).setYSpeed(0);
-						player.get(0).setY((int) (fBlock.get(i).getY() - player.get(0).getHeight()));
+					if(player.get(0).getYspeed() > 0){
+						switch(collisionOfPlayerAndFallingBlock(i)){
+						case 1:
+							player.get(0).setYSpeed(0);
+							player.get(0).setY((int) (fBlock.get(i).getY() - player.get(0).getHeight()));
+							
+						}
 					}
 				}
 				for(int i = 0; i<iBlock.size(); i++){
-					if(collisionOfPlayerAndItemBlock(i) && player.get(0).getYspeed() > 0){
+					if(player.get(0).getYspeed() > 0){
+						switch(collisionOfPlayerAndItemBlock(i)){
+						case 1:
 						player.get(0).setYSpeed(0);
 						player.get(0).setY((int) (iBlock.get(i).getY() - player.get(0).getHeight()));
 					}
-				}
-				for(int i = 0; i<block.size(); i++){
-					if(collisionOfPlayerAndNormalBlocks(i) && player.get(0).getYspeed() > 0){
-						player.get(0).setYSpeed(0);
-						player.get(0).setY((int) (block.get(i).getY() - player.get(0).getHeight()));
 					}
 				}
+				for(int i = 0; i < block.size(); i++){
+					if(block.get(i).checkStandingCollision(player.get(0)) && player.get(0).getYspeed() > 0){
+						player.get(0).setYSpeed(0);
+						player.get(0).setY((int) (block.get(i).getY() - player.get(0).getHeight()));
+						System.out.println("on top");
+					}
+					if(block.get(i).checkBreakingCollision(player.get(0)) && player.get(0).getYspeed() < 0){
+						//block.remove(i);
+						player.get(0).setYSpeed(player.get(0).getYspeed() * -1);
+						System.out.println("broke");
+						
+					}
+//					if(block.get(i).checkLeftSideCollision(player.get(0))){
+//						player.get(0).setX(blocks.get(i).getX());
+//						System.out.println("left side hit");
+//					}
+//					if(block.get(i).checkRightSideCollision(player.get(0))){
+//						player.get(0).setXSpeed(blocks.get(i).getX() + blocks.get(i).getWidth());
+//						System.out.println("right side hit");
+//					}
+				}
+				
 //			if(collisionOfPlayerAndPlatform() && player.get(0).getYspeed() > 0){
 //				player.get(0).setYSpeed(0);
 //				player.get(0).setY((int) (mPlat.get(0).getY() - player.get(0).getHeight()));
@@ -293,13 +319,15 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 						player.get(0).setCrouching(false);
 					}
 					player.get(0).setHeight(player.get(0).initialHeight);
-					
 				}
 				
 				if(player.get(0).getYspeed() < 0){ 
 				     player.get(0).setYSpeed((player.get(0).getYspeed() +  1.98)/ 1.0198);
 				}
-				
+			
+//				if(isPlayerHit()){
+//					System.out.println("dead");
+//				}
 				if(player.get(0).getY() >= height-1){
 					System.out.println("You Died!");
 					player.get(0).setY((int) (player.get(0).getY() - height/2));
@@ -349,6 +377,9 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 						if(walkers.get(i).getYspeed() < 0){ 
 							walkers.get(i).setYSpeed((walkers.get(i).getYspeed() +  1.98)/ 1.0198);
 						}
+						if(walkers.get(i).checkCollision(player.get(0))){
+							System.out.println("died");
+						}
 					}
 				}
 				
@@ -371,6 +402,14 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 							slugs.get(i).setXSpeed(2*slugSpeed/3 * - 1);
 							slugs.get(i).movingToBoundry(false);
 						}
+						if(slugs.get(i).checkCollision(player.get(0))){
+							System.out.println("died");
+						}
+					}
+					for(int i = 0; i< slimeBalls.size(); i++){
+						if(slimeBalls.get(i).checkCollision(player.get(0))){
+							System.out.println("died");
+						}
 					}
 				}
 				
@@ -392,7 +431,6 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		g.drawString ("Number of slime balls: " + slimeBalls.size(), 5, 40);
 		g.drawString ("Current Key: " + key, 5, 60);
 		g.drawString ("Current Direction: " + playerProjectileDirection, 5, 80);
-		g.drawImage(buffer1, 0, 0, null);
 		// paints initial ground of main menu/first screen
 		for (int i = 0; i < ground.size(); i++) {
 			g.setColor(Color.GREEN);   
@@ -435,42 +473,62 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	}
 		
 	public boolean isPlayerHit(){
-		for (int i = 0; i < slugs.size(); i++){
-			for(int j = 0; j < slugs.get(i).getWidth(); j++){
-				for(int k = 0; k < player.get(0).getWidth(); k++){
-					if(player.get(0).getY() + player.get(0).getHeight() + k == mPlatHorizontal.get(i).getY() + j && player.get(0).getX() + k == mPlatHorizontal.get(i).getX() + j){
-						return true;
+		
+		//If the player touches a walker hitbox anywhere for now
+		for (int i = 0; i < walkers.size(); i++){
+			for(int walkerWidth = 0; walkerWidth < walkers.get(i).getWidth(); walkerWidth++){
+				for(int walkerHeight = 0; walkerHeight < walkers.get(i).getWidth(); walkerHeight++){
+					for(int playerWidth = 0; playerWidth < player.get(0).getHeight(); playerWidth++){
+						for(int playerHeight = 0; playerHeight < player.get(0).getHeight(); playerHeight++){
+							if(player.get(0).getY() + playerHeight == walkers.get(i).getY() + walkerHeight && player.get(0).getX() + playerWidth == walkers.get(i).getX() + walkerHeight){
+								return true;
+							}
+						}
 					}
-					else if(player.get(0).getY() == mPlatHorizontal.get(i).getY()){
-						return true;
+				}
+			}
+		}
+		//if the player touches a slime ball
+		for (int i = 0; i < slimeBalls.size(); i++){
+			for(int playerWidth = 0; playerWidth < player.get(0).getWidth(); playerWidth++){
+				for(int playerHeight = 0; playerHeight < player.get(0).getHeight(); playerHeight++){
+					if(slugDirection == 1){
+						if(player.get(0).getX() + playerHeight <= slimeBalls.get(i).getX() + slimeBalls.get(i).getRadius() && player.get(0).getX() + playerWidth >= slimeBalls.get(i).getX() - slimeBalls.get(i).getRadius() && player.get(0).getY() + playerHeight <= slimeBalls.get(i).getY() + slimeBalls.get(i).getRadius() && player.get(0).getY() + playerWidth >= slimeBalls.get(i).getY() - slimeBalls.get(i).getRadius()*2){
+							return true;
+						}
+					}
+					else if(slugDirection == -1){
+						if(player.get(0).getX() + playerHeight <= slimeBalls.get(i).getX() + slimeBalls.get(i).getRadius()*2 && player.get(0).getX() + playerWidth >= slimeBalls.get(i).getX() - slimeBalls.get(i).getRadius() && player.get(0).getY() + playerHeight <= slimeBalls.get(i).getY() + slimeBalls.get(i).getRadius() && player.get(0).getY() + playerWidth >= slimeBalls.get(i).getY() - slimeBalls.get(i).getRadius()){
+							return true;
+						}
 					}
 				}
 			}
 		}
 		return false;
 	}
-
 	//Collision for the player to the ground so the player does not go through the ground 
-	public boolean collisionOfPlayerAndGround(int i){
+	public int collisionOfPlayerAndGround(int i){
 		if((player.get(0).getY() + player.get(0).getHeight() >= ground.get(i).getY() && player.get(0).getY() + player.get(0).getHeight() <= ground.get(i).getY() + ground.get(i).getHeight()) && (player.get(0).getX() <= ground.get(i).getX() + ground.get(i).getWidth() && player.get(0).getX() + player.get(0).getWidth() >= ground.get(i).getX())){
-			return true;
+			return 1;
 		}
-		return false;
+		
+		return -1;
 	}
 	//Collision for the saltballs too the ground so the projectiles don't go through the ground 
-//	public boolean collisionOfSaltBallsAndGround(){
-//		if(saltBalls.get(0).getY() + saltBalls.get(0).getRadius() == ground.get(0).getY()){
-//			return true;
-//		}
-//		else
-//			return false;
-//	}      
-	//collision for the player and the falling blocks so he can stand on the falling blocks 
-	public boolean collisionOfPlayerAndFallingBlock(int i){
-		if((player.get(0).getY() + player.get(0).getHeight() > fBlock.get(i).getY() && player.get(0).getY() + player.get(0).getHeight() < fBlock.get(i).getY() + fBlock.get(i).getHeight()) && (player.get(0).getX() < fBlock.get(i).getX() + fBlock.get(i).getWidth() && player.get(0).getX() + player.get(0).getWidth() > fBlock.get(i).getX())){
+	public boolean collisionOfSaltBallsAndGround(){
+		if(saltBalls.get(0).getY() + saltBalls.get(0).getRadius() == ground.get(0).getY()){
 			return true;
 		}
-		return false;
+		else
+			return false;
+	}      
+	//collision for the player and the falling blocks so he can stand on the falling blocks 
+	public int collisionOfPlayerAndFallingBlock(int i){
+		if((player.get(0).getY() + player.get(0).getHeight() > fBlock.get(i).getY() && player.get(0).getY() + player.get(0).getHeight() < fBlock.get(i).getY() + fBlock.get(i).getHeight()) && (player.get(0).getX() < fBlock.get(i).getX() + fBlock.get(i).getWidth() && player.get(0).getX() + player.get(0).getWidth() > fBlock.get(i).getX())){
+			return 1;
+		}
+		return -1;
 	}
 	//collision for the player to stand on the moving platforms
 //	public boolean collisionOfPlayerAndPlatform(){
@@ -481,18 +539,30 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 //			return false;
 //	}
 	//collision for the player to stand on a normal block 
-	public boolean collisionOfPlayerAndNormalBlocks(int i){
+	public int collisionOfPlayerAndNormalBlocks(int i){
 		if((player.get(0).getY() + player.get(0).getHeight() > block.get(i).getY() && player.get(0).getY() + player.get(0).getHeight() < block.get(i).getY() + block.get(i).getHeight()) && (player.get(0).getX() < block.get(i).getX() + block.get(i).getWidth() && player.get(0).getX() + player.get(0).getWidth() > block.get(i).getX())){
-			return true;
+			return 1;
 		}
-		return false;
+		else if((player.get(0).getY() + player.get(0).getHeight() > block.get(i).getY() && player.get(0).getY() + player.get(0).getHeight() < block.get(i).getY() + block.get(i).getHeight()) && (player.get(0).getX() < block.get(i).getX() + block.get(i).getWidth() && player.get(0).getX() + player.get(0).getWidth() > block.get(i).getX())){
+			return 2;
+		}
+		else if((player.get(0).getY() + player.get(0).getHeight() > block.get(i).getY() && player.get(0).getY() + player.get(0).getHeight() < block.get(i).getY() + block.get(i).getHeight()) && (player.get(0).getX() < block.get(i).getX() + block.get(i).getWidth() && player.get(0).getX() + player.get(0).getWidth() > block.get(i).getX())){
+			return 3;
+		}
+		return -1;
 	}
 	//for the player to stand on an item block
-	public boolean collisionOfPlayerAndItemBlock(int i){
+	public int collisionOfPlayerAndItemBlock(int i){
 		if((player.get(0).getY() + player.get(0).getHeight() > iBlock.get(i).getY() && player.get(0).getY() + player.get(0).getHeight() < iBlock.get(i).getY() + iBlock.get(i).getHeight()) && (player.get(0).getX() < iBlock.get(i).getX() + iBlock.get(i).getWidth() && player.get(0).getX() + player.get(0).getWidth() > iBlock.get(i).getX())){
-			return true;
+			return 1;
 		}
-		return false;
+		else if((player.get(0).getY() + player.get(0).getHeight() > iBlock.get(i).getY() && player.get(0).getY() + player.get(0).getHeight() < iBlock.get(i).getY() + iBlock.get(i).getHeight()) && (player.get(0).getX() < iBlock.get(i).getX() + iBlock.get(i).getWidth() && player.get(0).getX() + player.get(0).getWidth() > iBlock.get(i).getX())){
+			return 2;
+		}
+		else if((player.get(0).getY() + player.get(0).getHeight() > iBlock.get(i).getY() && player.get(0).getY() + player.get(0).getHeight() < iBlock.get(i).getY() + iBlock.get(i).getHeight()) && (player.get(0).getX() < iBlock.get(i).getX() + iBlock.get(i).getWidth() && player.get(0).getX() + player.get(0).getWidth() > iBlock.get(i).getX())){
+			return 3;
+		}
+		return -1;
 	}
 
 	/**

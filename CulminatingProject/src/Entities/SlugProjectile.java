@@ -107,4 +107,59 @@ public class SlugProjectile extends MovingObject {
 	public void setDirection(int x){
 		direction = x;
 	}
+	public boolean checkCollision(Player entity){
+		//If the player touches a slug projectile hitbox anywhere for now
+		if(entity.getX() >= this.getX() + this.getRadius()){ //entity on right side of slug
+			if(entity.getX() > this.getX() + this.getRadius()){
+				return false;
+			}
+			// top side of a slug projectile
+			else if(entity.getY() + entity.getHeight() < this.getY()){
+				return false;
+			}
+			// bottom side of a slug projectile
+			else if(entity.getY() > this.getY() + this.getRadius()){
+				return false;
+			}
+		}	
+		else if(entity.getX() + entity.getWidth() <= this.getX()){// left side of slug
+			if(entity.getX() < this.getX() - entity.getWidth()){
+				return false;
+			}
+			// top side of a slug projectile
+			else if(entity.getY() + entity.getHeight() < this.getY()){
+				return false;
+			}
+			// bottom side of a slug projectile
+			else if(entity.getY() > this.getY() + this.getRadius()){
+				return false;
+			}
+		}
+		// top side of a slug projectile
+		else if(entity.getY() + entity.getHeight() < this.getY()){
+			if(entity.getX() > this.getX() + this.getRadius()){
+				return false;
+			}
+			else if(entity.getX() < this.getX() - entity.getWidth()){
+				return false;
+			}
+			else if(entity.getY() < this.getY() - entity.getHeight()){
+				return false;
+			}
+		}
+		// bottom side of a slug projectile
+		else if(entity.getY() > this.getY() + this.getRadius()){
+			if(entity.getX() + entity.getHeight() < this.getX()){
+				return false;
+			}
+			else if(entity.getX() < this.getX() - entity.getWidth()){
+				return false;
+			}
+			else if(entity.getY() > this.getY() + entity.getHeight()){
+				return false;
+			}
+		}
+	
+		return true;
+	}
 }

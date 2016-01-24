@@ -6,7 +6,10 @@ package Entities;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+
 import java.io.IOException;
+
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -15,7 +18,7 @@ import QWithoutA.SaltGamePanel;
 
 /**
  * @author Glen Su
- * Jan 01, 2015
+ * Jan 23, 2015
  */
 public class Slug extends MovingObject {
 	
@@ -41,11 +44,11 @@ public class Slug extends MovingObject {
 		setWidth(55);
 		setShooting(false);
 		movingToBoundry(false);
-		try {
-	        image = ImageIO.read(Player.class.getResourceAsStream("/Images/Snail.png"));
-	    } catch (IOException e) {
-	    	e.printStackTrace();
-	    }
+		try{
+			image = ImageIO.read(Player.class.getResourceAsStream("/Images/Snail.png"));
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 
 	/* (non-Javadoc)
@@ -56,9 +59,9 @@ public class Slug extends MovingObject {
 		// TODO Auto-generated method stub
 		int drawX = (int) getX();
 		int drawY = (int) getY();
-		
-		
 		g.drawImage(image, drawX, drawY, this.width, this.height, null);
+//		g.setColor(Color.GREEN);
+//		g.fillRect(drawX, drawY, width, height);
 	}
 
 	/* (non-Javadoc)
@@ -102,5 +105,65 @@ public class Slug extends MovingObject {
 	}
 	public boolean isShooting(){
 		return isShooting;
+	}
+	
+	public boolean checkCollision(Player entity){
+		//If the player touches a slug hitbox anywhere for now
+		if(entity.getX() >= this.getX()+ this.getWidth()){ //entity on right side of slug
+			if(entity.getX() > this.getX() + this.getWidth()){
+				return false;
+			}
+			// top side of slug
+			else if(entity.getY() + entity.getHeight() < this.getY()){
+				return false;
+			}
+			// bottom side of slug
+			else if(entity.getY() > this.getY() + this.getHeight()){
+				return false;
+			}
+		}	
+		else if(entity.getX() + entity.getWidth() <= this.getX()){// left side of slug
+			if(entity.getX() < this.getX() - entity.getWidth()){
+				return false;
+			}
+			// top side of slug
+			else if(entity.getY() + entity.getHeight() < this.getY()){
+				return false;
+			}
+			// bottom side of slug
+			else if(entity.getY() > this.getY() + this.getHeight()){
+				return false;
+			}
+		}
+		// top side of slug
+		else if(entity.getY() + entity.getHeight() < this.getY()){
+			return false;
+		}
+		// bottom side of slug
+		else if(entity.getY() > this.getY() + this.getHeight()){
+			if(entity.getX() + entity.getHeight() < this.getX()){
+				return false;
+			}
+			else if(entity.getX() < this.getX() - entity.getWidth()){
+				return false;
+			}
+			else if(entity.getY() > this.getY() + entity.getHeight()){
+				return false;
+			}
+		}
+
+		return true;
+	}
+	public static void main(String[] args){
+		ArrayList<Slug> slugs = new ArrayList<Slug>();
+		slugs.add(new Slug(500, 450, 400, 600, 0 , 1100));
+		slugs.get(0).setXSpeed(7);
+		ArrayList<Player> player = new ArrayList<Player>();
+		player.add(new Player(550, 425, 400, 600, -0, 1100*2));
+		if(slugs.get(0).checkCollision(player.get(0))){
+			System.out.println("died");
+		}
+		System.out.println("running");
+		System.exit(0);
 	}
 }

@@ -7,7 +7,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
@@ -33,12 +32,10 @@ public class Player extends MovingObject{
 	private boolean isDown;
 	private boolean isJumping;
 	private int jumpCounter;
-
 	/**
 	 * Contains the image used for the player
 	 */
 	private BufferedImage image;
-
 	/**
 	 * @param x
 	 * @param y
@@ -59,12 +56,11 @@ public class Player extends MovingObject{
 		isJumping = false;
 		jumpCounter = 0;
 		
-		try {
-	        image = ImageIO.read(Player.class.getResourceAsStream("/Images/Saltman.png"));
-	    } catch (IOException e) {
-	    	e.printStackTrace();
-	    }
-		
+		try{
+			image = ImageIO.read(Player.class.getResourceAsStream("/Images/Saltman.png"));
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 	
 	/* (non-Javadoc)
@@ -77,7 +73,10 @@ public class Player extends MovingObject{
 		int drawX = (int) getX();
 		int drawY = (int) getY();
 		g.drawImage(image, drawX, drawY, this.width, this.height, null);
-		
+//		g.setColor(Color.YELLOW);
+//		g.fillRect(drawX ,drawY, this.width, this.height);
+//		g.setColor(Color.BLACK);
+//		g.drawRect(drawX ,drawY, this.width, this.height);
 	}
 
 	/* (non-Javadoc)

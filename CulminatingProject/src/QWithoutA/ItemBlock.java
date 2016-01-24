@@ -24,11 +24,11 @@ public class ItemBlock extends Blocks{
 		counter = 0;
 		flashSpeed = (int) (10);
 		filledIn = true;
-		try {
-	        image = ImageIO.read(Player.class.getResourceAsStream("/Images/Item Block.png"));
-	    } catch (IOException e) {
-	    	e.printStackTrace();
-	    }
+		try{
+			image = ImageIO.read(Player.class.getResourceAsStream("/Images/Item Block.png"));
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -36,9 +36,8 @@ public class ItemBlock extends Blocks{
 		// TODO Auto-generated method stub
 		int drawX = (int) getX();
 		int drawY = (int) getY();
-		
-		g.fillRect(drawX, drawY, getWidth(), getHeight());
 		g.drawImage(image, drawX, drawY, this.width, this.height, null);
+//		g.fillRect(drawX, drawY, getWidth(), getHeight());
 		if (!filledIn) {
 			g.setColor(Color.black);
 			g.fillRect(drawX, drawY, width, height);
