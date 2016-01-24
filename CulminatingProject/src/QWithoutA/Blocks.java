@@ -166,7 +166,7 @@ public class Blocks extends MovingObject{
 			if(entity.getX() + entity.getWidth() < this.getX()){
 				return false;
 			}
-			else if(entity.getX() < this.getX() - entity.getWidth()){
+			else if(entity.getX() > this.getX() + this.getWidth()){
 				return false;
 			}
 			else if(entity.getY() < this.getY() + this.getHeight()+10){
