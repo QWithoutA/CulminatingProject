@@ -134,6 +134,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 */
 	private int mouseY;
 	
+	private int time;
+	
 	public boolean checkState;
 	
 	public boolean isPlayerProjectileSpawned = false;
@@ -183,6 +185,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		
 		this.addMouseListener(new MouseInput());
 		
+		player.add(new Player(30, 250, 0, width, 0, height));
 		//this.levelGlen();
 		this.levelTimothy();
 		//this.levelRosauro();
@@ -213,13 +216,14 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		
 		ground.add(new Ground(100, 300, 0, width, 0, height));
 		ground.get(3).setWidth(ground.get(3).getWidth()/4);
+		
 		// adds item blocks
 		iBlock.add(new ItemBlock(250, 350, 0, width, 0, height));
 		//adds regular blocks
 		block.add(new Blocks(150, 350, 0, width, 0, height));
 		block.add(new Blocks(350, 350, 0, width, 0, height));
 		for(int i = 0; i<5; i++){
-		block.add(new Blocks(525 + (i * 35), 400, 0, width, 0, height));
+		block.add(new Blocks(525 + (i * 35), 300, 0, width, 0, height));
 		}
 		//adds a platform that moves on the x axis
 		mPlatHorizontal.add(new Platform(800, 300, 750, 1000, 0, height));
@@ -230,7 +234,6 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 
 		//adds a block that falls 
 		fBlock.add(new FallingBlock(500, 300, 0, width, 0, height));
-		player.add(new Player(30, 250, 0, width, 0, height));
 		
 		walkers.add(new RoamingEnemy(400, 500, 200, 600, 0, height));
 		walkers.get(0).setXSpeed(walkerSpeed);
@@ -250,25 +253,61 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		ground.add(new Ground(750, 525, 0, width, 0, height));
 		ground.get(1).setWidth(ground.get(1).getWidth()/3);
 		
-		ground.add(new Ground(448, 300, 500, width, 0, height));
-		ground.get(2).setWidth(ground.get(2).getWidth()/9);
+		ground.add(new Ground(450, 450, 500, width, 0, height));
+		ground.get(2).setWidth(ground.get(2).getWidth()/5);
 		
-		// adds item blocks
-		iBlock.add(new ItemBlock(250, 350, 0, width, 0, height));
-		//adds regular blocks
-		block.add(new Blocks(150, 350, 0, width, 0, height));
-		block.add(new Blocks(350, 350, 0, width, 0, height));
+		ground.add(new Ground(0, 200, 0, width, 0, height));
+		ground.get(3).setWidth(ground.get(3).getWidth()/7);
 		
-		for(int i = 0; i<5; i++){
-		block.add(new Blocks(525 + (i * 35), 400, 0, width, 0, height));
-		}
+		ground.add(new Ground(950, 200, 0, width, 0, height));
+		ground.get(4).setWidth(ground.get(4).getWidth()/7);
 		
-		//adds a platform that moves on the x axis
-		mPlatHorizontal.add(new Platform(800, 300, 750, 1000, 0, height));
+		ground.add(new Ground(420, 270, 0, width, 0, height));
+		ground.get(5).setWidth(ground.get(5).getWidth()/4);
+			
+		mPlatHorizontal.add(new Platform(500, 200, 250, 700, 0, height));
 		mPlatHorizontal.get(0).setXSpeed(3);
-
-		//adds a block that falls 
-		player.add(new Player(30, 250, 0, width, 0, height));
+		
+		mPlatVertical.add(new Platform(900, 400, 0, width, 270, 500));
+		mPlatVertical.get(0).setYSpeed(3);
+		
+		mPlatVertical.add(new Platform(100, 398, 0, width, 270, 500));
+		mPlatVertical.get(1).setYSpeed(4);
+		
+		slugs.add(new Slug(50, 170, 20, 100, 0 , height));
+		slugs.get(0).setXSpeed(2*slugSpeed/3);
+		
+		slugs.add(new Slug(950, 170, 940, 1050, 0 , height));
+		slugs.get(1).setXSpeed(2*slugSpeed/3);
+		
+		slugs.add(new Slug(500, 250, 450, 600, 0 , height));
+		slugs.get(2).setXSpeed(4*slugSpeed/3);
+		
+		walkers.add(new RoamingEnemy(50, 500, 0, 350, 0, height));
+		walkers.get(0).setXSpeed(walkerSpeed*2);
+		
+		walkers.add(new RoamingEnemy(500, 425, 450, 650, 0, height));
+		walkers.get(1).setXSpeed(walkerSpeed*3);
+		
+		walkers.add(new RoamingEnemy(800, 500, 750, 1050, 0, height));
+		walkers.get(2).setXSpeed(walkerSpeed);
+		
+		block.add(new Blocks(350, 325, 0, width, 0, height));
+		
+		block.add(new Blocks(450, 325, 0, width, 0, height));
+		
+		block.add(new Blocks(550, 325, 0, width, 0, height));
+		
+		block.add(new Blocks(750, 325, 0, width, 0, height));
+	
+		block.add(new Blocks(350, 325, 0, width, 0, height));
+		
+		iBlock.add(new ItemBlock(650, 325, 0, width, 0, height));
+		
+		iBlock.add(new ItemBlock(50, 75, 0, width, 0, height));
+		
+		iBlock.add(new ItemBlock(1000, 75, 0, width, 0, height));
+		
 	}
 	
 	// the first level that Rosauro created 
@@ -358,6 +397,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 							System.out.println("right side hit");
 						}
 					}
+					if (block.size() > 0){
 					for(int i = 0; i < block.size(); i++){
 						if(block.get(i).checkStandingCollision(player.get(0)) && player.get(0).getYspeed() > 0){
 							player.get(0).setYSpeed(0);
@@ -367,16 +407,20 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 						if(block.get(i).checkBottomCollision(player.get(0)) && player.get(0).getYspeed() < 0){
 							block.remove(i);
 							System.out.println("broke");
+							break;
 						}
+						
 						if(block.get(i).checkLeftSideCollision(player.get(0))){
 							player.get(0).setX((int) block.get(i).getX() - player.get(0).getWidth() - 5);
 							System.out.println("left side hit");
 						}
+						
 						else if(block.get(i).checkRightSideCollision(player.get(0))){
 							player.get(0).setX((int) block.get(i).getX() + block.get(0).getWidth() + 5);
 							System.out.println("right side hit");
 						}
 					}
+				}
 
 					if(Character.toString(key).equalsIgnoreCase("w") && player.get(0).getYspeed() == 0){
 						player.get(0).setJumping(true);
@@ -414,7 +458,6 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 						}
 
 					}
-
 					if(!Character.toString(key).equalsIgnoreCase("s")){ 
 						if(player.get(0).isCrouching()){
 							player.get(0).setY((int) (player.get(0).getY() - player.get(0).initialHeight/2));
@@ -531,10 +574,14 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if (State == STATE.GAME) {
-			g.drawString ("Number of salt balls: " + saltBalls.size(), 5, 20);
-			g.drawString ("Number of slime balls: " + slimeBalls.size(), 5, 40);
-			g.drawString ("Current Key: " + key, 5, 60);
-			g.drawString ("Current Direction: " + playerProjectileDirection, 5, 80);
+			//g.drawString ("Number of salt balls: " + saltBalls.size(), 5, 20);
+			//g.drawString ("Number of slime balls: " + slimeBalls.size(), 5, 40);
+			//g.drawString ("Current Key: " + key, 5, 60);
+			//g.drawString ("Current Direction: " + playerProjectileDirection, 5, 80);
+			
+			//g.drawString("Current Time Remaining:" + " " + timer(), 5, 20);
+			
+			
 			// paints initial ground of main menu/first screen
 			for (int i = 0; i < ground.size(); i++) {
 				g.setColor(Color.GREEN);   
@@ -588,21 +635,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	}
 	//backup collisions of lagging
 	public boolean isPlayerHit(){
-		
-		//If the player touches a walker hitbox anywhere for now
-		for (int i = 0; i < walkers.size(); i++){
-			for(int walkerWidth = 0; walkerWidth < walkers.get(i).getWidth(); walkerWidth++){
-				for(int walkerHeight = 0; walkerHeight < walkers.get(i).getWidth(); walkerHeight++){
-					for(int playerWidth = 0; playerWidth < player.get(0).getHeight(); playerWidth++){
-						for(int playerHeight = 0; playerHeight < player.get(0).getHeight(); playerHeight++){
-							if(player.get(0).getY() + playerHeight == walkers.get(i).getY() + walkerHeight && player.get(0).getX() + playerWidth == walkers.get(i).getX() + walkerHeight){
-								return true;
-							}
-						}
-					}
-				}
-			}
-		}
+	
 		//if the player touches a slime ball
 		for (int i = 0; i < slimeBalls.size(); i++){
 			for(int playerWidth = 0; playerWidth < player.get(0).getWidth(); playerWidth++){
@@ -704,7 +737,17 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		}
 		return -1;
 	}
-
+	
+	public int timer() throws InterruptedException{	 
+		for(int i = 60; i > 0; i--){
+				time = i;
+		    	 Thread.sleep(1000);
+		    	 System.out.println(i);
+			}
+		return time;
+		}
+	
+	
 	/**
 	 * sets the x direction the player's projectile is traveling towards
 	 */
