@@ -42,7 +42,6 @@ public class SlugProjectile extends MovingObject {
 		x = (int) getX() - (radius);
 		y = (int) getY() - (radius);
 		isDecayed = false;
-		
 	}
 
 	/* (non-Javadoc)
@@ -109,7 +108,7 @@ public class SlugProjectile extends MovingObject {
 	}
 	public boolean checkCollision(Player entity){
 		//If the player touches a slug projectile hitbox anywhere for now
-		if(entity.getX() >= this.getX() + this.getRadius()){ //entity on right side of slug
+		if(entity.getX() > this.getX() + this.getRadius()){ //entity on right side of slug
 			if(entity.getX() > this.getX() + this.getRadius()){
 				return false;
 			}
@@ -121,8 +120,11 @@ public class SlugProjectile extends MovingObject {
 			else if(entity.getY() > this.getY() + this.getRadius()){
 				return false;
 			}
+			else if(entity.getX() > this.getX()+ this.getRadius()){
+				return false;
+			}
 		}	
-		else if(entity.getX() + entity.getWidth() <= this.getX()){// left side of slug
+		else if(entity.getX() + entity.getWidth() < this.getX()){// left side of slug
 			if(entity.getX() < this.getX() - entity.getWidth()){
 				return false;
 			}
@@ -134,6 +136,9 @@ public class SlugProjectile extends MovingObject {
 			else if(entity.getY() > this.getY() + this.getRadius()){
 				return false;
 			}
+			else if(entity.getX() + entity.getWidth() < this.getX()){
+				return false;
+			}
 		}
 		// top side of a slug projectile
 		else if(entity.getY() + entity.getHeight() < this.getY()){
@@ -141,6 +146,9 @@ public class SlugProjectile extends MovingObject {
 				return false;
 			}
 			else if(entity.getX() < this.getX() - entity.getWidth()){
+				return false;
+			}
+			else if(entity.getY() < this.getY() - entity.getHeight()){
 				return false;
 			}
 			else if(entity.getY() < this.getY() - entity.getHeight()){
@@ -156,6 +164,9 @@ public class SlugProjectile extends MovingObject {
 				return false;
 			}
 			else if(entity.getY() > this.getY() + entity.getHeight()){
+				return false;
+			}
+			else if(entity.getY() > this.getY() - entity.getHeight()+10){
 				return false;
 			}
 		}

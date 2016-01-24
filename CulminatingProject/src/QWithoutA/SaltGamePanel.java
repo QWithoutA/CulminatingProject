@@ -193,9 +193,9 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		
 		walkers.add(new RoamingEnemy(400, 500, 200, 600, 0, height));
 		walkers.get(0).setXSpeed(walkerSpeed);
-		walkers.get(0).setYSpeed(walkerSpeed/2);
+//		walkers.get(0).setYSpeed(walkerSpeed/2);
 		
-		slugs.add(new Slug(500, 500, 400, 600, 0 , height));
+		slugs.add(new Slug(500, 450, 400, 600, 0 , height));
 		slugs.get(0).setXSpeed(2*slugSpeed/3);
 		slugs.add(new Slug(750, 500, 700, 900, 0 , height));
 		slugs.get(1).setXSpeed(2*slugSpeed/3);

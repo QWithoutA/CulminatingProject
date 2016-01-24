@@ -109,7 +109,7 @@ public class Slug extends MovingObject {
 	
 	public boolean checkCollision(Player entity){
 		//If the player touches a slug hitbox anywhere for now
-		if(entity.getX() >= this.getX()+ this.getWidth()){ //entity on right side of slug
+		if(entity.getX() > this.getX()+ this.getWidth()){ //entity on right side of slug
 			if(entity.getX() > this.getX() + this.getWidth()){
 				return false;
 			}
@@ -121,8 +121,11 @@ public class Slug extends MovingObject {
 			else if(entity.getY() > this.getY() + this.getHeight()){
 				return false;
 			}
+			else if(entity.getX() > this.getX()+ this.getWidth()){
+				return false;
+			}
 		}	
-		else if(entity.getX() + entity.getWidth() <= this.getX()){// left side of slug
+		else if(entity.getX() + entity.getWidth() < this.getX()){// left side of slug
 			if(entity.getX() < this.getX() - entity.getWidth()){
 				return false;
 			}
@@ -134,10 +137,24 @@ public class Slug extends MovingObject {
 			else if(entity.getY() > this.getY() + this.getHeight()){
 				return false;
 			}
+			else if(entity.getX() + entity.getWidth() < this.getX()){
+				return false;
+			}
 		}
 		// top side of slug
-		else if(entity.getY() + entity.getHeight() < this.getY()){
-			return false;
+		else if(entity.getY() < this.getY() - entity.getHeight()){				
+			if(entity.getY() > this.getY() - entity.getHeight()+10){
+				return false;
+			}
+			else if(entity.getX() + entity.getWidth() < this.getX()){
+				return false;
+			}
+			else if(entity.getX() > this.getX() + this.getWidth()){
+				return false;
+			}
+			else if(entity.getY() < this.getY() - entity.getHeight()){
+				return false;
+			}
 		}
 		// bottom side of slug
 		else if(entity.getY() > this.getY() + this.getHeight()){
@@ -148,6 +165,9 @@ public class Slug extends MovingObject {
 				return false;
 			}
 			else if(entity.getY() > this.getY() + entity.getHeight()){
+				return false;
+			}
+			else if(entity.getY() > this.getY() - entity.getHeight()+10){
 				return false;
 			}
 		}
