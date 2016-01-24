@@ -21,6 +21,11 @@ public class MouseInput implements MouseListener {
 					SaltGamePanel.State = SaltGamePanel.STATE.GAME;
 				}
 			}
+			if (mouseX >= helpButton.x && mouseX <= helpButton.x + 100) {
+				if (mouseY >= helpButton.y && mouseY <= helpButton.y + 50) {
+					SaltGamePanel.State = SaltGamePanel.STATE.GAME;
+				}
+			}
 		}
 	}
 

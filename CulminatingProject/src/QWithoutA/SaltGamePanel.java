@@ -122,8 +122,6 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 */
 	char key = ' ';
 
-	public int screenCount = 0;
-
 	private int mouseX;
 	/**
 	 * X co-ordinate of the mouse 
@@ -134,11 +132,6 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 */
 
 	public boolean checkState;
-
-	/*public static Rectangle playButton = new Rectangle(500, 300, 100, 50);
-	public static Rectangle helpButton = new Rectangle(500, 400, 100, 50);
-	public static Rectangle quitButton = new Rectangle(500, 500, 100, 50);
-	 */
 
 	public boolean isPlayerProjectileSpawned = false;
 	public boolean isSlugProjectileSpawned = false;
@@ -179,23 +172,6 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		
 	}
 
-	/*public static void renderMainMenu(Graphics g) {
-		boolean click = false;
-		Graphics2D g2d = (Graphics2D) g;
-		Font fnt0 = new Font("Comic Sans MS", Font.BOLD, 50);
-		g.setFont(fnt0);
-		g.setColor(Color.BLACK);
-		g.drawString("The Adventures of Salt Man", 250, 250);
-		Font fnt1 = new Font("arial", Font.BOLD, 30);
-		g.setFont(fnt1);
-		g.drawString("Play", playButton.x + 19, playButton.y + 35);
-		g2d.draw(playButton);
-		g.drawString("Help", helpButton.x + 19, helpButton.y + 35);
-		g2d.draw(helpButton);
-		g.drawString("Quit", quitButton.x + 19, quitButton.y + 35);
-		g2d.draw(quitButton);
-	}
-	 */
 	public SaltGamePanel(){
 		this.setPreferredSize(new Dimension(width, height));
 		this.setBackground(Color.CYAN);
@@ -664,16 +640,6 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 
 	public char getKey() {
 		return key;
-	}
-
-	public int screenChange() {
-		if((player[0].getX() + player[0].getWidth() >= width - 100)) {
-			screenCount++;
-			return screenCount; 
-		}
-		else {
-			return 0; 
-		}
 	}
 
 }
