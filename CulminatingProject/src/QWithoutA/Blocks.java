@@ -52,11 +52,11 @@ public class Blocks extends MovingObject{
 				return false;
 			}
 			// top side of hitbox
-			else if(entity.getY() > this.getY() - entity.getHeight()+10){
+			else if(entity.getY() + entity.getHeight() < this.getY() - 5){
 				return false;
 			}
 			// bottom side of hitbox
-			else if(entity.getY() < this.getY() + this.getHeight()){
+			else if(entity.getY() + entity.getHeight() > this.getY() + this.getHeight()/2){
 				return false;
 			}
 			else if(entity.getX() > this.getX()+ this.getWidth()){
@@ -68,11 +68,11 @@ public class Blocks extends MovingObject{
 				return false;
 			}
 			// top side of hitbox
-			else if(entity.getY() > this.getY() - entity.getHeight()+10){
+			else if(entity.getY() + entity.getHeight() < this.getY() - 5){
 				return false;
 			}
 			// bottom side of hitbox
-			else if(entity.getY() < this.getY() + this.getHeight()){
+			else if(entity.getY() + entity.getHeight() > this.getY() + this.getHeight()/2){
 				return false;
 			}
 			else if(entity.getX() + entity.getWidth() < this.getX()){
@@ -80,32 +80,32 @@ public class Blocks extends MovingObject{
 			}
 		}
 		// top side of hitbox
-		else if(entity.getY() < this.getY() - entity.getHeight()){				
+		else if(entity.getY() + entity.getHeight() < this.getY() - 5){				
 			if(entity.getY() > this.getY() - entity.getHeight()+10){
 				return false;
 			}
 			else if(entity.getX() + entity.getWidth() < this.getX()){
 				return false;
 			}
-			else if(entity.getX() > this.getX() + this.getWidth()){
+			else if(entity.getY() + entity.getHeight() > this.getY() + this.getHeight()/2){
 				return false;
 			}
-			else if(entity.getY() < this.getY() - entity.getHeight()){
+			else if(entity.getY() + entity.getHeight() < this.getY() - 5){
 				return false;
 			}
 		}
 		// bottom side of hitbox
-		else if(entity.getY() > this.getY() - entity.getHeight()+10){
+		else if(entity.getY() + entity.getHeight() > this.getY() + this.getHeight()/2){
 			if(entity.getX() + entity.getHeight() < this.getX()){
 				return false;
 			}
 			else if(entity.getX() < this.getX() - entity.getWidth()){
 				return false;
 			}
-			else if(entity.getY() < this.getY() - entity.getHeight()){
+			else if(entity.getY() + entity.getHeight() < this.getY() - 5){
 				return false;
 			}
-			else if(entity.getY() > this.getY() - entity.getHeight()+10){
+			else if(entity.getY() + entity.getHeight() > this.getY() + this.getHeight()/2){
 				return false;
 			}
 		}
