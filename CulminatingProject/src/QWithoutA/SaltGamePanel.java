@@ -251,14 +251,19 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 						player.get(0).setY((int) (block.get(i).getY() - player.get(0).getHeight()));
 						System.out.println("on top");
 					}
-//					if(block.get(i).checkBreakingCollision(player.get(0))){
-//						//block.remove(i);
-//						player.get(0).setYSpeed(player.get(0).getYspeed() * -1);
-//						System.out.println("broke");
+					if(block.get(i).checkBreakingCollision(player.get(0)) && player.get(0).getYspeed() < 0){
+						//block.remove(i);
+						player.get(0).setYSpeed(player.get(0).getYspeed() * -1);
+						System.out.println("broke");
+						
+					}
+//					if(block.get(i).checkLeftSideCollision(player.get(0))){
+//						player.get(0).setX(blocks.get(i).getX());
+//						System.out.println("left side hit");
 //					}
-//					if(block.get(i).checkSideCollision(player.get(0)) && player.get(0).getYspeed() < 0){
-//						player.get(0).setXSpeed(0);
-//						System.out.println("side hit");
+//					if(block.get(i).checkRightSideCollision(player.get(0))){
+//						player.get(0).setXSpeed(blocks.get(i).getX() + blocks.get(i).getWidth());
+//						System.out.println("right side hit");
 //					}
 				}
 				
