@@ -245,7 +245,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 							System.out.println("on top");
 						}
 						if(ground.get(i).checkBottomCollision(player.get(0)) && player.get(0).getYspeed() < 0){
-							player.get(0).setYSpeed(player.get(0).getYspeed() * -1);
+							player.get(0).setY((int) ground.get(i).getY() + ground.get(i).getHeight());
+							player.get(0).setJumping(false);
 							System.out.println("bottom");
 						}
 						if(ground.get(i).checkLeftSideCollision(player.get(0))){
@@ -289,12 +290,25 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 						}
 					}
 					for(int i = 0; i<iBlock.size(); i++){
-						if(player.get(0).getYspeed() > 0){
-							switch(collisionOfPlayerAndItemBlock(i)){
-							case 1:
-								player.get(0).setYSpeed(0);
-								player.get(0).setY((int) (iBlock.get(i).getY() - player.get(0).getHeight()));
-							}
+						if(iBlock.get(i).checkStandingCollision(player.get(0)) && player.get(0).getYspeed() > 0){
+							player.get(0).setYSpeed(0);
+							player.get(0).setY((int) (iBlock.get(i).getY() - player.get(0).getHeight()));
+							System.out.println("on top");
+						}
+						if(iBlock.get(i).checkBottomCollision(player.get(0)) && player.get(0).getYspeed() < 0){
+							player.get(0).setY((int) iBlock.get(i).getY() + iBlock.get(i).getHeight());
+							player.get(0).setJumping(false);
+							player.get(0).setYSpeed(player.get(0).getYspeed() *-1);
+							System.out.println("broke");
+
+						}
+						if(iBlock.get(i).checkLeftSideCollision(player.get(0))){
+							player.get(0).setX((int) iBlock.get(i).getX() - player.get(0).getWidth() - 5);
+							System.out.println("left side hit");
+						}
+						else if(iBlock.get(i).checkRightSideCollision(player.get(0))){
+							player.get(0).setX((int) iBlock.get(i).getX() + iBlock.get(0).getWidth() + 5);
+							System.out.println("right side hit");
 						}
 					}
 					for(int i = 0; i < block.size(); i++){
@@ -303,11 +317,9 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 							player.get(0).setY((int) (block.get(i).getY() - player.get(0).getHeight()));
 							System.out.println("on top");
 						}
-						if(block.get(i).checkBreakingCollision(player.get(0)) && player.get(0).getYspeed() < 0){
+						if(block.get(i).checkBottomCollision(player.get(0)) && player.get(0).getYspeed() < 0){
 							block.remove(i);
-							player.get(0).setYSpeed(player.get(0).getYspeed() * -1);
 							System.out.println("broke");
-
 						}
 						if(block.get(i).checkLeftSideCollision(player.get(0))){
 							player.get(0).setX((int) block.get(i).getX() - player.get(0).getWidth() - 5);
@@ -335,9 +347,6 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 					if(!player.get(0).isJumping()){
 						player.get(0).setYSpeed((player.get(0).getYspeed() +  1.98)/ 1.0198);
 					}
-					//				if(player.get(0).getYspeed() < 0){
-					//					player.get(0).setYSpeed(0);
-					//				}
 					if(player.get(0).getY() > height){
 						player.get(0).setY((int) (player.get(0).getY() - height/4));
 					}

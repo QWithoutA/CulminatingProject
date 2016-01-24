@@ -112,7 +112,7 @@ public class Blocks extends MovingObject{
 		return true;
 	}
 
-	public boolean checkBreakingCollision(Player entity){
+	public boolean checkBottomCollision(Player entity){
 		//If the player touches a block hitbox below
 		if(entity.getX() > this.getX()+ this.getWidth()){ //right side of hitbox
 			if(entity.getX() + entity.getWidth() < this.getX()){
