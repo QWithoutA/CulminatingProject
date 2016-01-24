@@ -213,7 +213,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 
 		//adds a block that falls 
 		fBlock.add(new FallingBlock(500, 250, 0, width, 0, height));
-		player.add(new Player(30, 250, -width, width*2, -height, height*2));
+		player.add(new Player(30, 250, 0, width, 0, height));
 		
 		walkers.add(new RoamingEnemy(400, 500, 200, 600, 0, height));
 		walkers.get(0).setXSpeed(walkerSpeed);
@@ -236,12 +236,23 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 				try{
 					Thread.sleep(pauseDuration);
 					for(int i = 0; i<ground.size(); i++){
-						if(player.get(0).getYspeed() > 0){
-							switch(collisionOfPlayerAndGround(i)){
-							case 1:
-								player.get(0).setYSpeed(0);
-								player.get(0).setY((int) (ground.get(i).getY() - player.get(0).getHeight()));
-							}
+						if(ground.get(i).checkStandingCollision(player.get(0)) && player.get(0).getYspeed() >= 0){
+							player.get(0).setYSpeed(0);
+							player.get(0).setY((int) (ground.get(i).getY() - player.get(0).getHeight()));
+							System.out.println("on top");
+						}
+						else if(ground.get(i).checkBottomCollision(player.get(0)) && player.get(0).getYspeed() < 0){
+							player.get(0).setYSpeed(player.get(0).getYspeed() * -1);
+							System.out.println("broke");
+
+						}
+						else if(ground.get(i).checkLeftSideCollision(player.get(0))){
+							player.get(0).setX((int) ground.get(i).getX() - ground.get(i).getWidth() - 5);
+							System.out.println("left side hit");
+						}
+						else if(ground.get(i).checkRightSideCollision(player.get(0))){
+							player.get(0).setX((int) ground.get(i).getX() + ground.get(i).getWidth()+5);
+							System.out.println("right side hit");
 						}
 					}
 					for(int i = 0; i<fBlock.size(); i++){
@@ -269,20 +280,20 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 							player.get(0).setY((int) (block.get(i).getY() - player.get(0).getHeight()));
 							System.out.println("on top");
 						}
-						if(block.get(i).checkBreakingCollision(player.get(0)) && player.get(0).getYspeed() < 0){
-							//block.remove(i);
+						else if(block.get(i).checkBreakingCollision(player.get(0)) && player.get(0).getYspeed() < 0){
+							block.remove(i);
 							player.get(0).setYSpeed(player.get(0).getYspeed() * -1);
 							System.out.println("broke");
 
 						}
-//						if(block.get(i).checkLeftSideCollision(player.get(0))){
-//							player.get(0).setX((int) block.get(i).getX());
-//							System.out.println("left side hit");
-//						}
-//						if(block.get(i).checkRightSideCollision(player.get(0))){
-//							player.get(0).setXSpeed(block.get(i).getX() + block.get(i).getWidth());
-//							System.out.println("right side hit");
-//						}
+						else if(block.get(i).checkLeftSideCollision(player.get(0))){
+							player.get(0).setX((int) block.get(i).getX() - block.get(i).getWidth() - 5);
+							System.out.println("left side hit");
+						}
+						else if(block.get(i).checkRightSideCollision(player.get(0))){
+							player.get(0).setX((int) block.get(i).getX() + block.get(i).getWidth()+5);
+							System.out.println("right side hit");
+						}
 					}
 
 //					if(collisionOfPlayerAndPlatform() && player.get(0).getYspeed() > 0){

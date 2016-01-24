@@ -71,7 +71,7 @@ public class Slug extends MovingObject {
 	public void animateOneStep() {
 		// TODO Auto-generated method stub
 		shotCounter++;
-		if (shotCounter > 30){
+		if (shotCounter > 100){
 			setShooting(true);
 			shotCounter = 0;
 		}
