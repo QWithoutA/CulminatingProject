@@ -12,6 +12,7 @@ import QWithoutA.SaltGamePanel.STATE;
 public class MouseInput implements MouseListener {
 	
 	public static Rectangle playButton = new Rectangle(500, 250, 100, 50);
+	public static Rectangle continueButton = new Rectangle(500, 250, 100, 50);
 	public static Rectangle quitButton = new Rectangle(500, 350, 100, 50);
 	
 	public void mouseClicked(MouseEvent e) {
@@ -20,6 +21,20 @@ public class MouseInput implements MouseListener {
 		if (SaltGamePanel.State == STATE.MENU){
 			if (mouseX >= playButton.x && mouseX <= playButton.x + 100) {
 				if (mouseY >= playButton.y && mouseY <= playButton.y + 50) {
+					SaltGamePanel.State = SaltGamePanel.STATE.GAME;
+				}
+			}
+			if (mouseX >= quitButton.x && mouseX <= quitButton.x + 100) {
+				if (mouseY >= quitButton.y && mouseY <= quitButton.y + 50) {
+					System.exit(0);
+				}
+			}
+		}
+		else if (SaltGamePanel.State == STATE.DEATH) {
+			if (mouseX >= continueButton.x && mouseX <= continueButton.x + 100) {
+				if (mouseY >= continueButton.y && mouseY <= continueButton.y + 50) {
+					SaltGamePanel.player.get(0).setX(0);
+					SaltGamePanel.player.get(0).setY(400);
 					SaltGamePanel.State = SaltGamePanel.STATE.GAME;
 				}
 			}

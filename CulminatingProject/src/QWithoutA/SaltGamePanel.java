@@ -73,7 +73,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
     /**
      * Player entity
      */
-    ArrayList<Player> player = new ArrayList<Player>();
+    static ArrayList<Player> player = new ArrayList<Player>();
     /**
      * Ranged-enemies commonly known as 'slugs'
      */
@@ -150,7 +150,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 
 	public enum STATE{
 		MENU,
-		GAME
+		GAME,
+		DEATH
 	};
 	public static STATE State = STATE.MENU;
 	
@@ -187,9 +188,9 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		
 		player.add(new Player(30, 250, 0, width, 0, height));
 		//this.levelGlen();
-		this.levelTimothy();
+		//this.levelTimothy();
 		//this.levelRosauro();
-		//this.levelDavid();
+		this.levelDavid();
 	
 		
 		//adds main menu
@@ -315,12 +316,88 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	}
 	// the first level that David created 
 	public void levelDavid(){
+		ground.add(new Ground(0, 525, 0, width, 0, height));
+		ground.get(0).setWidth(ground.get(0).getWidth()/3);
+		
+		ground.add(new Ground(750, 525, 0, width, 0, height));
+		ground.get(1).setWidth(ground.get(1).getWidth()/3);
+		
+		ground.add(new Ground(450, 525, 500, width, 0, height));
+		ground.get(2).setWidth(ground.get(2).getWidth()/5);
+		
+		ground.add(new Ground(0, 250, 0, width, 0, height));
+		ground.get(3).setWidth(ground.get(3).getWidth()/7);
+		
+		ground.add(new Ground(950, 250, 0, width, 0, height));
+		ground.get(4).setWidth(ground.get(4).getWidth()/7);
+		
+		ground.add(new Ground(100, 450, 0, width, 0, height));
+		ground.get(5).setWidth(ground.get(5).getWidth()/8);
+		
+		ground.add(new Ground(200, 400, 0, width, 0, height));
+		ground.get(6).setWidth(ground.get(6).getWidth()/8);
+
+		ground.add(new Ground(300, 350, 0, width, 0, height));
+		ground.get(7).setWidth(ground.get(7).getWidth()/6);
+		
+		ground.add(new Ground(650, 350, 0, width, 0, height));
+		ground.get(8).setWidth(ground.get(8).getWidth()/6);
+		
+		ground.add(new Ground(900, 450, 0, width, 0, height));
+		ground.get(9).setWidth(ground.get(9).getWidth()/8);
+		
+		ground.add(new Ground(800, 400, 0, width, 0, height));
+		ground.get(10).setWidth(ground.get(10).getWidth()/8);
+		
+		ground.add(new Ground(250, 175, 0, width, 0, height));
+		ground.get(11).setWidth(ground.get(11).getWidth()/8);
+		
+		ground.add(new Ground(450, 175, 0, width, 0, height));
+		ground.get(12).setWidth(ground.get(12).getWidth()/4);
+		
+		ground.add(new Ground(800, 175, 0, width, 0, height));
+		ground.get(13).setWidth(ground.get(13).getWidth()/8);
+
+		
+		mPlatVertical.add(new Platform(525, 400, 0, width, 270, 500));
+		mPlatVertical.get(0).setYSpeed(3);
+		
+		slugs.add(new Slug(300, 325, 300, 425, 0 , height));
+		slugs.get(0).setXSpeed(2*slugSpeed/3);
+		
+		slugs.add(new Slug(450, 150, 450, 650, 0 , height));
+		slugs.get(1).setXSpeed(2*slugSpeed/3);
+		
+		walkers.add(new RoamingEnemy(50, 500, 0, 350, 0, height));
+		walkers.get(0).setXSpeed(walkerSpeed*2);
+		
+		walkers.add(new RoamingEnemy(650, 325, 650, 800, 0, height));
+		walkers.get(1).setXSpeed(walkerSpeed*3);
+		
+		walkers.add(new RoamingEnemy(800, 500, 750, 1050, 0, height));
+		walkers.get(2).setXSpeed(walkerSpeed);
+		
+		//block.add(new Blocks(350, 325, 0, width, 0, height));
+		
+		//block.add(new Blocks(450, 325, 0, width, 0, height));
+		
+		//block.add(new Blocks(750, 325, 0, width, 0, height));
+	
+		//block.add(new Blocks(350, 325, 0, width, 0, height));
+		
+		iBlock.add(new ItemBlock(550, 225, 0, width, 0, height));
+		
+		block.add(new Blocks(50, 75, 0, width, 0, height));
+		
+		block.add(new Blocks(1000, 75, 0, width, 0, height));
+		
 	}
 	
 	public void run() {
 		while (true) {
 			this.requestFocusInWindow();
 			if (State == STATE.GAME) {
+				this.setBackground(Color.CYAN);
 				repaint();
 				try{
 					Thread.sleep(pauseDuration);
@@ -473,13 +550,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 					//				if(isPlayerHit()){
 					//					System.out.println("dead");
 					//				}
-					if(player.get(0).getY() >= height-1){
-						System.out.println("You Died!");
-						player.get(0).setY((int) (player.get(0).getY() - height/2));
-						slugs.get(0).setXSpeed(0);
-						walkers.get(0).setXSpeed(0);
-						mPlatHorizontal.get(0).setXSpeed(0);
-						mPlatVertical.get(0).setYSpeed(0);
+					if(player.get(0).getY() >= height-player.get(0).getHeight()){
+						State = STATE.DEATH;
 
 					}
 					if(playerProjectileDirection == -1){
@@ -523,7 +595,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 								walkers.get(i).setYSpeed((walkers.get(i).getYspeed() +  1.98)/ 1.0198);
 							}
 							if(walkers.get(i).checkCollision(player.get(0))){
-								System.out.println("died");
+								State = STATE.DEATH;
 							}
 						}
 					}
@@ -548,12 +620,12 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 								slugs.get(i).movingToBoundry(false);
 							}
 							if(slugs.get(i).checkCollision(player.get(0))){
-								System.out.println("died");
+								State = STATE.DEATH;
 							}
 						}
 						for(int i = 0; i< slimeBalls.size(); i++){
 							if(slimeBalls.get(i).checkCollision(player.get(0))){
-								System.out.println("died");
+								State = STATE.DEATH;
 							}
 						}
 					}
@@ -567,7 +639,9 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 				} catch(ArrayIndexOutOfBoundsException e) {
 				
 				}
-		}
+		} 
+			else if (State == STATE.DEATH)
+				repaint();
 	}
 }
 	
@@ -631,6 +705,10 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		}
 		else if (State == STATE.MENU) {
 			MainMenu.render(g);
+		}
+		else if (State == STATE.DEATH) {
+			this.setBackground(Color.RED);
+			DeathScreen.render(g);
 		}
 	}
 	//backup collisions of lagging
