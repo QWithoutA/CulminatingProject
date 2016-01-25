@@ -52,7 +52,9 @@ public class FallingBlock extends Blocks{
 	public int getCountFalling(){
 		return countFalling;
 	}
-	
+	/**
+	 * check if the player is on the falling block
+	 */
 	public boolean checkStandingCollision(Player entity){
 		//If the player touches a block hitbox on top
 		if(entity.getX() > this.getX()+ this.getWidth()){ //right side of hitbox			
@@ -90,18 +92,18 @@ public class FallingBlock extends Blocks{
 		// top side of hitbox
 		else if(entity.getY() + entity.getHeight() < this.getY() + 5){  
 			if(entity.getX() + entity.getWidth() < this.getX()){
-			    return false;
-			   }
-			   else if(entity.getX() > this.getX() + this.getWidth()){
-			    return false;
-			   }
-			   else if(entity.getY() > this.getY() + this.getHeight()){
-			    return false;
-			   }
-			   else if(entity.getY() + entity.getHeight() < this.getY() + 5){
-			    return false;
-			   }
-			  }
+				return false;
+			}
+			else if(entity.getX() > this.getX() + this.getWidth()){
+				return false;
+			}
+			else if(entity.getY() + entity.getHeight() > this.getY() + this.getHeight()/2){
+				return false;
+			}
+			else if(entity.getY() + entity.getHeight() < this.getY() + 5){
+				return false;
+			}
+		}
 		// bottom side of hitbox
 		else if(entity.getY() + entity.getHeight() > this.getY() + this.getHeight()/2){
 			if(entity.getX() + entity.getHeight() < this.getX()){

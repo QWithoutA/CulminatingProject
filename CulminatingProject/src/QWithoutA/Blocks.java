@@ -44,7 +44,9 @@ public class Blocks extends MovingObject{
 	public int getHeight(){
 		return height;
 	}
-
+	/**
+	 * check if the player is on the block
+	 */
 	public boolean checkStandingCollision(Player entity){
 		//If the player touches a block hitbox on top
 		if(entity.getX() > this.getX()+ this.getWidth()){ //right side of hitbox			
@@ -82,18 +84,18 @@ public class Blocks extends MovingObject{
 		// top side of hitbox
 		else if(entity.getY() + entity.getHeight() < this.getY() + 5){  
 			if(entity.getX() + entity.getWidth() < this.getX()){
-			    return false;
-			   }
-			   else if(entity.getX() > this.getX() + this.getWidth()){
-			    return false;
-			   }
-			   else if(entity.getY() > this.getY() + this.getHeight()){
-			    return false;
-			   }
-			   else if(entity.getY() + entity.getHeight() < this.getY() + 5){
-			    return false;
-			   }
-			  }
+				return false;
+			}
+			else if(entity.getX() > this.getX() + this.getWidth()){
+				return false;
+			}
+			else if(entity.getY() + entity.getHeight() > this.getY() + this.getHeight()/2){
+				return false;
+			}
+			else if(entity.getY() + entity.getHeight() < this.getY() + 5){
+				return false;
+			}
+		}
 		// bottom side of hitbox
 		else if(entity.getY() + entity.getHeight() > this.getY() + this.getHeight()/2){
 			if(entity.getX() + entity.getHeight() < this.getX()){
@@ -111,7 +113,9 @@ public class Blocks extends MovingObject{
 		}
 		return true;
 	}
-
+	/**
+	 * check if the player is touching underneath the block
+	 */
 	public boolean checkBottomCollision(Player entity){
 		//If the player touches a block hitbox below
 		if(entity.getX() > this.getX()+ this.getWidth()){ //right side of hitbox
@@ -178,6 +182,9 @@ public class Blocks extends MovingObject{
 		}
 		return true;
 	}
+	/**
+	 * check if the player is touching the left side of the block
+	 */
 	public boolean checkLeftSideCollision(Player entity){
 		//If the player touches a block hitbox on the left side
 		if(entity.getX() + entity.getWidth() > this.getX() + 5){ //right side of hitbox
@@ -244,6 +251,9 @@ public class Blocks extends MovingObject{
 		}
 		return true;
 	}
+	/**
+	 * check if the player is touching the right side of the block
+	 */
 	public boolean checkRightSideCollision(Player entity){
 		//If the player touches a block hitbox on the right side
 		if(entity.getX() > this.getX() + this.getWidth() + 5){ //right side of hitbox
