@@ -1,4 +1,9 @@
 package QWithoutA;
+
+/**
+ * this is the death screen class, it creates the death screen for when you die
+ */
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;

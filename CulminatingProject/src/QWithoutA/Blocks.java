@@ -1,5 +1,7 @@
 package QWithoutA;
-
+/**
+ * this is the block class, it creates a new block
+ */
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;

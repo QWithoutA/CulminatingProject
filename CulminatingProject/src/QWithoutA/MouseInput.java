@@ -1,5 +1,7 @@
 package QWithoutA;
-
+/**
+ * this is the mouse input class, this is for all the mouse inputs 
+ */
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;

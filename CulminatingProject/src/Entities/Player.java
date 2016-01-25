@@ -86,53 +86,82 @@ public class Player extends MovingObject{
 			jumpCounter++;
 		}
 		if(jumpCounter > 10){
-			jumpCounter ++;
+//			jumpCounter ++;
 		}
 		if(jumpCounter > 20){
 			jumpCounter = 0;
 		}
-	}
+	}/**
+	 * this sets the widheightth of the palyer
+	 * @return
+	 */
 	
 	public void setHeight(int x) {
 		// TODO Auto-generated metdhod stub
 		this.height = x;
 	}
-	
+	/**
+	 * this gets the height of the palyer
+	 * @return
+	 */
 	public int getHeight() {
 		// TODO Auto-generated method stub
 		return this.height;
 	}
 	
+	/**
+	 * this sets the width of the palyer
+	 * @return
+	 */
 	public void setWidth(int x) {
 		// TODO Auto-generated method stub
 		this.width = x;
 	}
 	
+	/**
+	 * this gets the width of the palyer
+	 * @return
+	 */
 	public int getWidth() {
 		// TODO Auto-generated method stub
 		return this.width;
 	}
-	public void setJumpCount(int x) {
-		// TODO Auto-generated method stub
-		this.jumpCounter = x;
-	}
+	/**
+	 * this gets the jump count for how long the player is in the air for
+	 * @return
+	 */
 	public int getJumpCount() {
 		// TODO Auto-generated method stub
 		return this.jumpCounter;
 	}
 	
+	/**
+	 * this sets the crouching 
+	 * @return
+	 */
 	public void setCrouching(boolean x){
 		isDown = x;	
 	}
 	
+	/**
+	 * this gets the crouching to test if the player is crouching 
+	 * @return
+	 */
 	public boolean isCrouching(){
 		return isDown;
 	}
 	
+	/**
+	 * this sets the jump 
+	 * @return
+	 */
 	public void setJumping(boolean x){
 		isJumping = x;	
 	}
-	
+	/**
+	 * this gets the jump for if the palyer is jumping 
+	 * @return
+	 */
 	public boolean isJumping(){
 		return isJumping;
 	}

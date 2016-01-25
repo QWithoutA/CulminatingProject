@@ -1,5 +1,7 @@
 package QWithoutA;
-
+/**
+ * this is the ground class, it creates a new ground
+ */
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -66,7 +68,7 @@ public class Ground extends Blocks{
 				return false;
 			}
 			// bottom side of hitbox
-			else if(entity.getY() + entity.getHeight() > this.getY() + this.getHeight()/2){
+			else if(entity.getY() + entity.getHeight() > this.getY() + this.getHeight()){
 				return false;
 			}
 			else if(entity.getX() > this.getX()+ this.getWidth()){
@@ -82,7 +84,7 @@ public class Ground extends Blocks{
 				return false;
 			}
 			// bottom side of hitbox
-			else if(entity.getY() + entity.getHeight() > this.getY() + this.getHeight()/2){
+			else if(entity.getY() + entity.getHeight() > this.getY() + this.getHeight()){
 				return false;
 			}
 			else if(entity.getX() + entity.getWidth() < this.getX()){
@@ -97,7 +99,7 @@ public class Ground extends Blocks{
 			else if(entity.getX() > this.getX() + this.getWidth()){
 				return false;
 			}
-			else if(entity.getY() + entity.getHeight() > this.getY() + this.getHeight()/2){
+			else if(entity.getY() + entity.getHeight() > this.getY() + this.getHeight()){
 				return false;
 			}
 			else if(entity.getY() + entity.getHeight() < this.getY() + 5){
@@ -105,7 +107,7 @@ public class Ground extends Blocks{
 			}
 		}
 		// bottom side of hitbox
-		else if(entity.getY() + entity.getHeight() > this.getY() + this.getHeight()/2){
+		else if(entity.getY() + entity.getHeight() > this.getY() + this.getHeight()){
 			if(entity.getX() + entity.getHeight() < this.getX()){
 				return false;
 			}
@@ -115,7 +117,7 @@ public class Ground extends Blocks{
 			else if(entity.getY() + entity.getHeight() < this.getY() - 5){
 				return false;
 			}
-			else if(entity.getY() + entity.getHeight() > this.getY() + this.getHeight()/2){
+			else if(entity.getY() + entity.getHeight() > this.getY() + this.getHeight()){
 				return false;
 			}
 		}

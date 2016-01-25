@@ -184,7 +184,9 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		frame.setTitle("The Adventures of Salt Man");
 		frame.setResizable(false);
 	}
-	
+	/**
+	 * this is the salt game panel, this is the stuff that will appere on the game panel for you to play
+	 */
 	public SaltGamePanel(){
 		this.setPreferredSize(new Dimension(width, height));
 		this.setBackground(Color.CYAN);
@@ -467,6 +469,10 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		level = 4;
 	}
 	
+	
+	/**
+	 * this is the run method, this is what happens when the game is run such as checking the collisions and making stuff appear.
+	 */
 	public void run() {
 		while (true) {
 			this.requestFocusInWindow();
@@ -579,7 +585,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 						player.get(0).setJumping(true);
 					}
 					if(player.get(0).isJumping()){
-						player.get(0).setYSpeed((player.get(0).getYspeed() +  3.98)/ -1.0198 - 15);
+						player.get(0).setYSpeed((player.get(0).getYspeed() +  3.98)/ -1.0198 - 40);
 					}
 					if(player.get(0).getJumpCount() > 20){
 						player.get(0).setY((int) (player.get(0).getY() -2));
@@ -687,6 +693,66 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 									time = 240;
 								else if(level == 4)
 									time = 360;
+								if(time == 0){
+									groundRemover(ground, ground.size());
+									blockRemover(block, block.size());
+									itemBlockRemover(iBlock, iBlock.size());
+									platformRemover(mPlatHorizontal, mPlatHorizontal.size());
+									platformRemover(mPlatVertical, mPlatVertical.size());
+									fallingBlockRemover(fBlock, fBlock.size());
+									walkersRemover(walkers, walkers.size());
+									slugRemover(slugs, slugs.size());
+									slimeBallRemover(slimeBalls, slimeBalls.size());
+									playerProjectileRemover(saltBalls, saltBalls.size());
+									player.get(0).setX(30);
+									player.get(0).setY(250);
+									levelGlen();
+								}
+								else if(time == 120){
+									groundRemover(ground, ground.size());
+									blockRemover(block, block.size());
+									itemBlockRemover(iBlock, iBlock.size());
+									platformRemover(mPlatHorizontal, mPlatHorizontal.size());
+									platformRemover(mPlatVertical, mPlatVertical.size());
+									fallingBlockRemover(fBlock, fBlock.size());
+									walkersRemover(walkers, walkers.size());
+									slugRemover(slugs, slugs.size());
+									slimeBallRemover(slimeBalls, slimeBalls.size());
+									playerProjectileRemover(saltBalls, saltBalls.size());
+									player.get(0).setX(30);
+									player.get(0).setY(250);
+									levelRosauro();
+								}
+								else if(time == 240){
+									groundRemover(ground, ground.size());
+									blockRemover(block, block.size());
+									itemBlockRemover(iBlock, iBlock.size());
+									platformRemover(mPlatHorizontal, mPlatHorizontal.size());
+									platformRemover(mPlatVertical, mPlatVertical.size());
+									fallingBlockRemover(fBlock, fBlock.size());
+									walkersRemover(walkers, walkers.size());
+									slugRemover(slugs, slugs.size());
+									slimeBallRemover(slimeBalls, slimeBalls.size());
+									playerProjectileRemover(saltBalls, saltBalls.size());
+									player.get(0).setX(30);
+									player.get(0).setY(250);
+									levelTimothy();
+								}
+								else if(time == 360){
+									groundRemover(ground, ground.size());
+									blockRemover(block, block.size());
+									itemBlockRemover(iBlock, iBlock.size());
+									platformRemover(mPlatHorizontal, mPlatHorizontal.size());
+									platformRemover(mPlatVertical, mPlatVertical.size());
+									fallingBlockRemover(fBlock, fBlock.size());
+									walkersRemover(walkers, walkers.size());
+									slugRemover(slugs, slugs.size());
+									slimeBallRemover(slimeBalls, slimeBalls.size());
+									playerProjectileRemover(saltBalls, saltBalls.size());
+									player.get(0).setX(30);
+									player.get(0).setY(250);
+									levelDavid();
+								}
 							}
 						}
 					}
@@ -720,6 +786,66 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 									time = 240;
 								else if(level == 4)
 									time = 360;
+								if(time == 0){
+									groundRemover(ground, ground.size());
+									blockRemover(block, block.size());
+									itemBlockRemover(iBlock, iBlock.size());
+									platformRemover(mPlatHorizontal, mPlatHorizontal.size());
+									platformRemover(mPlatVertical, mPlatVertical.size());
+									fallingBlockRemover(fBlock, fBlock.size());
+									walkersRemover(walkers, walkers.size());
+									slugRemover(slugs, slugs.size());
+									slimeBallRemover(slimeBalls, slimeBalls.size());
+									playerProjectileRemover(saltBalls, saltBalls.size());
+									player.get(0).setX(30);
+									player.get(0).setY(250);
+									levelGlen();
+								}
+								else if(time == 120){
+									groundRemover(ground, ground.size());
+									blockRemover(block, block.size());
+									itemBlockRemover(iBlock, iBlock.size());
+									platformRemover(mPlatHorizontal, mPlatHorizontal.size());
+									platformRemover(mPlatVertical, mPlatVertical.size());
+									fallingBlockRemover(fBlock, fBlock.size());
+									walkersRemover(walkers, walkers.size());
+									slugRemover(slugs, slugs.size());
+									slimeBallRemover(slimeBalls, slimeBalls.size());
+									playerProjectileRemover(saltBalls, saltBalls.size());
+									player.get(0).setX(30);
+									player.get(0).setY(250);
+									levelRosauro();
+								}
+								else if(time == 240){
+									groundRemover(ground, ground.size());
+									blockRemover(block, block.size());
+									itemBlockRemover(iBlock, iBlock.size());
+									platformRemover(mPlatHorizontal, mPlatHorizontal.size());
+									platformRemover(mPlatVertical, mPlatVertical.size());
+									fallingBlockRemover(fBlock, fBlock.size());
+									walkersRemover(walkers, walkers.size());
+									slugRemover(slugs, slugs.size());
+									slimeBallRemover(slimeBalls, slimeBalls.size());
+									playerProjectileRemover(saltBalls, saltBalls.size());
+									player.get(0).setX(30);
+									player.get(0).setY(250);
+									levelTimothy();
+								}
+								else if(time == 360){
+									groundRemover(ground, ground.size());
+									blockRemover(block, block.size());
+									itemBlockRemover(iBlock, iBlock.size());
+									platformRemover(mPlatHorizontal, mPlatHorizontal.size());
+									platformRemover(mPlatVertical, mPlatVertical.size());
+									fallingBlockRemover(fBlock, fBlock.size());
+									walkersRemover(walkers, walkers.size());
+									slugRemover(slugs, slugs.size());
+									slimeBallRemover(slimeBalls, slimeBalls.size());
+									playerProjectileRemover(saltBalls, saltBalls.size());
+									player.get(0).setX(30);
+									player.get(0).setY(250);
+									levelDavid();
+								}
 							}
 						}
 						for(int i = 0; i< slimeBalls.size(); i++){
@@ -733,6 +859,66 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 									time = 240;
 								else if(level == 4)
 									time = 360;
+								if(time == 0){
+									groundRemover(ground, ground.size());
+									blockRemover(block, block.size());
+									itemBlockRemover(iBlock, iBlock.size());
+									platformRemover(mPlatHorizontal, mPlatHorizontal.size());
+									platformRemover(mPlatVertical, mPlatVertical.size());
+									fallingBlockRemover(fBlock, fBlock.size());
+									walkersRemover(walkers, walkers.size());
+									slugRemover(slugs, slugs.size());
+									slimeBallRemover(slimeBalls, slimeBalls.size());
+									playerProjectileRemover(saltBalls, saltBalls.size());
+									player.get(0).setX(30);
+									player.get(0).setY(250);
+									levelGlen();
+								}
+								else if(time == 120){
+									groundRemover(ground, ground.size());
+									blockRemover(block, block.size());
+									itemBlockRemover(iBlock, iBlock.size());
+									platformRemover(mPlatHorizontal, mPlatHorizontal.size());
+									platformRemover(mPlatVertical, mPlatVertical.size());
+									fallingBlockRemover(fBlock, fBlock.size());
+									walkersRemover(walkers, walkers.size());
+									slugRemover(slugs, slugs.size());
+									slimeBallRemover(slimeBalls, slimeBalls.size());
+									playerProjectileRemover(saltBalls, saltBalls.size());
+									player.get(0).setX(30);
+									player.get(0).setY(250);
+									levelRosauro();
+								}
+								else if(time == 240){
+									groundRemover(ground, ground.size());
+									blockRemover(block, block.size());
+									itemBlockRemover(iBlock, iBlock.size());
+									platformRemover(mPlatHorizontal, mPlatHorizontal.size());
+									platformRemover(mPlatVertical, mPlatVertical.size());
+									fallingBlockRemover(fBlock, fBlock.size());
+									walkersRemover(walkers, walkers.size());
+									slugRemover(slugs, slugs.size());
+									slimeBallRemover(slimeBalls, slimeBalls.size());
+									playerProjectileRemover(saltBalls, saltBalls.size());
+									player.get(0).setX(30);
+									player.get(0).setY(250);
+									levelTimothy();
+								}
+								else if(time == 360){
+									groundRemover(ground, ground.size());
+									blockRemover(block, block.size());
+									itemBlockRemover(iBlock, iBlock.size());
+									platformRemover(mPlatHorizontal, mPlatHorizontal.size());
+									platformRemover(mPlatVertical, mPlatVertical.size());
+									fallingBlockRemover(fBlock, fBlock.size());
+									walkersRemover(walkers, walkers.size());
+									slugRemover(slugs, slugs.size());
+									slimeBallRemover(slimeBalls, slimeBalls.size());
+									playerProjectileRemover(saltBalls, saltBalls.size());
+									player.get(0).setX(30);
+									player.get(0).setY(250);
+									levelDavid();
+								}
 							}
 						}
 					}
@@ -803,6 +989,9 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 				repaint();
 	}
 }
+	/**
+	 * this is the paintComponent method and it creats the images that are outputed onto the screen
+	 */
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -907,9 +1096,11 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 * The game timer
 	 */
 	Runnable timer = new Runnable() {
-	    public void run() {
-	        time++;
-	    }
+		public void run() {
+			if(State != STATE.DEATH){
+				time++;
+			}
+		}
 	};
 	
 	/**
@@ -1033,7 +1224,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 * @param size - total amount of objects stored
 	 */
 	private static void groundRemover(ArrayList<Ground> x, int size){
-		for(int i = 0; i< size; i++)
+		for(int i = size - 1; i>=0; i--)
 			x.remove(i);
 	}
 	/**
@@ -1042,7 +1233,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 * @param size - total amount of objects stored
 	 */
 	private static void blockRemover(ArrayList<Blocks> x, int size){
-		for(int i = 0; i< size; i++)
+		for(int i = size - 1; i>=0; i--)
 			x.remove(i);
 	}
 	/**
@@ -1051,7 +1242,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 * @param size - total amount of objects stored
 	 */
 	private static void itemBlockRemover(ArrayList<ItemBlock> x, int size){
-		for(int i = 0; i< size; i++)
+		for(int i = size - 1; i>=0; i--)
 			x.remove(i);
 	}
 	/**
@@ -1060,7 +1251,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 * @param size - total amount of objects stored
 	 */
 	private static void platformRemover(ArrayList<Platform> x, int size){
-		for(int i = 0; i< size; i++)
+		for(int i = size - 1; i>=0; i--)
 			x.remove(i);
 	}
 	/**
@@ -1069,7 +1260,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 * @param size - total amount of objects stored
 	 */
 	private static void fallingBlockRemover(ArrayList<FallingBlock> x, int size){
-		for(int i = 0; i< size; i++)
+		for(int i = size - 1; i>=0; i--)
 			x.remove(i);
 	}
 	/**
@@ -1078,7 +1269,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 * @param size - total amount of objects stored
 	 */
 	private static void playerProjectileRemover(ArrayList<PlayerProjectile> x, int size){
-		for(int i = 0; i< size; i++)
+		for(int i = size - 1; i>=0; i--)
 			x.remove(i);
 	}
 	/**
@@ -1087,7 +1278,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 * @param size - total amount of objects stored
 	 */
 	private static void walkersRemover(ArrayList<RoamingEnemy> x, int size){
-		for(int i = 0; i< size; i++)
+		for(int i = size - 1; i>=0; i--)
 			x.remove(i);
 	}
 	/**
@@ -1096,7 +1287,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 * @param size - total amount of objects stored
 	 */
 	private static void slugRemover(ArrayList<Slug> x, int size){
-		for(int i = 0; i< size; i++)
+		for(int i = size - 1; i>=0; i--)
 			x.remove(i);
 	}
 	/**
@@ -1105,7 +1296,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 * @param size - total amount of objects stored
 	 */
 	private static void slimeBallRemover(ArrayList<SlugProjectile> x, int size){
-		for(int i = 0; i< size; i++)
+		for(int i = size - 1; i>=0; i--)
 			x.remove(i);
 	}
 	public void setKey(char x) {

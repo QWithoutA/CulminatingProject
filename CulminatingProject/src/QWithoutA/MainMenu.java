@@ -1,5 +1,7 @@
 package QWithoutA;
-
+/**
+ * this is the main menu class, it creates the main menu for when you load the game
+ */
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;

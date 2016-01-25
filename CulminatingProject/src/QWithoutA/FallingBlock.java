@@ -1,5 +1,7 @@
 package QWithoutA;
-
+/**
+ * this is the fallingblock class, it creates a new fallingblock
+ */
 import java.awt.Graphics;
 import Entities.Player;
 

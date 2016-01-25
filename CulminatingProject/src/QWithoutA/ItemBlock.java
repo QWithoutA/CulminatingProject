@@ -1,5 +1,9 @@
 package QWithoutA;
 
+/**
+ * this is the itemblock class, it creates a new itemblock
+ */
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
