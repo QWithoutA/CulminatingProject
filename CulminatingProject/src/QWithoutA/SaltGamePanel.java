@@ -187,10 +187,10 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		this.addMouseListener(new MouseInput());
 		
 		player.add(new Player(30, 250, 0, width, 0, height));
-		//this.levelGlen();
+		this.levelGlen();
 		//this.levelTimothy();
 		//this.levelRosauro();
-		this.levelDavid();
+		//this.levelDavid();
 	
 		
 		//adds main menu
@@ -423,17 +423,18 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 					}
 					
 					for(int i = 0; i<mPlatHorizontal.size(); i++){
-						if(collisionOfPlayerAndPlatformHorizontal(i) && player.get(0).getYspeed() > 0){
-							player.get(0).setYSpeed(0);
+						if(mPlatHorizontal.get(i).checkStandingCollision(player.get(0)) && player.get(0).getYspeed() > 0){
+							player.get(0).setYSpeed(mPlatHorizontal.get(i).getXspeed());
 							player.get(0).setY((int) (mPlatHorizontal.get(i).getY() - player.get(0).getHeight()));
-							player.get(0).setXSpeed(mPlatHorizontal.get(i).getXspeed());
+							//System.out.println("on top");
 						}
 					}
 
 					for(int i = 0; i<mPlatVertical.size(); i++){
-						if(collisionOfPlayerAndPlatformVertical(i) && player.get(0).getYspeed() > 0){
-							player.get(0).setYSpeed(0);
+						if(mPlatVertical.get(i).checkStandingCollision(player.get(0)) && player.get(0).getYspeed() > 0){
+							player.get(0).setYSpeed(mPlatVertical.get(i).getYspeed());
 							player.get(0).setY((int) (mPlatVertical.get(i).getY() - player.get(0).getHeight()));
+							//System.out.println("on top");
 						}
 					}	
 					

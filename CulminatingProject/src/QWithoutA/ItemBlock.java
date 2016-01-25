@@ -92,16 +92,16 @@ public class ItemBlock extends Blocks{
 		}
 		// top side of hitbox
 		else if(entity.getY() + entity.getHeight() < this.getY() - 5){				
-			if(entity.getY() > this.getY() - entity.getHeight()+10){
+			if(entity.getX() + entity.getWidth() < this.getX()){
 				return false;
 			}
-			else if(entity.getX() + entity.getWidth() < this.getX()){
+			else if(entity.getY() + entity.getHeight() < this.getY() - 5){
 				return false;
 			}
 			else if(entity.getY() + entity.getHeight() > this.getY() + this.getHeight()/2){
 				return false;
 			}
-			else if(entity.getY() + entity.getHeight() < this.getY() - 5){
+			else if(entity.getX() > this.getX()+ this.getWidth()){
 				return false;
 			}
 		}

@@ -45,4 +45,71 @@ public class Platform extends MovingObject{
 	public int getHeight(){
 		return height;
 	}
+	
+	public boolean checkStandingCollision(Player entity){
+		//If the player touches a block hitbox on top
+		if(entity.getX() > this.getX()+ this.getWidth()){ //right side of hitbox			
+			if(entity.getX() + entity.getWidth() < this.getX()){
+				return false;
+			}
+			// top side of hitbox
+			else if(entity.getY() + entity.getHeight() < this.getY() - 5){
+				return false;
+			}
+			// bottom side of hitbox
+			else if(entity.getY() + entity.getHeight() > this.getY() + 5){
+				return false;
+			}
+			else if(entity.getX() > this.getX()+ this.getWidth()){
+				return false;
+			}
+		}	
+		else if(entity.getX() + entity.getWidth() < this.getX()){//left side of hitbox			
+			if(entity.getX() < this.getX() - entity.getWidth()){
+				return false;
+			}
+			// top side of hitbox
+			else if(entity.getY() + entity.getHeight() < this.getY() - 5){
+				return false;
+			}
+			// bottom side of hitbox
+			else if(entity.getY() + entity.getHeight() > this.getY() + 5){
+				return false;
+			}
+			else if(entity.getX() + entity.getWidth() < this.getX()){
+				return false;
+			}
+		}
+		// top side of hitbox
+		else if(entity.getY() + entity.getHeight() < this.getY() - 5){				
+			if(entity.getX() + entity.getWidth() < this.getX()){
+				return false;
+			}
+			else if(entity.getY() + entity.getHeight() < this.getY() - 5){
+				return false;
+			}
+			else if(entity.getY() + entity.getHeight() > this.getY() + 5){
+				return false;
+			}
+			else if(entity.getX() > this.getX()+ this.getWidth()){
+				return false;
+			}
+		}
+		// bottom side of hitbox
+		else if(entity.getY() + entity.getHeight() > this.getY() + 5){
+			if(entity.getX() + entity.getWidth() < this.getX()){
+				return false;
+			}
+			else if(entity.getX() < this.getX() - entity.getWidth()){
+				return false;
+			}
+			else if(entity.getY() + entity.getHeight() < this.getY() - 5){
+				return false;
+			}
+			else if(entity.getY() + entity.getHeight() > this.getY() + 5){
+				return false;
+			}
+		}
+		return true;
+	}
 }
