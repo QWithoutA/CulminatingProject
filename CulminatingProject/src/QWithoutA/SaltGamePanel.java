@@ -283,7 +283,6 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 								fBlock.get(0).setYSpeed(3);
 								fBlock.get(i).setFalling(false);
 							}
-							
 						}
 						if(fBlock.get(i).getY() + fBlock.get(i).getHeight() > height){
 								fBlock.remove(i);
