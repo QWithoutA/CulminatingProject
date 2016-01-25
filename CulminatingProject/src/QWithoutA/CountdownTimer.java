@@ -1,12 +1,14 @@
 package QWithoutA;
 
-import java.util.Timer;
-import java.util.TimerTask;
 
-import javax.swing.JFrame;
-public class CountdownTimer { 
-	int countdown = 10000;
-    public static void main(String[] args) {
-    //http://codereview.stackexchange.com/questions/87713/full-screen-countdown-display
+public class CountdownTimer
+{
+    static Thread thread = new Thread();
+    public static void main(String args[]) throws InterruptedException {
+    	for(int i = 60; i>0; i--){
+    		thread.sleep(1000);
+    		System.out.println(i);
+    	}
     }
 }
+   

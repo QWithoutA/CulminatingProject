@@ -11,8 +11,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Timer;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -124,7 +127,8 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	 */
 	char key = ' ';
 	
-	BufferedImage buffer1;
+	BufferedImage image;
+	
 	
 	public boolean isPlayerProjectileSpawned = false;
 	public boolean isSlugProjectileSpawned = false;
@@ -163,6 +167,13 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		addKeyListener(this);
 		addMouseListener (this);
 		addMouseMotionListener(this);
+		
+		//image used for the background
+		try {
+	        image = ImageIO.read(Player.class.getResourceAsStream("/Images/Background.png"));
+	    } catch (IOException e) {
+	    	e.printStackTrace();
+	    }
 		
 		// adds ground to stand on
 		ground.add(new Ground(0, 525, 0, width, 0, height));
@@ -388,11 +399,13 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		g.drawImage(image, 0, 0, null);
 		g.drawString ("Number of salt balls: " + saltBalls.size(), 5, 20);
 		g.drawString ("Number of slime balls: " + slimeBalls.size(), 5, 40);
 		g.drawString ("Current Key: " + key, 5, 60);
 		g.drawString ("Current Direction: " + playerProjectileDirection, 5, 80);
-		g.drawImage(buffer1, 0, 0, null);
+		
+		
 		// paints initial ground of main menu/first screen
 		for (int i = 0; i < ground.size(); i++) {
 			g.setColor(Color.GREEN);   
