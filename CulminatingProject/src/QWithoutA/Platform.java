@@ -45,7 +45,9 @@ public class Platform extends MovingObject{
 	public int getHeight(){
 		return height;
 	}
-	
+	/**
+	 * check if the player is on the platform
+	 */
 	public boolean checkStandingCollision(Player entity){
 		//If the player touches a block hitbox on top
 		if(entity.getX() > this.getX()+ this.getWidth()){ //right side of hitbox			

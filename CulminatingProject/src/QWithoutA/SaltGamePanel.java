@@ -872,7 +872,11 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		}
 	}
 
-	//collision for the player to stand on the moving platforms	
+	/**
+	 * collision for the player to stand on the moving platforms	
+	 * @param i
+	 * @return
+	 */
 	public boolean collisionOfPlayerAndPlatformHorizontal(int i){
 	if((player.get(0).getY() + player.get(0).getHeight() > mPlatHorizontal.get(i).getY() && player.get(0).getY() + player.get(0).getHeight() < mPlatHorizontal.get(i).getY() + mPlatHorizontal.get(i).getHeight()) && (player.get(0).getX() < mPlatHorizontal.get(i).getX() + mPlatHorizontal.get(i).getWidth() && player.get(0).getX() + player.get(0).getWidth() > mPlatHorizontal.get(i).getX())){
 		return true;
@@ -884,7 +888,11 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		return false;
 	}
 	
-	//collision for the player to stand on the moving platforms	
+	/**
+	 * collision for the player to stand on the moving platforms	
+	 * @param i
+	 * @return
+	 */
 	public boolean collisionOfPlayerAndPlatformVertical(int i){
 	if((player.get(0).getY() + player.get(0).getHeight() > mPlatVertical.get(i).getY() && player.get(0).getY() + player.get(0).getHeight() < mPlatVertical.get(i).getY() + mPlatVertical.get(i).getHeight()) && (player.get(0).getX() < mPlatVertical.get(i).getX() + mPlatVertical.get(i).getWidth() && player.get(0).getX() + player.get(0).getWidth() > mPlatVertical.get(i).getX())){
 			return true;
@@ -895,7 +903,9 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	else
 		return false;
 	}
-	
+	/**
+	 * The game timer
+	 */
 	Runnable timer = new Runnable() {
 	    public void run() {
 	        time++;
@@ -937,7 +947,9 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 		}
 		}
 	}
-
+	/**
+	 * Resets key value
+	 */
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		key = KeyEvent.CHAR_UNDEFINED;
@@ -976,14 +988,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		//Spawns new saltballs upon mouse click
-//			saltBalls.add(new PlayerProjectile(playerX, playerY, 0, width, 0, height));
-//			for(int i = 0; i < saltBalls.size(); i++){
-//				saltBalls.get(i).setXSpeed(initialVelocity * signX);
-//				saltBalls.get(i).setYSpeed((saltBalls.get(i).getYspeed() + saltBalls.get(i).getProjectileAcceleration()));
-//				saltBalls.get(i).setColor(new Color((int) (0), (int)  (0), (int) (0)));
-//			}
-
+		
 	}
 	
 	@Override
@@ -1022,38 +1027,83 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 			}
 		}
 	}
+	/**
+	 * removes all objects from the ground arraylist
+	 * @param x - arraylist to empty
+	 * @param size - total amount of objects stored
+	 */
 	private static void groundRemover(ArrayList<Ground> x, int size){
 		for(int i = 0; i< size; i++)
 			x.remove(i);
 	}
+	/**
+	 * removes all objects from the block arraylist
+	 * @param x - arraylist to empty
+	 * @param size - total amount of objects stored
+	 */
 	private static void blockRemover(ArrayList<Blocks> x, int size){
 		for(int i = 0; i< size; i++)
 			x.remove(i);
 	}
+	/**
+	 * removes all objects from the itemBlock arraylist
+	 * @param x - arraylist to empty
+	 * @param size - total amount of objects stored
+	 */
 	private static void itemBlockRemover(ArrayList<ItemBlock> x, int size){
 		for(int i = 0; i< size; i++)
 			x.remove(i);
 	}
+	/**
+	 * removes all objects from platform arraylists
+	 * @param x - arraylist to empty
+	 * @param size - total amount of objects stored
+	 */
 	private static void platformRemover(ArrayList<Platform> x, int size){
 		for(int i = 0; i< size; i++)
 			x.remove(i);
 	}
+	/**
+	 * removes all objects from the fallingBlock arraylist
+	 * @param x - arraylist to empty
+	 * @param size - total amount of objects stored
+	 */
 	private static void fallingBlockRemover(ArrayList<FallingBlock> x, int size){
 		for(int i = 0; i< size; i++)
 			x.remove(i);
 	}
+	/**
+	 * removes all objects from the playerProjectile arraylist
+	 * @param x - arraylist to empty
+	 * @param size - total amount of objects stored
+	 */
 	private static void playerProjectileRemover(ArrayList<PlayerProjectile> x, int size){
 		for(int i = 0; i< size; i++)
 			x.remove(i);
 	}
+	/**
+	 * removes all objects from the walkers arraylist
+	 * @param x - arraylist to empty
+	 * @param size - total amount of objects stored
+	 */
 	private static void walkersRemover(ArrayList<RoamingEnemy> x, int size){
 		for(int i = 0; i< size; i++)
 			x.remove(i);
 	}
+	/**
+	 * removes all objects from the slugs arraylist
+	 * @param x - arraylist to empty
+	 * @param size - total amount of objects stored
+	 */
 	private static void slugRemover(ArrayList<Slug> x, int size){
 		for(int i = 0; i< size; i++)
 			x.remove(i);
 	}
+	/**
+	 * removes all objects from the slimeBalls arraylist
+	 * @param x - arraylist to empty
+	 * @param size - total amount of objects stored
+	 */
 	private static void slimeBallRemover(ArrayList<SlugProjectile> x, int size){
 		for(int i = 0; i< size; i++)
 			x.remove(i);

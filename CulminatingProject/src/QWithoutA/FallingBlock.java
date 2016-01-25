@@ -52,7 +52,9 @@ public class FallingBlock extends Blocks{
 	public int getCountFalling(){
 		return countFalling;
 	}
-	
+	/**
+	 * check if the player is on the falling block
+	 */
 	public boolean checkStandingCollision(Player entity){
 		//If the player touches a block hitbox on top
 		if(entity.getX() > this.getX()+ this.getWidth()){ //right side of hitbox			
