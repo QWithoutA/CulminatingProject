@@ -88,7 +88,7 @@ public class Platform extends MovingObject{
 			else if(entity.getY() + entity.getHeight() < this.getY() - 5){
 				return false;
 			}
-			else if(entity.getY() + entity.getHeight() > this.getY() + 5){
+			else if(entity.getY() + entity.getHeight() > this.getY() + this.getHeight()/2){
 				return false;
 			}
 			else if(entity.getX() > this.getX()+ this.getWidth()){

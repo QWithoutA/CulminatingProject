@@ -95,7 +95,7 @@ public class FallingBlock extends Blocks{
 			else if(entity.getX() > this.getX() + this.getWidth()){
 				return false;
 			}
-			else if(entity.getY() > this.getY() + this.getHeight()){
+			else if(entity.getY() + entity.getHeight() > this.getY() + this.getHeight()/2){
 				return false;
 			}
 			else if(entity.getY() + entity.getHeight() < this.getY() + 5){
