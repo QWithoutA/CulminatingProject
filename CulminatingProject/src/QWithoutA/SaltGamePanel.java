@@ -11,8 +11,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -147,6 +149,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	public double initialVelocity = Math.sqrt(-2*playerProjectileAcceleration *playerProjectileMaxHeight);
 	
 	private MainMenu mainMenu;
+	private BufferedImage image;
 
 	public enum STATE{
 		MENU,
@@ -178,6 +181,11 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	public SaltGamePanel(){
 		this.setPreferredSize(new Dimension(width, height));
 		this.setBackground(Color.CYAN);
+		try{
+			image = ImageIO.read(Player.class.getResourceAsStream("/Images/Background.png"));
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 		
 		setFocusable(true);
 		addKeyListener(this);
@@ -313,6 +321,64 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	
 	// the first level that Rosauro created 
 	public void levelRosauro(){
+		ground.add(new Ground(0, 525, 0, width, 0, height));
+		ground.get(0).setWidth(ground.get(0).getWidth()/7);
+		
+		ground.add(new Ground(350, 525, 0, width, 0, height));
+		ground.get(1).setWidth(ground.get(1).getWidth()/8);
+		
+		ground.add(new Ground(650, 525, 0, width, 0, height));
+		ground.get(2).setWidth(ground.get(2).getWidth()/8);
+		
+		ground.add(new Ground(950, 525, 0, width, 0, height));
+		ground.get(3).setWidth(ground.get(3).getWidth()/8);
+		
+		ground.add(new Ground(250, 450, 0, width, 0, height));
+		ground.get(4).setWidth(ground.get(4).getWidth()/6);
+		
+		ground.add(new Ground(300, 250, 0, width, 0, height));
+		ground.get(5).setWidth(ground.get(5).getWidth()/6);
+		
+		ground.add(new Ground(600, 250, 0, width, 0, height));
+		ground.get(6).setWidth(ground.get(6).getWidth()/6);
+		
+		ground.add(new Ground(900, 350, 0, width, 0, height));
+		ground.get(7).setWidth(ground.get(7).getWidth()/6);
+		
+		ground.add(new Ground(900, 150, 0, width, 0, height));
+		ground.get(8).setWidth(ground.get(8).getWidth()/6);
+		
+		ground.add(new Ground(0, 150, 0, width, 0, height));
+		ground.get(9).setWidth(ground.get(9).getWidth()/6);
+		
+		ground.add(new Ground(600, 400, 0, width, 0, height));
+		ground.get(10).setWidth(ground.get(10).getWidth()/8);
+		
+		fBlock.add(new FallingBlock(100, 350, 0, width, 0, height));
+		
+		slugs.add(new Slug(300, 425, 300, 425, 0 , height));
+		slugs.get(0).setXSpeed(2*slugSpeed/6);
+		
+		slugs.add(new Slug(620, 230, 600, 750, 0 , height));
+		slugs.get(1).setXSpeed(2*slugSpeed/3);
+		
+		slugs.add(new Slug(600, 375, 600, 720, 0 , height));
+		slugs.get(2).setXSpeed(2*slugSpeed/3);
+		
+		slugs.add(new Slug(320, 500, 320, 450, 0 , height));
+		slugs.get(3).setXSpeed(2*slugSpeed/3);
+		
+		walkers.add(new RoamingEnemy(0, 120, 0, 150, 0, height));
+		walkers.get(0).setXSpeed(walkerSpeed*2);
+		
+		walkers.add(new RoamingEnemy(650, 495, 650, 760, 0, height));
+		walkers.get(1).setXSpeed(walkerSpeed*3);
+		
+		walkers.add(new RoamingEnemy(950, 495, 950, 1050, 0, height));
+		walkers.get(2).setXSpeed(walkerSpeed);
+		
+		walkers.add(new RoamingEnemy(950, 120, 950, 1050, 0, height));
+		walkers.get(3).setXSpeed(walkerSpeed);
 	}
 	// the first level that David created 
 	public void levelDavid(){
@@ -647,6 +713,7 @@ public class SaltGamePanel  extends JPanel implements Runnable, MouseListener, M
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		g.drawImage(image, 0, 0, null);
 		if (State == STATE.GAME) {
 			//g.drawString ("Number of salt balls: " + saltBalls.size(), 5, 20);
 			//g.drawString ("Number of slime balls: " + slimeBalls.size(), 5, 40);
